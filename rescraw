@@ -1,0 +1,8 @@
+#!/bin/bash
+
+for file in "$@"
+do
+echo "${file%}"
+#echo "/media/truecrypt3/Books/Audiobooks/Isaac Asimov/4-Foundation and Empire/split/${file%}" "~/Desktop/FE/${file%}"
+ddrescue -d "${file%}" ~/Desktop/FE/"${file%}"
+done
