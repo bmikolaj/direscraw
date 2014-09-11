@@ -1,8 +1,20 @@
 #!/bin/bash
 #Directory Rescue Crawler, direscraw v1.0
 #Written by Brian Mikolajczyk, brianm12@gmail.com
-for file in "$1/*"
-do
-echo "${file%}"
-ddrescue $1/"${file%}" $2/"${file%}" | tee drclog
+if (($# != 2)); then
+echo "Usage: direscraw <input_dir> <output_dir>"
+else
+start=$(pwd -P)
+for dir in `find $1 -type d`; do
+mkdir -p "$2"/"$dir"
+cd "$dir"
+for file in `ls -p | grep -v /`; do
+echo "$file" | tee -a "$start"/"$2"/"$dir"/drclog | tee -a "$start"/"$2"/fulldrclog
+ddrescue "$file" "$start"/"$2"/"$dir"/"$file" | tee -a "$start"/"$2"/"$dir"/drclog | tee -a "$start"/"$2"/fulldrclog
 done
+errcalc "$start"/"$2"/"$dir"/drclog
+cd "$start"
+done
+errcalc "$start"/"$2"/"$dir"/drclog
+mv "$start"/"$2"/"$dir"/error_summary "$start"/"$2"/"$dir"/full_error_summary
+fi
