@@ -1,0 +1,8 @@
+#!/bin/bash
+#Directory Rescue Crawler, direscraw v1.0
+#Written by Brian Mikolajczyk, brianm12@gmail.com
+for file in "$1/*"
+do
+echo "${file%}"
+ddrescue $1/"${file%}" $2/"${file%}" | tee drclog
+done
