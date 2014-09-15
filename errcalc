@@ -9,9 +9,9 @@ cat cutfile | grep -v rescued > filelist
 paste -d\+ errorsizes filesizes > addition
 cat addition | sed s/^/'units\ '/g | sed s/$/'\ \|\ cut\ -d\:\ -f2'/g > mathsadd
 chmod +x mathsadd
-./mathsadd | sed s/'\ bit'/B/g | column -t > fullsizes
+./mathsadd | sed s/$/\"/g | column -t > fullsizes
 paste -d\/ errorsizes fullsizes > division
-cat division | sed s/^/'units\ 100*'/g | sed s/$/'\ \|\ cut\ -d\:\ -f2'/g > mathsdiv
+cat division | sed s/^/'units\ \"100*'/g | sed s/$/'\ \|\ cut\ -d\:\ -f2'/g > mathsdiv
 chmod +x mathsdiv
 ./mathsdiv | sed s/$/\%/g > ratios
 paste -d' ' filelist ratios > error_summary
