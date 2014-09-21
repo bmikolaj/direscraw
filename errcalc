@@ -14,5 +14,5 @@ paste -d\/ errorsizes fullsizes > division
 cat division | sed s/^/'units\ \"100*'/g | sed s/$/'\ \|\ cut\ -d\:\ -f2'/g > mathsdiv
 chmod +x mathsdiv
 ./mathsdiv | sed s/$/\%/g > ratios
-paste -d' ' filelist ratios > error_summary
+paste -d' ' filelist ratios
 rm cutfile filelist errorsizes filesizes division addition ratios mathsadd mathsdiv fullsizes
