@@ -1,8 +1,9 @@
 #!/bin/bash
-#Error Percentage Calculation Summary
+#Error Percentage and Run time calculation Summary
 #Written by Brian Mikolajczyk, 2014, brianm12@gmail.com
 #cat "$1" | grep -v '^GNU' | grep -v '^Press' | grep -v '^Finished' | grep -v 'ipos' | grep -v 'opos' | sed '/^$/d' > cutfile
 tr -cd '\11\12\40-\176' < "$1" | grep -v '^GNU' | grep -v '^Press' | grep -v '^Finished' | grep -v 'ipos' | grep -v 'opos' | sed s/'\[A'//g | grep -v '^Copying' | sed '/^$/d' > cutfile
+tr -cd '\11\12\40-\176' < "$1" | grep -v '^GNU' | grep -v '^Press' | grep -v '^Finished' | grep -v 'ipos' | grep -v 'rescued' | sed s/'\[A'//g | grep -v '^Copying' | sed '/^$/d' | awk 'NR % 3 != 0' | grep opos | cut -d\: -f3 | cut -d, -f1 | column -t | sed s/'\ '//g > times
 cat cutfile | grep rescued | cut -d\: -f2 | cut -d, -f1 | column -t | sed s/'\ '//g > filesizes
 cat cutfile | grep rescued | cut -d\: -f3 | cut -d, -f1 | column -t | sed s/'\ '//g > errorsizes
 cat cutfile | grep -v rescued > filelist
@@ -14,5 +15,5 @@ paste -d\/ errorsizes fullsizes > division
 cat division | sed s/^/'units\ \"100*'/g | sed s/$/'\ \|\ cut\ -d\:\ -f2'/g > mathsdiv
 chmod +x mathsdiv
 ./mathsdiv | sed s/$/\%/g > ratios
-paste -d' ' filelist ratios
-rm cutfile filelist errorsizes filesizes division addition ratios mathsadd mathsdiv fullsizes
+paste -d' ' filelist ratios times
+rm cutfile filelist errorsizes filesizes division addition ratios mathsadd mathsdiv fullsizes times
