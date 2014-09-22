@@ -27,6 +27,7 @@ fi
 if [ ! -x $(which units) ]; then
 unvar=$(wget http://ftp.gnu.org/gnu/units/ -qO - | grep -v sig | grep href | grep units | tail -1 | cut -d\" -f6)
 wget -q http://ftp.gnu.org/gnu/units/$unvar
+gunzip $unvar
 tar xf "${unvar%.gz}"
 cd "${unvar%.tar.gz}"
 ./configure
