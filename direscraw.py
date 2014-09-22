@@ -19,7 +19,8 @@ def main(input_dir=None, output_dir=None):
         for current_dir, _, unfilenames in os.walk(input_dir):
             filenames = sorted(unfilenames)
             relative_dir = os.path.relpath(current_dir, input_dir)
-            current_out_dir = os.path.join(output_dir, top_input_dir, relative_dir)
+            current_out_dir = os.path.join(output_dir, top_input_dir, 
+            relative_dir)
             try:
                 os.makedirs(current_out_dir)
             except OSError:
@@ -32,7 +33,8 @@ def main(input_dir=None, output_dir=None):
                     in_file_path = os.path.join(current_dir, filename)
                     out_file_path = os.path.join(current_out_dir, filename)
                     print(in_file_path)
-                    subprocess.call(["ddrescue $0 $1 | tee -a drclog", in_file_path, out_file_path], shell=True)
+                    subprocess.call(["ddrescue $0 $1 | tee -a drclog", 
+                                    in_file_path, out_file_path], shell=True)
                 drclog.seek(0)
                 for line in drclog:
                     fulldrclog.write(line)
