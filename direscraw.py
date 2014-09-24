@@ -5,6 +5,7 @@
 import os.path
 import argparse
 import subprocess
+from pipes import quote
 
 def main(input_dir=None, output_dir=None):
     try:
@@ -32,9 +33,10 @@ def main(input_dir=None, output_dir=None):
                     drclog.flush()
                     in_file_path = os.path.join(current_dir, filename)
                     out_file_path = os.path.join(current_out_dir, filename)
+                    files = in_file_path, out_file_path
                     print(in_file_path)
-                    subprocess.call(["ddrescue $0 $1 | tee -a drclog", 
-                                    in_file_path, out_file_path], shell=True)
+                    subprocess.call('ddrescue {} |  tee -a drclog'
+                    .format(' '.join(map(quote, files))), shell=True)
                 drclog.seek(0)
                 for line in drclog:
                     fulldrclog.write(line)
