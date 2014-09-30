@@ -7,14 +7,15 @@ import argparse
 import subprocess
 from pipes import quote
 
-def main(input_dir=None, output_dir=None):
+def main(input_dir=None, output_dir=None, blacklist=None):
     try:
         os.mkdir(output_dir)
     except OSError:
         pass
 
-    blacklist = set(["drclog","fulldrclog","error_summary"
+    oblist = set(["drclog","fulldrclog","error_summary"
     ,"full_error_summary"])
+    blacklist = set(blacklist) | oblist
     _, top_input_dir = os.path.split(os.path.abspath(input_dir))
     with open(os.path.join(output_dir, 'fulldrclog'), 'w') as fulldrclog:
         for current_dir, _, unfilenames in os.walk(input_dir):
@@ -49,7 +50,7 @@ def main(input_dir=None, output_dir=None):
                 error_summary.flush()
                 subprocess.call(['errcalc', os.path.join(current_out_dir,
                                 'drclog')], stdout=error_summary)
-                #os.remove(os.path.join(current_out_dir, 'drclog'))
+                os.remove(os.path.join(current_out_dir, 'drclog'))
 
     with open(os.path.join(output_dir, 'full_error_summary'),
     'w') as full_error_summary:
@@ -57,11 +58,13 @@ def main(input_dir=None, output_dir=None):
         full_error_summary.flush()
         subprocess.call(['errcalc', os.path.join(output_dir, 'fulldrclog')],
                         stdout=full_error_summary)
-        #os.remove(os.path.join(output_dir, 'fulldrclog'))
+        os.remove(os.path.join(output_dir, 'fulldrclog'))
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('input_dir')
     parser.add_argument('output_dir')
+    parser.add_argument('-b', '--blacklist', nargs='+',
+        help="Add arguements separated by spaces to omit filenames/directories")
 
     main(**vars(parser.parse_args()))
