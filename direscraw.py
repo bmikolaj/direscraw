@@ -34,9 +34,11 @@ def main(input_dir=None, output_dir=None):
                     in_file_path = os.path.join(current_dir, filename)
                     out_file_path = os.path.join(current_out_dir, filename)
                     files = in_file_path, out_file_path
-                    print(in_file_path)
-                    subprocess.call('ddrescue {} |  tee -a drclog'
-                    .format(' '.join(map(quote, files))), shell=True)
+                    print('\n' + in_file_path)
+                    subprocess.call("ddrescue {} |  tee -a {}"
+                        .format(' '.join(map(quote, files)),
+                        os.path.join(current_out_dir, 'drclog')), shell=True)
+                    #subprocess.call(["ddrescue", in_file_path, out_file_path], stdout=drclog)
                 drclog.seek(0)
                 for line in drclog:
                     fulldrclog.write(line)
@@ -47,7 +49,7 @@ def main(input_dir=None, output_dir=None):
                 error_summary.flush()
                 subprocess.call(['errcalc', os.path.join(current_out_dir,
                                 'drclog')], stdout=error_summary)
-                os.remove(os.path.join(current_out_dir, 'drclog'))
+                #os.remove(os.path.join(current_out_dir, 'drclog'))
 
     with open(os.path.join(output_dir, 'full_error_summary'),
     'w') as full_error_summary:
@@ -55,7 +57,7 @@ def main(input_dir=None, output_dir=None):
         full_error_summary.flush()
         subprocess.call(['errcalc', os.path.join(output_dir, 'fulldrclog')],
                         stdout=full_error_summary)
-        os.remove(os.path.join(output_dir, 'fulldrclog'))
+        #os.remove(os.path.join(output_dir, 'fulldrclog'))
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
