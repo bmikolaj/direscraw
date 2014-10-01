@@ -18,7 +18,8 @@ def main(input_dir=None, output_dir=None, blacklist=None):
     blacklist = set(blacklist) | oblist
     _, top_input_dir = os.path.split(os.path.abspath(input_dir))
     with open(os.path.join(output_dir, 'fulldrclog'), 'w') as fulldrclog:
-        for current_dir, _, unfilenames in os.walk(input_dir):
+        for current_dir, dirnames, unfilenames in os.walk(input_dir):
+            dirnames[:] = set(dirnames) - blacklist
             filenames = sorted(unfilenames)
             relative_dir = os.path.relpath(current_dir, input_dir)
             current_out_dir = os.path.join(output_dir, top_input_dir, 
