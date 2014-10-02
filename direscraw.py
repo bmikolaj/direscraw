@@ -15,7 +15,11 @@ def main(input_dir=None, output_dir=None, blacklist=None):
 
     oblist = set(["drclog","fulldrclog","error_summary"
     ,"full_error_summary"])
-    blacklist = set(blacklist) | oblist
+    if blacklist is None:
+        blacklist = oblist
+    else:
+        blacklist = set(blacklist) | oblist
+    
     _, top_input_dir = os.path.split(os.path.abspath(input_dir))
     with open(os.path.join(output_dir, 'fulldrclog'), 'w') as fulldrclog:
         for current_dir, dirnames, unfilenames in os.walk(input_dir):
@@ -40,7 +44,6 @@ def main(input_dir=None, output_dir=None, blacklist=None):
                     subprocess.call("ddrescue {} |  tee -a {}"
                         .format(' '.join(map(quote, files)),
                         os.path.join(current_out_dir, 'drclog')), shell=True)
-                    #subprocess.call(["ddrescue", in_file_path, out_file_path], stdout=drclog)
                 drclog.seek(0)
                 for line in drclog:
                     fulldrclog.write(line)
