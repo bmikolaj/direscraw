@@ -43,7 +43,7 @@ def main(input_dir=None, output_dir=None, blacklist=None):
                     print('\n' + in_file_path)
                     subprocess.call("ddrescue {} |  tee -a {}"
                         .format(' '.join(map(quote, files)),
-                        os.path.join(current_out_dir, 'drclog')), shell=True)
+                        quote(os.path.join(current_out_dir, 'drclog'))), shell=True)
                 drclog.seek(0)
                 for line in drclog:
                     fulldrclog.write(line)
