@@ -1,7 +1,8 @@
 #!/bin/bash
 #Installation File
-#Directory Rescue Crawler, direscraw v1.0
-#Written by Brian Mikolajczyk, brianm12@gmail.com
+#Directory Rescue Crawler, direscraw v1.0; Error Percentage and Runtime Calculation Summary, errcalc v1.0
+#Copywrite 2014 by Brian Mikolajczyk, brianm12@gmail.com
+
 if [ ! -x $(which lzip) ]; then
 lver=$(wget http://download.savannah.gnu.org/releases/lzip/ -qO - | grep lzip | grep -v plzip | grep tar.gz | grep -v sig | cut -d\" -f8 | tail -1)
 wget -q http://download.savannah.gnu.org/releases/lzip/$lver
@@ -32,4 +33,5 @@ fi
 sudo cp errcalc /usr/local/bin
 sudo cp direscraw /usr/local/bin
 sudo chmod a+x /usr/local/bin/direscraw
-echo "direscraw installed successfully"
+sudo chmod a+x /usr/local/bin/errcalc
+echo "direscraw and errcalc installed successfully"

@@ -1,7 +1,7 @@
 #!/bin/bash
-#Error Percentage and Run time calculation Summary
-#Written by Brian Mikolajczyk, 2014, brianm12@gmail.com
-#cat "$1" | grep -v '^GNU' | grep -v '^Press' | grep -v '^Finished' | grep -v 'ipos' | grep -v 'opos' | sed '/^$/d' > cutfile
+#Error Percentage and Runtime Calculation Summary, errcalc v1.0
+#Copywrite 2014 by Brian Mikolajczyk, brianm12@gmail.com
+
 tr -cd '\11\12\40-\176' < "$1" | grep -v '^GNU' | grep -v '^Press' | grep -v '^Finished' | grep -v 'ipos' | grep -v 'opos' | sed s/'\[A'//g | grep -v '^Copying' | sed '/^$/d' | grep -iv ddrescue > cutfile
 tr -cd '\11\12\40-\176' < "$1" | grep -v '^GNU' | grep -v '^Press' | grep -v '^Finished' | grep -v 'ipos' | grep -v 'rescued' | sed s/'\[A'//g | grep -v '^Copying' | sed '/^$/d' | grep -iv ddrescue | awk 'NR % 2 != 0' | grep opos | cut -d\: -f3 | cut -d, -f1 | column -t | sed s/'\ '//g > times
 cat cutfile | grep rescued | cut -d\: -f2 | cut -d, -f1 | column -t | sed s/'\ '//g > filesizes

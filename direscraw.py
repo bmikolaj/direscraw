@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #Directory Rescue Crawler, direscraw v1.0
-#Written by Brian Mikolajczyk, brianm12@gmail.com
+#Copywrite 2014 by Brian Mikolajczyk, brianm12@gmail.com
 
 import os.path
 import argparse
