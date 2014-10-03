@@ -31,7 +31,7 @@ cd "${unvar%.tar.gz}"
 cd ..
 fi
 sudo cp errcalc /usr/local/bin
-sudo cp direscraw /usr/local/bin
+sudo cp direscraw.py /usr/local/bin/direscraw
 sudo chmod a+x /usr/local/bin/direscraw
 sudo chmod a+x /usr/local/bin/errcalc
 echo "direscraw and errcalc installed successfully"

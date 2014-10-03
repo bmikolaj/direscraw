@@ -44,7 +44,7 @@ Note: Directories and files with spaces or characters that need escaping can be 
 ##Changelog
 * v1.0 Initial Release
 
-##Authors
+##Author
 Brian Mikolajczyk, brianm12@gmail.com
 ##Legal
 ###Licence
