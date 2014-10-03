@@ -1,6 +1,19 @@
 #!/bin/bash
 #Error Percentage and Runtime Calculation Summary, errcalc v1.0
-#Copywrite 2014 by Brian Mikolajczyk, brianm12@gmail.com
+#Copyright (c) 2014 by Brian Mikolajczyk, brianm12@gmail.com
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 tr -cd '\11\12\40-\176' < "$1" | grep -v '^GNU' | grep -v '^Press' | grep -v '^Finished' | grep -v 'ipos' | grep -v 'opos' | sed s/'\[A'//g | grep -v '^Copying' | sed '/^$/d' | grep -iv ddrescue > cutfile
 tr -cd '\11\12\40-\176' < "$1" | grep -v '^GNU' | grep -v '^Press' | grep -v '^Finished' | grep -v 'ipos' | grep -v 'rescued' | sed s/'\[A'//g | grep -v '^Copying' | sed '/^$/d' | grep -iv ddrescue | awk 'NR % 2 != 0' | grep opos | cut -d\: -f3 | cut -d, -f1 | column -t | sed s/'\ '//g > times

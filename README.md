@@ -3,7 +3,7 @@ v1.0
 
 ##Description
 
-Directory Rescue Crawler uses `ddrescue` to recover full directories from one location to another. This program also prints a error and runtime summary in each directory copied and a full summary in the root directory.
+Directory Rescue Crawler uses `ddrescue` to recover full directories from one location to another. This program also prints a error and runtime summary in each subdirectory copied and a full summary in the root directory.
 
 ##Dependencies
 Directory Rescue Crawler was designed for Linux and uses the following programs.
@@ -17,7 +17,8 @@ Directory Rescue Crawler was designed for Linux and uses the following programs.
 * GNU Units (installed via install.sh)
 
 ##Install
-Run the following command to install;
+* Clone git archive via the following command: `git clone https://github.com/p014k/direscraw.git direscraw`
+* Run the following command to install;
 
 `sudo ./install.sh`
 
@@ -42,10 +43,10 @@ Note: Directories and files with spaces or characters that need escaping can be 
 
 
 ##Changelog
-* v1.0 Initial Release
+* v1.0 Initial Release (03 October 2014)
 
 ##Author
-Brian Mikolajczyk, brianm12@gmail.com
+[Brian Mikolajczyk](https://github.com/p014k), brianm12@gmail.com
 ##Legal
 ###Licence
 Please see file LICENCE.
