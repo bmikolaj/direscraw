@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#Directory Rescue Crawler, direscraw v1.0
+#Directory Rescue Crawler, direscraw v1.1
 #Copyright (c) 2014 by Brian Mikolajczyk, brianm12@gmail.com
 
 # This program is free software: you can redistribute it and/or modify
@@ -20,14 +20,18 @@ import argparse
 import subprocess
 from pipes import quote
 
-def main(input_dir=None, output_dir=None, blacklist=None):
+def main(input_dir=None, output_dir=None, blacklist=None, nosum=False):
     try:
         os.mkdir(output_dir)
     except OSError:
         pass
 
-    oblist = set(["drclog","fulldrclog","error_summary"
-    ,"full_error_summary"])
+    if not nosum:
+        oblist = set(["drclog","fulldrclog","error_summary"
+        ,"full_error_summary"])
+    else:
+        oblist = set(["drclog","fulldrclog"])
+
     if blacklist is None:
         blacklist = oblist
     else:
@@ -60,22 +64,26 @@ def main(input_dir=None, output_dir=None, blacklist=None):
                 drclog.seek(0)
                 for line in drclog:
                     fulldrclog.write(line)
-            
-            with open(os.path.join(current_out_dir, 'error_summary'),
-            'w') as error_summary:
-                error_summary.write('File Error% RunTime' + '\n')
-                error_summary.flush()
-                subprocess.call(['errcalc', os.path.join(current_out_dir,
-                                'drclog')], stdout=error_summary)
-                os.remove(os.path.join(current_out_dir, 'drclog'))
 
-    with open(os.path.join(output_dir, 'full_error_summary'),
-    'w') as full_error_summary:
-        full_error_summary.write('File Error% RunTime' + '\n')
-        full_error_summary.flush()
-        subprocess.call(['errcalc', os.path.join(output_dir, 'fulldrclog')],
-                        stdout=full_error_summary)
-        os.remove(os.path.join(output_dir, 'fulldrclog'))
+            if not nosum:
+                with open(os.path.join(current_out_dir, 'error_summary'),
+                'w') as error_summary:
+                    error_summary.write('File Error% RunTime' + '\n')
+                    error_summary.flush()
+                    subprocess.call(['errcalc', os.path.join(current_out_dir,
+                                    'drclog')], stdout=error_summary)
+
+            os.remove(os.path.join(current_out_dir, 'drclog'))
+
+    if not nosum:
+        with open(os.path.join(output_dir, 'full_error_summary'),
+        'w') as full_error_summary:
+            full_error_summary.write('File Error% RunTime' + '\n')
+            full_error_summary.flush()
+            subprocess.call(['errcalc', os.path.join(output_dir, 'fulldrclog')],
+                            stdout=full_error_summary)
+
+    os.remove(os.path.join(output_dir, 'fulldrclog'))
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -83,5 +91,7 @@ if __name__ == '__main__':
     parser.add_argument('output_dir')
     parser.add_argument('-b', '--blacklist', nargs='+',
         help="Add arguements separated by spaces to omit filenames/directories")
+    parser.add_argument('-n', '--nosum', action='store_true',
+        help="No error percentage and runtime summary in subdirectories")
 
     main(**vars(parser.parse_args()))

@@ -1,6 +1,6 @@
 #!/bin/bash
 #Installation File
-#Directory Rescue Crawler, direscraw v1.0; Error Percentage and Runtime Calculation Summary, errcalc v1.0
+#Directory Rescue Crawler, direscraw v1.1; Error Percentage and Runtime Calculation Summary, errcalc v1.1
 #Copyright (c) 2014 by Brian Mikolajczyk, brianm12@gmail.com
 
 # This program is free software: you can redistribute it and/or modify

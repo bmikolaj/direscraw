@@ -1,5 +1,5 @@
 #Directory Rescue Crawler
-v1.0
+v1.1
 
 ##Description
 
@@ -29,13 +29,15 @@ This will install two programs: Directory Rescue Crawler (`direscraw`) and the E
 ##Usage
 Run from the command line;
 
-`direscraw [-h] <input_directory> <output_directory> [-b] BLACKLIST`
+`direscraw [-h] <input_directory> <output_directory> [-n] [-b] BLACKLIST`
 
 ####Required parameters
 `<input_directory>` and `<output_directory>` are required.
 
 ####Optional parameters
 `-h` for help
+
+`-n` will run the program without `errcalc` thus creating no Error Percentage and Runtime Calculation files.
 
 `-b BLACKLIST` specifies a list of files and/or directories separated by a space to omit from rescuing (case-sensitive). 
 
@@ -44,9 +46,19 @@ Run from the command line;
 
 Note: Directories and files with spaces or characters that need escaping can be put in quores.
 
+##Uninstall
+* Run the following command to install;
+  
+  `sudo ./uninstall.sh`
 
 ##Changelog
-* v1.0 Initial Release (03 October 2014)
+* v1.1 (03 October 2014)
+
+  Added supression of Error Percentage and Runtime Calculation option, `-n`
+
+* v1.0 (03 October 2014)
+
+  Initial Release
 
 ##Author
 [Brian Mikolajczyk](https://github.com/p014k), brianm12@gmail.com
