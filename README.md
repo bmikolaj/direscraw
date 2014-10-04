@@ -1,5 +1,5 @@
 #Directory Rescue Crawler
-v1.1
+v1.2
 
 ##Description
 
@@ -12,9 +12,9 @@ Directory Rescue Crawler was designed for Linux and uses the following programs;
 * Python 2.7+
 * Gunzip
 * Tar
-* Lzip (installed via install.sh)
-* Ddrescue (installed via install.sh)
-* GNU Units (installed via install.sh)
+* Lzip (installed via setup.sh)
+* Ddrescue (installed via setup.sh)
+* GNU Units (installed via setup.sh)
 
 ##Install
 * Clone git archive via the following command; 
@@ -22,7 +22,7 @@ Directory Rescue Crawler was designed for Linux and uses the following programs;
   `git clone https://github.com/p014k/direscraw.git direscraw`
 * Run the following command to install;
   
-  `sudo ./install.sh`
+  `sudo ./setup.sh install`
 
 This will install two programs: Directory Rescue Crawler (`direscraw`) and the Error Percentage and Runtime Calculation Summary (`errcalc`) to /usr/local/bin.
 
@@ -37,9 +37,9 @@ Run from the command line;
 ####Optional parameters
 `-h` for help
 
-`-n` will run the program without `errcalc` thus creating no Error Percentage and Runtime Calculation files.
+`-n`,`--nosum` will run the program without `errcalc` thus creating no Error Percentage and Runtime Calculation files.
 
-`-b BLACKLIST` specifies a list of files and/or directories separated by a space to omit from rescuing (case-sensitive). 
+`-b BLACKLIST`, `--blacklist BLACKLIST` specifies a list of files and/or directories separated by a space to omit from rescuing (case-sensitive). 
 
 ###Example 
 `use@computer:$ direscraw /media/Drive1/ /media/Drive2/Backup/ -b .mp3 'Pictures Of Me'` (This will omit all mp3 files and a directory called Pictures Of Me). 
@@ -47,11 +47,15 @@ Run from the command line;
 Note: Directories and files with spaces or characters that need escaping can be put in quores.
 
 ##Uninstall
-* Run the following command to install;
+* Run the following command to uninstall;
   
-  `sudo ./uninstall.sh`
+  `sudo ./setup.sh uninstall`
 
 ##Changelog
+* v1.2 (04 October 2014)
+
+  Combined install and uninstall into setup.sh
+
 * v1.1 (03 October 2014)
 
   Added supression of Error Percentage and Runtime Calculation option, `-n`
