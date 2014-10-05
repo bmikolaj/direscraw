@@ -1,9 +1,11 @@
 #Directory Rescue Crawler
-v1.2
+v1.3
+
+#####Errcalc v1.0
 
 ##Description
 
-Directory Rescue Crawler uses `ddrescue` to recover full directories from one location to another. This program also prints an error and runtime summary in each subdirectory copied and a full summary in the root directory.
+Directory Rescue Crawler uses `ddrescue` to recover full directories from one location to another. This program also prints an error and runtime summary in each subdirectory copied and a full summary in the root directory via the included `errcalc` program.
 
 ##Dependencies
 Directory Rescue Crawler was designed for Linux and uses the following programs;
@@ -13,13 +15,14 @@ Directory Rescue Crawler was designed for Linux and uses the following programs;
 * Gunzip
 * Tar
 * Lzip (installed via setup.sh)
-* Ddrescue (installed via setup.sh)
+* GNU ddrescue (installed via setup.sh)
 * GNU Units (installed via setup.sh)
 
 ##Install
 * Clone git archive via the following command; 
   
   `git clone https://github.com/p014k/direscraw.git direscraw`
+* Change directories via `cd direscraw`
 * Run the following command to install;
   
   `sudo ./setup.sh install`
@@ -52,6 +55,10 @@ Note: Directories and files with spaces or characters that need escaping can be 
   `sudo ./setup.sh uninstall`
 
 ##Changelog
+* v1.3 (05 October 2014)
+
+  Now prints directory in error_summary and full_error_summary 
+
 * v1.2 (04 October 2014)
 
   Combined install and uninstall into setup.sh
@@ -64,6 +71,14 @@ Note: Directories and files with spaces or characters that need escaping can be 
 
   Initial Release
 
+##Development Notes
+Tested with the following program versions;
+
+* Bash v4.3.11(1)-release (i686-pc-linux-gnu)
+* Python 2.7.6
+* GNU ddrescue 1.18.1
+* GNU Units v2.02
+
 ##Author
 [Brian Mikolajczyk](https://github.com/p014k), brianm12@gmail.com
 
@@ -75,4 +90,3 @@ Please see file LICENCE.
 
 ###Copying
 Please see file COPYING.
-
