@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#Directory Rescue Crawler, direscraw v1.3
+#Directory Rescue Crawler, direscraw v1.4
 #Copyright (c) 2014 by Brian Mikolajczyk, brianm12@gmail.com
 
 # This program is free software: you can redistribute it and/or modify
@@ -18,6 +18,7 @@
 import os.path
 import argparse
 import subprocess
+import time
 from pipes import quote
 
 def main(input_dir=None, output_dir=None, blacklist=None, nosum=False):
@@ -26,19 +27,16 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False):
     except OSError:
         pass
 
-    if not nosum:
-        oblist = set(['drclog', 'fulldrclog' ,'error_summary',
-                      'full_error_summary'])
-    else:
-        oblist = set(['drclog', 'fulldrclog'])
-
+    oblist = set(['drclog', 'fulldrclog', 'error_summary',
+                  'full_error_summary'])
     if blacklist is None:
         blacklist = oblist
     else:
         blacklist = set(blacklist) | oblist
     
     _, top_input_dir = os.path.split(os.path.abspath(input_dir))
-    with open(os.path.join(output_dir, 'full_error_summary'), 'w+') as full_error_summary:
+    with open(os.path.join(output_dir, 'full_error_summary'),
+                           'w+') as full_error_summary:
         if not nosum:
             full_error_summary.write('File Error% RunTime' + '\n')
 
@@ -53,7 +51,8 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False):
             except OSError:
                 pass
 
-            with open(os.path.join(current_out_dir, 'drclog'), 'w+') as drclog:
+            with open(os.path.join(current_out_dir, 'drclog'),
+                                   'w+') as drclog:
                 for filename in [f for f in filenames if f not in blacklist]:
                     drclog.write('{}\n'.format(filename))
                     drclog.flush()
@@ -63,22 +62,30 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False):
                     print('\n' + in_file_path)
                     subprocess.call('ddrescue {} |  tee -a {}'
                         .format(' '.join(map(quote, files)),
-                        quote(os.path.join(current_out_dir, 'drclog'))), shell=True)
+                        quote(os.path.join(current_out_dir, 'drclog'))),
+                                           shell=True)
                 drclog.seek(0)
                 if not nosum:
                     with open(os.path.join(current_out_dir, 'error_summary'),
                     'w') as error_summary:
+                        error_summary.write(time.strftime('%Y-%m-%d %H:%M:%S')
+                                            + '\n')
                         error_summary.write(current_out_dir + '\n')
                         error_summary.write('File Error% RunTime' + '\n')
                         error_summary.flush()
                         full_error_summary.write(current_out_dir + '\n')
                         full_error_summary.flush()
-                        subprocess.call(['errcalc', os.path.join(current_out_dir,
+                        subprocess.call(['errcalc',
+                                        os.path.join(current_out_dir,
                                         'drclog')], stdout=error_summary)
-                        subprocess.call(['errcalc', os.path.join(current_out_dir,
+                        subprocess.call(['errcalc',
+                                        os.path.join(current_out_dir,
                                         'drclog')], stdout=full_error_summary)
 
             os.remove(os.path.join(current_out_dir, 'drclog'))
+
+        full_error_summary.seek(0)
+        full_error_summary.write(time.strftime('%Y-%m-%d %H:%M:%S') + '\n')
 
     if nosum:
         os.remove(os.path.join(output_dir, 'full_error_summary'))
@@ -88,7 +95,8 @@ if __name__ == '__main__':
     parser.add_argument('input_dir')
     parser.add_argument('output_dir')
     parser.add_argument('-b', '--blacklist', nargs='+',
-        help='Add arguements separated by spaces to omit filenames/directories')
+        help='Add arguments separated by spaces to omit\
+              filenames/directories')
     parser.add_argument('-n', '--nosum', action='store_true',
         help='No error percentage and runtime summary in subdirectories')
 

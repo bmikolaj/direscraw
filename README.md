@@ -1,5 +1,5 @@
 #Directory Rescue Crawler
-v1.3
+v1.4
 
 #####Errcalc v1.0
 
@@ -55,6 +55,10 @@ Note: Directories and files with spaces or characters that need escaping can be 
   `sudo ./setup.sh uninstall`
 
 ##Changelog
+* v1.4 (07 October 2014)
+
+  Added timestamp to error_summary and full_error_summary
+
 * v1.3 (05 October 2014)
 
   Now prints directory in error_summary and full_error_summary 
