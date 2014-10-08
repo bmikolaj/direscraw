@@ -14,9 +14,10 @@ Directory Rescue Crawler was designed for Linux and uses the following programs;
 * Python 2.7+
 * GNU ddrescue (installed via setup.sh)
 * GNU Units (installed via setup.sh)
+* Lzip (for installation; installed via setup.sh)
 * Gunzip (for installation)
 * Tar (for installation)
-* Lzip (for installation; installed via setup.sh)
+
 
 ##Install
 * Clone git archive via the following command; 

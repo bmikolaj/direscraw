@@ -22,7 +22,8 @@ import time
 import fnmatch
 from pipes import quote
 
-def main(input_dir=None, output_dir=None, blacklist=None, nosum=False, resume=False):
+def main(input_dir=None, output_dir=None, blacklist=None, nosum=False,
+                                                          resume=False):
     try:
         os.mkdir(output_dir)
     except OSError:
@@ -34,9 +35,10 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False, resume=Fa
         blwild = False
         blacklist = oblist
     else:
-        blacklist = set(blacklist) | oblist
         blwild = True
+        blacklist = set(blacklist) | oblist
 
+    tfmt = '%Y-%m-%d %H:%M:%S'
     _, top_input_dir = os.path.split(os.path.abspath(input_dir))
     with open(os.path.join(output_dir, 'full_error_summary'),
                            'w+') as full_error_summary:
@@ -58,8 +60,8 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False, resume=Fa
                 outfiles = sorted(set([f for f in os.listdir(current_out_dir)
                                       if os.path.isfile(os.path.join(
                                       current_out_dir, f))]) - blacklist)
-                if len(filenames) == len(list(outfiles)) and not os.path.isfile(
-                                  os.path.join(current_out_dir, 'copylog')):
+                if len(filenames) == len(list(outfiles)) and not\
+                   os.path.isfile(os.path.join(current_out_dir, 'copylog')):
                     continue
 
                 try:
@@ -70,16 +72,17 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False, resume=Fa
                 sindex = 0
 
             if blwild:
-                dircontents = sorted(set([f for f in os.listdir(current_dir)]) - blacklist)
-                fblacklist = []
+                infiles = sorted(set([f for f in os.listdir(
+                                     current_dir)]) - blacklist)
+                wildlist = []
                 for el in blacklist:
-                    fblacklist = fblacklist + fnmatch.filter(dircontents, el)
+                    wildlist = wildlist + fnmatch.filter(infiles, el)
                 
-                blacklist = blacklist | set(fblacklist)
+                blacklist = blacklist | set(wildlist)
                     
             with open(os.path.join(current_out_dir, 'drclog'),
                       'w+') as drclog, open(os.path.join(current_out_dir,
-                                                            'copylog'), 'w'):
+                                                         'copylog'), 'w'):
                 for filename in [f for f in filenames[sindex:]
                                          if f not in blacklist]:
                     in_file_path = os.path.join(current_dir, filename)
@@ -96,8 +99,7 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False, resume=Fa
                 if not nosum:
                     with open(os.path.join(current_out_dir, 'error_summary'),
                     'w') as error_summary:
-                        error_summary.write(time.strftime('%Y-%m-%d %H:%M:%S')
-                                            + '\n')
+                        error_summary.write(time.strftime(tfmt) + '\n')
                         error_summary.write(current_out_dir + '\n')
                         error_summary.write('File Error% RunTime' + '\n')
                         error_summary.flush()
@@ -114,7 +116,7 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False, resume=Fa
             os.remove(os.path.join(current_out_dir, 'copylog'))
 
         full_error_summary.seek(0)
-        full_error_summary.write(time.strftime('%Y-%m-%d %H:%M:%S') + '\n')
+        full_error_summary.write(time.strftime(tfmt) + '\n')
 
     if nosum:
         os.remove(os.path.join(output_dir, 'full_error_summary'))
