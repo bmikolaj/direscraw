@@ -45,21 +45,22 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False, resume=Fa
             filenames = sorted(unfilenames)
             relative_dir = os.path.relpath(current_dir, input_dir)
             current_out_dir = os.path.join(output_dir, top_input_dir, 
-            relative_dir).replace('/.', '/')
+                                     relative_dir).replace('/.', '/')
             try:
                 os.makedirs(current_out_dir)
             except OSError:
                 pass
 
             if resume:
-                outfiles = sorted([f for f in os.listdir(current_out_dir)
+                outfiles = sorted(set([f for f in os.listdir(current_out_dir)
                                   if os.path.isfile(os.path.join(
-                                  current_out_dir, f))])
-                if len(filenames) == len(outfiles):
+                                  current_out_dir, f))]) - blacklist)
+                if len(filenames) == len(list(outfiles)) and not os.path.isfile(
+                                  os.path.join(current_out_dir, 'copylog')):
                     continue
 
                 try:
-                    sindex = filenames.index(outfiles[-1])
+                    sindex = filenames.index(list(outfiles)[-1])
                 except (IndexError, ValueError):
                     sindex = 0
 
@@ -67,7 +68,8 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False, resume=Fa
                 sindex = 0
 
             with open(os.path.join(current_out_dir, 'drclog'),
-                                   'w+') as drclog:
+                      'w+') as drclog, open(os.path.join(current_out_dir,
+                                                            'copylog'), 'w'):
                 for filename in [f for f in filenames[sindex:]
                                          if f not in blacklist]:
                     in_file_path = os.path.join(current_dir, filename)
@@ -99,6 +101,7 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False, resume=Fa
                                         'drclog')], stdout=full_error_summary)
 
             os.remove(os.path.join(current_out_dir, 'drclog'))
+            os.remove(os.path.join(current_out_dir, 'copylog'))
 
         full_error_summary.seek(0)
         full_error_summary.write(time.strftime('%Y-%m-%d %H:%M:%S') + '\n')
