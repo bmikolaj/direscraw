@@ -39,30 +39,42 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False, resume=Fa
                            'w+') as full_error_summary:
         if not nosum:
             full_error_summary.write('File Error% RunTime' + '\n')
-
+        
         for current_dir, dirnames, unfilenames in os.walk(input_dir):
             dirnames[:] = set(dirnames) - blacklist
             filenames = sorted(unfilenames)
             relative_dir = os.path.relpath(current_dir, input_dir)
             current_out_dir = os.path.join(output_dir, top_input_dir, 
-            relative_dir)
-            if resume and os.path.isfile(os.path.join(current_out_dir,
-                                                      'error_summary')):
-                continue
-
+            relative_dir).replace('/.', '/')
             try:
                 os.makedirs(current_out_dir)
             except OSError:
                 pass
 
+            if resume:
+                outfiles = sorted([f for f in os.listdir(current_out_dir)
+                                  if os.path.isfile(os.path.join(
+                                  current_out_dir, f))])
+                if len(filenames) == len(outfiles):
+                    continue
+
+                try:
+                    sindex = filenames.index(outfiles[-1])
+                except (IndexError, ValueError):
+                    sindex = 0
+
+            else:
+                sindex = 0
+
             with open(os.path.join(current_out_dir, 'drclog'),
                                    'w+') as drclog:
-                for filename in [f for f in filenames if f not in blacklist]:
-                    drclog.write('{}\n'.format(filename))
-                    drclog.flush()
+                for filename in [f for f in filenames[sindex:]
+                                         if f not in blacklist]:
                     in_file_path = os.path.join(current_dir, filename)
                     out_file_path = os.path.join(current_out_dir, filename)
                     files = in_file_path, out_file_path
+                    drclog.write('{}\n'.format(filename))
+                    drclog.flush()
                     print('\n' + in_file_path)
                     subprocess.call('ddrescue {} |  tee -a {}'
                         .format(' '.join(map(quote, files)),
@@ -104,7 +116,7 @@ if __name__ == '__main__':
     parser.add_argument('-n', '--nosum', action='store_true',
         help='No error percentage and runtime summary in subdirectories')
     parser.add_argument('-r', '--resume', action='store_true',
-        help='Resumes a previously interrupted direscraw session skipping\
+        help='Resumes a previously-interrupted direscraw session skipping\
               already recovered directories')
 
     main(**vars(parser.parse_args()))

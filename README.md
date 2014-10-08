@@ -12,11 +12,11 @@ Directory Rescue Crawler was designed for Linux and uses the following programs;
 
 * Bash
 * Python 2.7+
-* Gunzip
-* Tar
-* Lzip (installed via setup.sh)
 * GNU ddrescue (installed via setup.sh)
 * GNU Units (installed via setup.sh)
+* Gunzip (for installation)
+* Tar (for installation)
+* Lzip (for installation; installed via setup.sh)
 
 ##Install
 * Clone git archive via the following command; 
@@ -32,7 +32,7 @@ This will install two programs: Directory Rescue Crawler (`direscraw`) and the E
 ##Usage
 Run from the command line;
 
-`direscraw [-h] <input_directory> <output_directory> [-n] [-b] BLACKLIST`
+`direscraw [-h] <input_directory> <output_directory> [-r] [-n] [-b] BLACKLIST`
 
 ####Required parameters
 `<input_directory>` and `<output_directory>` are required.
@@ -40,14 +40,16 @@ Run from the command line;
 ####Optional parameters
 `-h` for help
 
-`-n`,`--nosum` will run the program without `errcalc` thus creating no Error Percentage and Runtime Calculation files.
+`-n`, `--nosum` will run the program without `errcalc` thus creating no Error Percentage and Runtime Calculation files.
 
-`-b BLACKLIST`, `--blacklist BLACKLIST` specifies a list of files and/or directories separated by a space to omit from rescuing (case-sensitive). 
+`-b BLACKLIST`, `--blacklist BLACKLIST` specifies a list of files and/or directories (separated by a space) to omit from rescuing (case-sensitive).
+
+`-r`, `--resume` will resume a previously-interrupted session of `direscraw` skipping already rescued files. 
 
 ###Example 
-`use@computer:$ direscraw /media/Drive1/ /media/Drive2/Backup/ -b .mp3 'Pictures Of Me'` (This will omit all mp3 files and a directory called Pictures Of Me). 
+`user@computer:$ direscraw /media/Drive1/ /media/Drive2/Backup/ -b song.mp3 'Pictures Of Me'` (This will omit a file song.mp3 and a directory called Pictures Of Me). 
 
-Note: Directories and files with spaces or characters that need escaping can be put in quores.
+Note: Directories and files with characters that need escaping can be put in quotes. Files and directories are case-sensative. Wildcards are not accepted.
 
 ##Uninstall
 * Run the following command to uninstall;
@@ -57,11 +59,12 @@ Note: Directories and files with spaces or characters that need escaping can be 
 ##Changelog
 * v1.4 (07 October 2014)
 
+  Added resume support option, `-r`
   Added timestamp to error_summary and full_error_summary
 
 * v1.3 (05 October 2014)
 
-  Now prints directory in error_summary and full_error_summary 
+  Now prints directory in error_summary and full_error_summary
 
 * v1.2 (04 October 2014)
 
