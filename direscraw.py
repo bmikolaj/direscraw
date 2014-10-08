@@ -21,7 +21,7 @@ import subprocess
 import time
 from pipes import quote
 
-def main(input_dir=None, output_dir=None, blacklist=None, nosum=False):
+def main(input_dir=None, output_dir=None, blacklist=None, nosum=False, resume=False):
     try:
         os.mkdir(output_dir)
     except OSError:
@@ -46,6 +46,10 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False):
             relative_dir = os.path.relpath(current_dir, input_dir)
             current_out_dir = os.path.join(output_dir, top_input_dir, 
             relative_dir)
+            if resume and os.path.isfile(os.path.join(current_out_dir,
+                                                      'error_summary')):
+                continue
+
             try:
                 os.makedirs(current_out_dir)
             except OSError:
@@ -99,5 +103,8 @@ if __name__ == '__main__':
               filenames/directories')
     parser.add_argument('-n', '--nosum', action='store_true',
         help='No error percentage and runtime summary in subdirectories')
+    parser.add_argument('-r', '--resume', action='store_true',
+        help='Resumes a previously interrupted direscraw session skipping\
+              already recovered directories')
 
     main(**vars(parser.parse_args()))
