@@ -31,10 +31,12 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False, resume=Fa
     oblist = set(['drclog', 'fulldrclog', 'error_summary',
                   'full_error_summary'])
     if blacklist is None:
+        blwild = False
         blacklist = oblist
     else:
         blacklist = set(blacklist) | oblist
-    
+        blwild = True
+
     _, top_input_dir = os.path.split(os.path.abspath(input_dir))
     with open(os.path.join(output_dir, 'full_error_summary'),
                            'w+') as full_error_summary:
@@ -67,7 +69,7 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False, resume=Fa
             else:
                 sindex = 0
 
-            if blacklist is not None:
+            if blwild:
                 dircontents = sorted(set([f for f in os.listdir(current_dir)]) - blacklist)
                 fblacklist = []
                 for el in blacklist:
