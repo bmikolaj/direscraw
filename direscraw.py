@@ -19,6 +19,7 @@ import os.path
 import argparse
 import subprocess
 import time
+import fnmatch
 from pipes import quote
 
 def main(input_dir=None, output_dir=None, blacklist=None, nosum=False, resume=False):
@@ -53,8 +54,8 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False, resume=Fa
 
             if resume:
                 outfiles = sorted(set([f for f in os.listdir(current_out_dir)
-                                  if os.path.isfile(os.path.join(
-                                  current_out_dir, f))]) - blacklist)
+                                      if os.path.isfile(os.path.join(
+                                      current_out_dir, f))]) - blacklist)
                 if len(filenames) == len(list(outfiles)) and not os.path.isfile(
                                   os.path.join(current_out_dir, 'copylog')):
                     continue
@@ -63,10 +64,17 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False, resume=Fa
                     sindex = filenames.index(list(outfiles)[-1])
                 except (IndexError, ValueError):
                     sindex = 0
-
             else:
                 sindex = 0
 
+            if blacklist is not None:
+                dircontents = sorted(set([f for f in os.listdir(current_dir)]) - blacklist)
+                fblacklist = []
+                for el in blacklist:
+                    fblacklist = fblacklist + fnmatch.filter(dircontents, el)
+                
+                blacklist = blacklist | set(fblacklist)
+                    
             with open(os.path.join(current_out_dir, 'drclog'),
                       'w+') as drclog, open(os.path.join(current_out_dir,
                                                             'copylog'), 'w'):

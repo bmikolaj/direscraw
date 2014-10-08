@@ -5,7 +5,7 @@ v1.4
 
 ##Description
 
-Directory Rescue Crawler uses `ddrescue` to recover full directories from one location to another. This program also prints an error and runtime summary in each subdirectory copied and a full summary in the root directory via the included `errcalc` program.
+Directory Rescue Crawler uses `ddrescue` to recover full directories from one location to another. This program also prints an error and runtime summary in each subdirectory copied and a full summary in the root directory via the included `errcalc` program. 
 
 ##Dependencies
 Directory Rescue Crawler was designed for Linux and uses the following programs;
@@ -42,14 +42,14 @@ Run from the command line;
 
 `-n`, `--nosum` will run the program without `errcalc` thus creating no Error Percentage and Runtime Calculation files.
 
-`-b BLACKLIST`, `--blacklist BLACKLIST` specifies a list of files and/or directories (separated by a space) to omit from rescuing (case-sensitive).
+`-b BLACKLIST`, `--blacklist BLACKLIST` specifies a list of files and/or directories (separated by a space) to omit from rescuing (case-sensitive). Wildcards are accepted.
 
 `-r`, `--resume` will resume a previously-interrupted session of `direscraw` skipping already rescued files. 
 
 ###Example 
-`user@computer:$ direscraw /media/Drive1/ /media/Drive2/Backup/ -b song.mp3 'Pictures Of Me'` (This will omit a file song.mp3 and a directory called Pictures Of Me). 
+`user@computer:$ direscraw /media/Drive1/ /media/Drive2/Backup/ -b *.mp3 'Pictures Of Me'` (This will omit all mp3 files and a directory called Pictures Of Me). 
 
-Note: Directories and files with characters that need escaping can be put in quotes. Files and directories are case-sensative. Wildcards are not accepted.
+Note: Directories and files with characters that need escaping can be put in quotes. Files and directories are case-sensative. Wildcards are accepted.
 
 ##Uninstall
 * Run the following command to uninstall;
@@ -57,9 +57,12 @@ Note: Directories and files with characters that need escaping can be put in quo
   `sudo ./setup.sh uninstall`
 
 ##Changelog
-* v1.4 (07 October 2014)
+* v1.4 (08 October 2014)
 
   Added resume support option, `-r`
+
+  Added wildcard ability to blacklist
+
   Added timestamp to error_summary and full_error_summary
 
 * v1.3 (05 October 2014)
@@ -72,7 +75,7 @@ Note: Directories and files with characters that need escaping can be put in quo
 
 * v1.1 (03 October 2014)
 
-  Added supression of Error Percentage and Runtime Calculation option, `-n`
+  Added suppression of Error Percentage and Runtime Calculation option, `-n`
 
 * v1.0 (03 October 2014)
 
