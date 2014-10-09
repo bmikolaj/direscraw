@@ -1,5 +1,5 @@
 #Directory Rescue Crawler
-v1.4
+v1.45
 
 #####Errcalc v1.0
 
@@ -58,6 +58,10 @@ Note: Directories and files with characters that need escaping can be put in quo
   `sudo ./setup.sh uninstall`
 
 ##Changelog
+* v1.45 (08 October 2014)
+
+  Fixed file-only wildcard bug in blacklist
+
 * v1.4 (08 October 2014)
 
   Added resume support option, `-r`

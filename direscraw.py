@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#Directory Rescue Crawler, direscraw v1.4
+#Directory Rescue Crawler, direscraw v1.45
 #Copyright (c) 2014 by Brian Mikolajczyk, brianm12@gmail.com
 
 # This program is free software: you can redistribute it and/or modify
@@ -46,6 +46,15 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False,
             full_error_summary.write('File Error% RunTime' + '\n')
         
         for current_dir, dirnames, unfilenames in os.walk(input_dir):
+            if blwild:
+                infiles = sorted(set([f for f in os.listdir(
+                                     current_dir)]) - blacklist)
+                wildlist = []
+                for el in blacklist:
+                    wildlist = wildlist + fnmatch.filter(infiles, el)
+                
+                blacklist = blacklist | set(wildlist)
+
             dirnames[:] = set(dirnames) - blacklist
             filenames = sorted(unfilenames)
             relative_dir = os.path.relpath(current_dir, input_dir)
@@ -70,15 +79,6 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False,
                     sindex = 0
             else:
                 sindex = 0
-
-            if blwild:
-                infiles = sorted(set([f for f in os.listdir(
-                                     current_dir)]) - blacklist)
-                wildlist = []
-                for el in blacklist:
-                    wildlist = wildlist + fnmatch.filter(infiles, el)
-                
-                blacklist = blacklist | set(wildlist)
                     
             with open(os.path.join(current_out_dir, 'drclog'),
                       'w+') as drclog, open(os.path.join(current_out_dir,
