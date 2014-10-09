@@ -1,5 +1,5 @@
 #Directory Rescue Crawler
-v1.45
+v1.46
 
 #####Errcalc v1.0
 
@@ -50,7 +50,7 @@ Run from the command line;
 ###Example 
 `user@computer:$ direscraw /media/Drive1/ /media/Drive2/Backup/ -b *.mp3 'Pictures Of Me'` (This will omit all mp3 files and a directory called Pictures Of Me). 
 
-Note: Directories and files with characters that need escaping can be put in quotes. Files and directories are case-sensative. Wildcards are accepted.
+Note: Directories and files with characters that need escaping can be put in quotes. Files and directories are case-sensitive. Wildcards are accepted.
 
 ##Uninstall
 * Run the following command to uninstall;
@@ -58,6 +58,10 @@ Note: Directories and files with characters that need escaping can be put in quo
   `sudo ./setup.sh uninstall`
 
 ##Changelog
+* v1.46 (09 October 2014)
+
+  Fixed hidden directory omission error.
+
 * v1.45 (08 October 2014)
 
   Fixed file-only wildcard bug in blacklist

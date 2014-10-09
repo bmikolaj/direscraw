@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#Directory Rescue Crawler, direscraw v1.45
+#Directory Rescue Crawler, direscraw v1.46
 #Copyright (c) 2014 by Brian Mikolajczyk, brianm12@gmail.com
 
 # This program is free software: you can redistribute it and/or modify
@@ -15,12 +15,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import os.path
 import argparse
+import fnmatch
+import os.path
+from pipes import quote
+from re import sub
 import subprocess
 import time
-import fnmatch
-from pipes import quote
 
 def main(input_dir=None, output_dir=None, blacklist=None, nosum=False,
                                                           resume=False):
@@ -58,8 +59,8 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False,
             dirnames[:] = set(dirnames) - blacklist
             filenames = sorted(unfilenames)
             relative_dir = os.path.relpath(current_dir, input_dir)
-            current_out_dir = os.path.join(output_dir, top_input_dir, 
-                                     relative_dir).replace('/.', '/')
+            current_out_dir = sub(r'(?<=/)\.$', r'', os.path.join(output_dir,
+                                  top_input_dir, relative_dir))
             try:
                 os.makedirs(current_out_dir)
             except OSError:
