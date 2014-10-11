@@ -24,13 +24,14 @@ import time
 
 def main(input_dir=None, output_dir=None, blacklist=None, nosum=False,
                                                           resume=False):
+    input_dir = os.path.abspath(input_dir)
+    output_dir = os.path.abspath(output_dir)
     try:
         os.mkdir(output_dir)
     except OSError:
         pass
 
-    oblist = set(['drclog', 'fulldrclog', 'error_summary',
-                  'full_error_summary'])
+    oblist = set(['drclog', 'error_summary', 'full_error_summary'])
     if blacklist is None:
         blwild = False
         blacklist = oblist
@@ -39,7 +40,7 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False,
         blacklist = set(blacklist) | oblist
 
     tfmt = '%Y-%m-%d %H:%M:%S'
-    top_input_dir = os.path.split(os.path.abspath(input_dir))[1]
+    top_input_dir = os.path.split(input_dir)[1]
     with open(os.path.join(output_dir, 'full_error_summary'),
                            'w+') as full_error_summary:
         if not nosum:
