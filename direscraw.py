@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#Directory Rescue Crawler, direscraw v1.46
+#Directory Rescue Crawler, direscraw v1.47
 #Copyright (c) 2014 by Brian Mikolajczyk, brianm12@gmail.com
 
 # This program is free software: you can redistribute it and/or modify
@@ -19,7 +19,6 @@ import argparse
 import fnmatch
 import os.path
 from pipes import quote
-from re import sub
 import subprocess
 import time
 
@@ -40,7 +39,7 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False,
         blacklist = set(blacklist) | oblist
 
     tfmt = '%Y-%m-%d %H:%M:%S'
-    _, top_input_dir = os.path.split(os.path.abspath(input_dir))
+    top_input_dir = os.path.split(os.path.abspath(input_dir))[1]
     with open(os.path.join(output_dir, 'full_error_summary'),
                            'w+') as full_error_summary:
         if not nosum:
@@ -48,8 +47,8 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False,
         
         for current_dir, dirnames, unfilenames in os.walk(input_dir):
             if blwild:
-                infiles = sorted(set([f for f in os.listdir(
-                                     current_dir)]) - blacklist)
+                infiles = set([f for f in os.listdir(
+                                     current_dir)]) - blacklist
                 wildlist = []
                 for el in blacklist:
                     wildlist = wildlist + fnmatch.filter(infiles, el)
@@ -59,19 +58,22 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False,
             dirnames[:] = set(dirnames) - blacklist
             filenames = sorted(unfilenames)
             relative_dir = os.path.relpath(current_dir, input_dir)
-            current_out_dir = sub(r'(?<=/)\.$', r'', os.path.join(output_dir,
-                                  top_input_dir, relative_dir))
+            current_out_dir = os.path.join(output_dir,
+                              top_input_dir, relative_dir)
+            if os.path.split(current_out_dir)[1] == '.':
+                current_out_dir = os.path.split(current_out_dir)[0]
+
             try:
                 os.makedirs(current_out_dir)
             except OSError:
                 pass
 
             if resume:
-                outfiles = sorted(set([f for f in os.listdir(current_out_dir)
+                outfiles = set([f for f in os.listdir(current_out_dir)
                                       if os.path.isfile(os.path.join(
-                                      current_out_dir, f))]) - blacklist)
+                                      current_out_dir, f))]) - blacklist
                 if len(filenames) == len(list(outfiles)) and not\
-                   os.path.isfile(os.path.join(current_out_dir, 'copylog')):
+                     os.path.isfile(os.path.join(current_out_dir, 'copylog')):
                     continue
 
                 try:
@@ -112,13 +114,14 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False,
                         subprocess.call(['errcalc',
                                         os.path.join(current_out_dir,
                                         'drclog')], stdout=full_error_summary)
-
+        
             os.remove(os.path.join(current_out_dir, 'drclog'))
             os.remove(os.path.join(current_out_dir, 'copylog'))
 
-        full_error_summary.seek(0)
-        full_error_summary.write(time.strftime(tfmt) + '\n')
-
+        if not nosum:
+            full_error_summary.seek(0)
+            full_error_summary.write(time.strftime(tfmt) + '\n')
+        
     if nosum:
         os.remove(os.path.join(output_dir, 'full_error_summary'))
 
