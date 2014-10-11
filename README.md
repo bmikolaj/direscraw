@@ -1,5 +1,5 @@
 #Directory Rescue Crawler
-v1.46
+v1.23
 
 #####Errcalc v1.0
 
@@ -58,15 +58,19 @@ Note: Directories and files with characters that need escaping can be put in quo
   `sudo ./setup.sh uninstall`
 
 ##Changelog
-* v1.46 (09 October 2014)
+* v1.23 (11 October 2014)
+
+  Removed regex in favor of pythonic solution to hidden directories.
+
+* v1.22 (09 October 2014)
 
   Fixed hidden directory omission error.
 
-* v1.45 (08 October 2014)
+* v1.21 (08 October 2014)
 
   Fixed file-only wildcard bug in blacklist
 
-* v1.4 (08 October 2014)
+* v1.2 (08 October 2014)
 
   Added resume support option, `-r`
 
@@ -74,11 +78,11 @@ Note: Directories and files with characters that need escaping can be put in quo
 
   Added timestamp to error_summary and full_error_summary
 
-* v1.3 (05 October 2014)
+* v1.16 (05 October 2014)
 
   Now prints directory in error_summary and full_error_summary
 
-* v1.2 (04 October 2014)
+* v1.15 (04 October 2014)
 
   Combined install and uninstall into setup.sh
 
