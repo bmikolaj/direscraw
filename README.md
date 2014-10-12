@@ -42,6 +42,8 @@ Run from the command line;
 ####Optional parameters
 `-h` for help
 
+`--version` will print the version of `direscraw` and exit.
+
 `-n`, `--nosum` will run the program without `errcalc` thus creating no Error Percentage and Runtime Calculation files.
 
 `-b BLACKLIST`, `--blacklist BLACKLIST` specifies a list of files and/or directories (separated by a space) to omit from rescuing (case-sensitive). Wildcards are accepted.
@@ -62,6 +64,8 @@ Note: Directories and files with characters that need escaping can be put in quo
 * v1.24 (12 October 2014)
 
   Added g++ to setup.sh
+
+  Added --version support
 
 * v1.23 (11 October 2014)
 

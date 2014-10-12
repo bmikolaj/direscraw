@@ -130,6 +130,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('input_dir')
     parser.add_argument('output_dir')
+    parser.add_argument('--version', action='version',
+                        version='direscraw v1.24')
     parser.add_argument('-b', '--blacklist', nargs='+',
         help='Add arguments separated by spaces to omit\
               filenames/directories')
