@@ -23,7 +23,10 @@ import subprocess
 import time
 
 def main(input_dir=None, output_dir=None, blacklist=None, nosum=False,
-                                                          resume=False):
+                                           resume=False, debug=False):
+    if debug:
+        print("Debugging mode: drclog retention enabled." + '\n')
+
     input_dir = os.path.abspath(input_dir)
     output_dir = os.path.abspath(output_dir)
     try:
@@ -115,10 +118,12 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False,
                         subprocess.call(['errcalc',
                                         os.path.join(current_out_dir,
                                         'drclog')], stdout=full_error_summary)
-        
-            os.remove(os.path.join(current_out_dir, 'drclog'))
-            os.remove(os.path.join(current_out_dir, 'copylog'))
 
+            if not debug:
+                os.remove(os.path.join(current_out_dir, 'drclog'))
+            
+            os.remove(os.path.join(current_out_dir, 'copylog'))
+        
         if not nosum:
             full_error_summary.seek(0)
             full_error_summary.write(time.strftime(tfmt) + '\n')
@@ -132,6 +137,8 @@ if __name__ == '__main__':
     parser.add_argument('output_dir')
     parser.add_argument('--version', action='version',
                         version='direscraw v1.24')
+    parser.add_argument('-d', '--debug', action='store_true',
+                         help=argparse.SUPPRESS)
     parser.add_argument('-b', '--blacklist', nargs='+',
         help='Add arguments separated by spaces to omit\
               filenames/directories')
