@@ -70,15 +70,15 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False,
                 pass
 
             if resume:
-                outfiles = set([f for f in os.listdir(current_out_dir)
+                outfiles = list(set([f for f in os.listdir(current_out_dir)
                                       if os.path.isfile(os.path.join(
-                                      current_out_dir, f))]) - blacklist
-                if len(filenames) == len(list(outfiles)) and not\
+                                      current_out_dir, f))]) - blacklist)
+                if len(filenames) == len(outfiles) and not\
                      os.path.isfile(os.path.join(current_out_dir, 'copylog')):
                     continue
 
                 try:
-                    sindex = filenames.index(list(outfiles)[-1])
+                    sindex = filenames.index(outfiles[-1])
                 except (IndexError, ValueError):
                     sindex = 0
             else:
