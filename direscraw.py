@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#Directory Rescue Crawler, direscraw v1.23
+#Directory Rescue Crawler, direscraw v1.24
 #Copyright (c) 2014 by Brian Mikolajczyk, brianm12@gmail.com
 
 # This program is free software: you can redistribute it and/or modify

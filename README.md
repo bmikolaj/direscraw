@@ -1,5 +1,5 @@
 #Directory Rescue Crawler
-v1.23
+v1.24
 
 #####Errcalc v1.0
 
@@ -14,6 +14,7 @@ Directory Rescue Crawler was designed for Linux and uses the following programs;
 * Python 2.7+
 * GNU ddrescue (installed via setup.sh)
 * GNU Units (installed via setup.sh)
+* g++ (for installation; installed via setup.sh)
 * Lzip (for installation; installed via setup.sh)
 * Gunzip (for installation)
 * Tar (for installation)
@@ -58,6 +59,10 @@ Note: Directories and files with characters that need escaping can be put in quo
   `sudo ./setup.sh uninstall`
 
 ##Changelog
+* v1.24 (12 October 2014)
+
+  Added g++ to setup.sh
+
 * v1.23 (11 October 2014)
 
   Removed regex in favor of pythonic solution to hidden directories.
