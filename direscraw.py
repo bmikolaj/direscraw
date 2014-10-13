@@ -86,7 +86,8 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False,
                     sindex = 0
             else:
                 sindex = 0
-                    
+            
+            skipset = set([])
             with open(os.path.join(current_out_dir, 'drclog'),
                       'w+') as drclog, open(os.path.join(current_out_dir,
                                                          'copylog'), 'w'):
@@ -104,6 +105,7 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False,
                             quote(os.path.join(current_out_dir, 'drclog'))),
                                                shell=True)
                     except KeyboardInterrupt:
+                        skipset.add(in_file_path)
                         print('\n' + in_file_path + ' has been skipped')
                         continue
 
@@ -113,6 +115,14 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False,
                     'w') as error_summary:
                         error_summary.write(time.strftime(tfmt) + '\n')
                         error_summary.write(current_out_dir + '\n')
+                        if len(skipset) > 0:
+                            error_summary.write('\n' + 'Files Skipped:'\
+                                                + '\n')
+                            for skipel in skipset:
+                                error_summary.write(skipel + '\n')
+
+                            error_summary.write('\n')
+
                         error_summary.write('File Error% RunTime' + '\n')
                         error_summary.flush()
                         full_error_summary.write(current_out_dir + '\n')

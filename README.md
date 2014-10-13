@@ -44,9 +44,9 @@ Run from the command line;
 
 `--version` will print the version of `direscraw` and exit.
 
-`-n`, `--nosum` will run the program without `errcalc` thus creating no Error Percentage and Runtime Calculation files.
-
 `-b BLACKLIST`, `--blacklist BLACKLIST` specifies a list of files and/or directories (separated by a space) to omit from rescuing (case-sensitive). Wildcards are accepted.
+
+`-n`, `--nosum` will run the program without `errcalc` thus creating no Error Percentage and Runtime Calculation files.
 
 `-r`, `--resume` will resume a previously-interrupted session of `direscraw` skipping already rescued files. 
 
@@ -55,7 +55,7 @@ Run from the command line;
 
 Note: Directories and files with characters that need escaping can be put in quotes. Files and directories are case-sensitive. Wildcards are accepted.
 
-If `ddrescue` is running to long, or you want to manually skip a file while it's copying, `CTRL+C` will skip the file. 
+If `ddrescue` is running to long, or you want to manually skip a file while it's copying, `CTRL+C` will skip the file. A note of the skipped file is written to the error report.
 
 ##Uninstall
 * Run the following command to uninstall;
@@ -63,7 +63,7 @@ If `ddrescue` is running to long, or you want to manually skip a file while it's
   `sudo ./setup.sh uninstall`
 
 ##Changelog
-* v1.3 (12 October 2014)
+* v1.3 (13 October 2014)
 
   Added ability to skip a `ddrescue` instance.
 
