@@ -1,5 +1,5 @@
 #Directory Rescue Crawler
-v1.24
+v1.3
 
 #####Errcalc v1.0
 
@@ -55,15 +55,21 @@ Run from the command line;
 
 Note: Directories and files with characters that need escaping can be put in quotes. Files and directories are case-sensitive. Wildcards are accepted.
 
+If `ddrescue` is running to long, or you want to manually skip a file while it's copying, `CTRL+C` will skip the file. 
+
 ##Uninstall
 * Run the following command to uninstall;
   
   `sudo ./setup.sh uninstall`
 
 ##Changelog
-* v1.24 (12 October 2014)
+* v1.3 (12 October 2014)
+
+  Added ability to skip a `ddrescue` instance.
 
   Added g++ to setup.sh
+
+  Added drclog debugger (for development only)
 
   Added --version support
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#Directory Rescue Crawler, direscraw v1.24
+#Directory Rescue Crawler, direscraw v1.3
 #Copyright (c) 2014 by Brian Mikolajczyk, brianm12@gmail.com
 
 # This program is free software: you can redistribute it and/or modify
@@ -98,10 +98,15 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False,
                     drclog.write('{}\n'.format(filename))
                     drclog.flush()
                     print('\n' + in_file_path)
-                    subprocess.call('ddrescue {} |  tee -a {}'
-                        .format(' '.join(map(quote, files)),
-                        quote(os.path.join(current_out_dir, 'drclog'))),
-                                           shell=True)
+                    try:
+                        subprocess.call('ddrescue {} |  tee -a {}'
+                            .format(' '.join(map(quote, files)),
+                            quote(os.path.join(current_out_dir, 'drclog'))),
+                                               shell=True)
+                    except KeyboardInterrupt:
+                        print('\n' + in_file_path + ' has been skipped')
+                        continue
+
                 drclog.seek(0)
                 if not nosum:
                     with open(os.path.join(current_out_dir, 'error_summary'),
