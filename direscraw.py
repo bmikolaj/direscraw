@@ -151,7 +151,7 @@ if __name__ == '__main__':
     parser.add_argument('input_dir')
     parser.add_argument('output_dir')
     parser.add_argument('--version', action='version',
-                        version='direscraw v1.24')
+                        version='direscraw v1.3')
     parser.add_argument('-d', '--debug', action='store_true',
                          help=argparse.SUPPRESS)
     parser.add_argument('-b', '--blacklist', nargs='+',
