@@ -55,7 +55,7 @@ Run from the command line;
 
 Note: Directories and files with characters that need escaping can be put in quotes. Files and directories are case-sensitive. Wildcards are accepted.
 
-If `ddrescue` is running to long, or you want to manually skip a file while it's copying, `CTRL+C` will skip the file. A note of the skipped file is written to the error report.
+If `ddrescue` is running to long, or you want to manually skip a file while it's copying, `CTRL+C` will skip the file. A note of the skipped file is written to the error report of that directory.
 
 ##Uninstall
 * Run the following command to uninstall;
