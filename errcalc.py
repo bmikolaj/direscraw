@@ -15,24 +15,22 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import argparse
+import os.path
+import string
+
+def removeNonAscii(s): return "".join(i for i in s if ord(i)<128)
 def main(input=None):
-
-
+    f = open(os.path.abspath(input))
+    file = f.read()
+    f.close()
+    filter(lambda x: x in string.printable, file)
+    print(file)
+    
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('input_dir')
-    parser.add_argument('output_dir')
+    parser.add_argument('input')
     parser.add_argument('--version', action='version',
-                        version='direscraw v1.24')
-    parser.add_argument('-d', '--debug', action='store_true',
-                         help=argparse.SUPPRESS)
-    parser.add_argument('-b', '--blacklist', nargs='+',
-        help='Add arguments separated by spaces to omit\
-              filenames/directories')
-    parser.add_argument('-n', '--nosum', action='store_true',
-        help='No error percentage and runtime summary in subdirectories')
-    parser.add_argument('-r', '--resume', action='store_true',
-        help='Resumes a previously-interrupted direscraw session skipping\
-              already recovered directories')
+                        version='errcalc v2.0')
 
     main(**vars(parser.parse_args()))
