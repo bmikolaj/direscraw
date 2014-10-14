@@ -1,0 +1,75 @@
+#The input file;
+
+f 1
+f2
+f3
+large
+ue 1.18.1
+Press Ctrl-C to interrupt
+
+
+
+^M^[[A^[[A^[[Arescued:         0 B,  errsize:       0 B,  current rate:        0 B/s
+   ipos:         0 B,   errors:       0,    average rate:        0 B/s
+   opos:         0 B, run time:       0 s,  successful read:       0 s ago
+^MCopying non-tried blocks... Pass 1 (forwards)^M^[[A^[[A^[[Arescued:         0 B,  errsize:       0 B,  current rate:        0 B/s
+   ipos:         0 B,   errors:       0,    average rate:        0 B/s
+   opos:         0 B, run time:       1 s,  successful read:       1 s ago
+^MFinished
+
+
+GNU ddrescue 1.18.1
+Press Ctrl-C to interrupt
+
+
+
+^M^[[A^[[A^[[Arescued:         0 B,  errsize:       0 B,  current rate:        0 B/s
+   ipos:         0 B,   errors:       0,    average rate:        0 B/s
+   opos:         0 B, run time:       0 s,  successful read:       0 s ago
+^MCopying non-tried blocks... Pass 1 (forwards)^M^[[A^[[A^[[Arescued:         0 B,  errsize:       0 B,  current rate:        0 B/s
+   ipos:         0 B,   errors:       0,    average rate:        0 B/s
+   opos:         0 B, run time:       1 s,  successful read:       1 s ago
+^MFinished
+
+
+GNU ddrescue 1.18.1
+Press Ctrl-C to interrupt
+
+
+
+^M^[[A^[[A^[[Arescued:         0 B,  errsize:       0 B,  current rate:        0 B/s
+   ipos:         0 B,   errors:       0,    average rate:        0 B/s
+   opos:         0 B, run time:       0 s,  successful read:       0 s ago
+^MCopying non-tried blocks... Pass 1 (forwards)^M^[[A^[[A^[[Arescued:         0 B,  errsize:       0 B,  current rate:        0 B/s
+   ipos:         0 B,   errors:       0,    average rate:        0 B/s
+   opos:         0 B, run time:       1 s,  successful read:       1 s ago
+^MFinished
+
+
+GNU ddrescue 1.18.1
+Press Ctrl-C to interrupt
+
+
+
+^M^[[A^[[A^[[Arescued:         0 B,  errsize:       0 B,  current rate:        0 B/s
+   ipos:         0 B,   errors:       0,    average rate:        0 B/s
+   opos:         0 B, run time:       0 s,  successful read:       0 s ago
+^MCopying non-tried blocks... Pass 1 (forwards)^M^[[A^[[A^[[Arescued:    41287 kB,  errsize:       0 B,  current rate:   41287 kB/s
+   ipos:    41287 kB,   errors:       0,    average rate:   41287 kB/s
+   opos:    41287 kB, run time:       1 s,  successful read:       0 s ago
+^MCopying non-tried blocks... Pass 1 (forwards)^M^[[A^[[A^[[Arescued:    92274 kB,  errsize:       0 B,  current rate:   50987 kB/s
+   ipos:    92274 kB,   errors:       0,    average rate:   46137 kB/s
+   opos:    92274 kB, run time:       2 s,  successful read:       0 s ago
+^MCopying non-tried blocks... Pass 1 (forwards)^M^[[A^[[A^[[Arescued:   139591 kB,  errsize:       0 B,  current rate:   47316 kB/s
+   ipos:   139591 kB,   errors:       0,    average rate:   46530 kB/s
+   opos:   139591 kB, run time:       3 s,  successful read:       0 s ago
+^MCopying non-tried blocks... Pass 1 (forwards)^M^[[A^[[A^[[Arescued:   172097 kB,  errsize:       0 B,  current rate:   32505 kB/s
+   ipos:   172097 kB,   errors:       0,    average rate:   43024 kB/s
+   opos:   172097 kB, run time:       4 s,  successful read:       0 s ago
+^MCopying non-tried blocks... Pass 1 (forwards)^M^[[A^[[A^[[Arescued:   198049 kB,  errsize:       0 B,  current rate:   25952 kB/s
+   ipos:   198049 kB,   errors:       0,    average rate:   39609 kB/s
+   opos:   198049 kB, run time:       5 s,  successful read:       0 s ago
+^MCopying non-tried blocks... Pass 1 (forwards)^M^[[A^[[A^[[Arescued:   209715 kB,  errsize:       0 B,  current rate:   11665 kB/s
+   ipos:   209649 kB,   errors:       0,    average rate:   34952 kB/s
+   opos:   209649 kB, run time:       6 s,  successful read:       0 s ago
+^MFinished
