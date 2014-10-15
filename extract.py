@@ -20,8 +20,10 @@ def main(input=None):
     first_string = 'rescued'       
     end_string = 'Finished'
     newlines = ''
+    n_occurances = 0
     for i, line in enumerate(lines):
         if re.search(end_string, line):
+            n_occurances = n_occurances + 1
             for j in range(3):
                 current_line = lines[i - 3 + j]
                 if re.search(first_string, current_line):
