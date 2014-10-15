@@ -32,7 +32,8 @@ def main(input=None):
                     
                 newlines.append(current_line.strip())
 
-    #print(newlines)
+    files = [x.replace('\n','') for x in lines[0:n_occurances]]
+
 #Split into calculable variables
     rescued = []
     errsize = []
