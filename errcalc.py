@@ -53,36 +53,43 @@ def main(input=None):
             runtime.append(delim[3].strip().replace(' ',''))
 
 #Calculations
+    errpercent = []
     for i in xrange(n_files):
         #Conversion to bitmath format: rescued
         if rescued_unit[i] == 'B':
-            rescued_num[i] = 'bitmath.Byte(' + rescued_num[i] + ')'
+            rescued_num[i] = bitmath.Byte(float(rescued_num[i]))
             
-        if rescued_unit[i] == 'kB':
-            rescued_num[i] = 'bitmath.KiB(' + rescued_num[i] + ')'
+        elif rescued_unit[i] == 'kB':
+            rescued_num[i] = bitmath.KiB(float(rescued_num[i]))
             
-        if rescued_unit[i] == 'Mb': #Verify via ddrescue
-            rescued_num[i] = 'bitmath.MiB(' + rescued_num[i] + ')'
+        elif rescued_unit[i] == 'Mb': #Verify via ddrescue
+            rescued_num[i] = bitmath.MiB(float(rescued_num[i]))
             
-        if rescued_unit[i] == 'Gb': #Verify via ddrescue
-            rescued_num[i] = 'bitmath.GiB(' + rescued_num[i] + ')'
+        elif rescued_unit[i] == 'Gb': #Verify via ddrescue
+            rescued_num[i] = bitmath.GiB(float(rescued_num[i]))
             
         #Conversion to bitmath format: errsize
         if errsize_unit[i] == 'B':
-            errsize_num[i] = 'bitmath.Byte(' + errsize_num[i] + ')'
+            errsize_num[i] = bitmath.Byte(float(errsize_num[i]))
             
-        if errsize_unit[i] == 'kB':
-            errsize_num[i] = 'bitmath.KiB(' + errsize_num[i] + ')'
+        elif errsize_unit[i] == 'kB':
+            errsize_num[i] = bitmath.KiB(float(errsize_num[i]))
             
-        if errsize_unit[i] == 'Mb': #Verify via ddrescue
-            errsize_num[i] = 'bitmath.MiB(' + errsize_num[i] + ')'
+        elif errsize_unit[i] == 'Mb': #Verify via ddrescue
+            errsize_num[i] = bitmath.MiB(float(errsize_num[i]))
             
-        if errsize_unit[i] == 'Gb': #Verify via ddrescue
-            errsize_num[i] = 'bitmath.GiB(' + errsize_num[i] + ')'
+        elif errsize_unit[i] == 'Gb': #Verify via ddrescue
+            errsize_num[i] = bitmath.GiB(float(errsize_num[i]))
         
-        total_size = rescued_num[i] + errsize_num[i]
-        print(total_size)
-    
+        try:
+            errpercent.append((errsize_num[i] / (rescued_num[i] + errsize_num[i])) * 100)
+        except ZeroDivisionError:
+            errpercent.append(0)
+        
+    for i, line in enumerate(errpercent):
+        errpercent[i] = format(line, '.2f').rstrip('0').rstrip('.') + '%'
+
+    print(errpercent)
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('input')
