@@ -4,19 +4,19 @@
 #Authors: Brian Mikolajczyk and Gary Foreman
 #Last Modified: October 15, 2014
 #Reads in file given as command argument. Searches for each instance of string
-#"Finished", and prints preceeding three lines.
+#"Finished", and prints preceding three lines.
 ################################################################################
-
-from __future__ import print_function
 
 import argparse
 import os.path
 import re
 
 def main(input=None):
-    with open(input, 'r') as infile:
+    with open(os.path.abspath(input), 'r') as infile:
         lines = infile.readlines()
 
+
+#Clip input to match number of files
     first_string = 'rescued'       
     end_string = 'Finished'
     newlines = []
@@ -27,20 +27,25 @@ def main(input=None):
             for j in range(3):
                 current_line = lines[i - 3 + j]
                 if re.search(first_string, current_line):
-                    current_line = (first_string + 
+                    current_line = (first_string +
                                     re.split(first_string, current_line)[1])
-
+                    
                 newlines.append(current_line.strip())
 
     #print(newlines)
-
-    for i, line in enumerate(newlines):
-        #Note: if you want data from the lines the begin with 'ipos' and
-        #'opos', remove this if statement
+#Split into calculable variables
+    rescued = []
+    errsize = []
+    runtime = []
+    for line in newlines:
         if re.search(first_string, line):
             delim = re.split(': |, ', line)
-            print(delim)
-
+            rescued.append(delim[1].strip().replace(' ',''))
+            errsize.append(delim[3].strip().replace(' ',''))
+        if re.search('opos', line):
+            delim = re.split(': |, ', line)
+            runtime.append(delim[3].strip().replace(' ',''))
+            
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('input')
