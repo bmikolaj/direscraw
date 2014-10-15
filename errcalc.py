@@ -53,7 +53,7 @@ def main(input=None):
             runtime.append(delim[3].strip().replace(' ',''))
 
 #Calculations
-    errpercent = []
+    errper = []
     for i in xrange(n_files):
         #Conversion to bitmath format: rescued
         if rescued_unit[i] == 'B':
@@ -82,14 +82,17 @@ def main(input=None):
             errsize_num[i] = bitmath.GiB(float(errsize_num[i]))
         
         try:
-            errpercent.append((errsize_num[i] / (rescued_num[i] + errsize_num[i])) * 100)
+            errper.append((errsize_num[i] / (rescued_num[i] + errsize_num[i])) * 100)
         except ZeroDivisionError:
-            errpercent.append(0)
+            errper.append(0)
         
-    for i, line in enumerate(errpercent):
-        errpercent[i] = format(line, '.2f').rstrip('0').rstrip('.') + '%'
+    for i, line in enumerate(errper):
+        errper[i] = format(line, '.2f').rstrip('0').rstrip('.') + '%'
 
-    print(errpercent)
+#Concaterate lists
+    for i in xrange(n_files):
+        print(files[i] + ' ' + errper[i] + ' ' + runtime[i])
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('input')
