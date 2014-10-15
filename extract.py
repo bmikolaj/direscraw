@@ -54,9 +54,23 @@ def main(input=None):
 
 #Calculations
     for i in xrange(n_occurances):
+        #Conversion to bitmath format
+        if rescued_si[i] == 'B':
+            rescued_num[i] = 'bitmath.Byte(' + rescued_num[i] + ')'
+            
+        if rescued_si[i] == 'kB':
+            rescued_num[i] = 'bitmath.KiB(' + rescued_num[i] + ')'
+            
+        if rescued_si[i] == 'Mb': #Verify via ddrescue
+            rescued_num[i] = 'bitmath.MiB(' + rescued_num[i] + ')'
+            
+        if rescued_si[i] == 'Gb': #Verify via ddrescue
+            rescued_num[i] = 'bitmath.GiB(' + rescued_num[i] + ')'
+
         #errpercent = (rescued[i] + errsize[i]) / rescued[i]
-        errpercent = bitmath.Byte(5) + bitmath.Byte(10)
-        
+        #errpercent = bitmath.Byte(5) + bitmath.Byte(10)
+    print(rescued_num)
+    
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('input')
