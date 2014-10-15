@@ -13,29 +13,23 @@ import argparse
 import os.path
 import re
 
-
-PRECEDING_LINES = 3
-FINISHED_REGEX = 'Finished'
-SPLIT_REGEX = 'rescued'
-OUTPUT_FILE = 'drclog2'
-
-
 def main(input=None):
-    with open(input) as infile:
+    with open(input, 'r') as infile:
         lines = infile.readlines()
 
-    with open(OUTPUT_FILE, 'w') as outfile:
-        for i, line in enumerate(lines):
-            if re.search(FINISHED_REGEX, line):
-                for j in xrange(PRECEDING_LINES):
-                    current_line = lines[i - PRECEDING_LINES + j]
-                    if re.search(SPLIT_REGEX, current_line):
-                        current_line = (SPLIT_REGEX + 
-                                        re.split(SPLIT_REGEX, current_line)[1])
-                    print(current_line.strip())
-                    outfile.write(current_line.strip())
-                print('\n')
-                outfile.write('\n')
+    first_string = 'rescued'       
+    end_string = 'Finished'
+    for i, line in enumerate(lines):
+        if re.search(end_string, line):
+            for j in range(3):
+                current_line = lines[i - 3 + j]
+                if re.search(first_string, current_line):
+                    current_line = (first_string + 
+                                    re.split(first_string, current_line)[1])
+
+                print(current_line.strip())
+
+            print('\n')
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
