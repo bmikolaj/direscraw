@@ -21,10 +21,10 @@ def main(input=None):
     first_string = 'rescued'       
     end_string = 'Finished'
     newlines = []
-    n_occurances = 0
+    n_files = 0
     for i, line in enumerate(lines):
         if re.search(end_string, line):
-            n_occurances = n_occurances + 1
+            n_files = n_files + 1
             for j in xrange(3):
                 current_line = lines[i - 3 + j]
                 if re.search(first_string, current_line):
@@ -33,43 +33,55 @@ def main(input=None):
                     
                 newlines.append(current_line.strip())
 
-    files = [x.replace('\n','') for x in lines[0:n_occurances]]
+    files = [x.replace('\n','') for x in lines[0:n_files]]
 
 #Split into calculable variables
     rescued_num = []
-    rescued_si = []
+    rescued_unit = []
     errsize_num = []
-    errsize_si = []
+    errsize_unit = []
     runtime = []
     for line in newlines:
         if re.search(first_string, line):
             delim = re.split(': |, ', line)
             rescued_num.append(re.split(' ', delim[1].strip())[0])
-            rescued_si.append(re.split(' ', delim[1].strip())[1])
+            rescued_unit.append(re.split(' ', delim[1].strip())[1])
             errsize_num.append(re.split(' ', delim[3].strip())[0])
-            errsize_si.append(re.split(' ', delim[3].strip())[1])
+            errsize_unit.append(re.split(' ', delim[3].strip())[1])
         if re.search('opos', line):
             delim = re.split(': |, ', line)
             runtime.append(delim[3].strip().replace(' ',''))
 
 #Calculations
-    for i in xrange(n_occurances):
-        #Conversion to bitmath format
-        if rescued_si[i] == 'B':
+    for i in xrange(n_files):
+        #Conversion to bitmath format: rescued
+        if rescued_unit[i] == 'B':
             rescued_num[i] = 'bitmath.Byte(' + rescued_num[i] + ')'
             
-        if rescued_si[i] == 'kB':
+        if rescued_unit[i] == 'kB':
             rescued_num[i] = 'bitmath.KiB(' + rescued_num[i] + ')'
             
-        if rescued_si[i] == 'Mb': #Verify via ddrescue
+        if rescued_unit[i] == 'Mb': #Verify via ddrescue
             rescued_num[i] = 'bitmath.MiB(' + rescued_num[i] + ')'
             
-        if rescued_si[i] == 'Gb': #Verify via ddrescue
+        if rescued_unit[i] == 'Gb': #Verify via ddrescue
             rescued_num[i] = 'bitmath.GiB(' + rescued_num[i] + ')'
-
-        #errpercent = (rescued[i] + errsize[i]) / rescued[i]
-        #errpercent = bitmath.Byte(5) + bitmath.Byte(10)
-    print(rescued_num)
+            
+        #Conversion to bitmath format: errsize
+        if errsize_unit[i] == 'B':
+            errsize_num[i] = 'bitmath.Byte(' + errsize_num[i] + ')'
+            
+        if errsize_unit[i] == 'kB':
+            errsize_num[i] = 'bitmath.KiB(' + errsize_num[i] + ')'
+            
+        if errsize_unit[i] == 'Mb': #Verify via ddrescue
+            errsize_num[i] = 'bitmath.MiB(' + errsize_num[i] + ')'
+            
+        if errsize_unit[i] == 'Gb': #Verify via ddrescue
+            errsize_num[i] = 'bitmath.GiB(' + errsize_num[i] + ')'
+        
+        total_size = rescued_num[i] + errsize_num[i]
+        print(total_size)
     
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
