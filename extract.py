@@ -8,6 +8,7 @@
 ################################################################################
 
 import argparse
+import bitmath
 import os.path
 import re
 
@@ -24,7 +25,7 @@ def main(input=None):
     for i, line in enumerate(lines):
         if re.search(end_string, line):
             n_occurances = n_occurances + 1
-            for j in range(3):
+            for j in xrange(3):
                 current_line = lines[i - 3 + j]
                 if re.search(first_string, current_line):
                     current_line = (first_string +
@@ -35,18 +36,27 @@ def main(input=None):
     files = [x.replace('\n','') for x in lines[0:n_occurances]]
 
 #Split into calculable variables
-    rescued = []
-    errsize = []
+    rescued_num = []
+    rescued_si = []
+    errsize_num = []
+    errsize_si = []
     runtime = []
     for line in newlines:
         if re.search(first_string, line):
             delim = re.split(': |, ', line)
-            rescued.append(delim[1].strip().replace(' ',''))
-            errsize.append(delim[3].strip().replace(' ',''))
+            rescued_num.append(re.split(' ', delim[1].strip())[0])
+            rescued_si.append(re.split(' ', delim[1].strip())[1])
+            errsize_num.append(re.split(' ', delim[3].strip())[0])
+            errsize_si.append(re.split(' ', delim[3].strip())[1])
         if re.search('opos', line):
             delim = re.split(': |, ', line)
             runtime.append(delim[3].strip().replace(' ',''))
-            
+
+#Calculations
+    for i in xrange(n_occurances):
+        #errpercent = (rescued[i] + errsize[i]) / rescued[i]
+        errpercent = bitmath.Byte(5) + bitmath.Byte(10)
+        
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('input')
