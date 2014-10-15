@@ -16,16 +16,25 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import argparse
+from itertools import ifilter
 import os.path
-import string
+import re
+import subprocess
 
-def removeNonAscii(s): return "".join(i for i in s if ord(i)<128)
 def main(input=None):
-    f = open(os.path.abspath(input))
-    file = f.read()
+    f = open(os.path.abspath(input),'r')
+    file = f.readlines()
     f.close()
-    filter(lambda x: x in string.printable, file)
-    print(file)
+    #a_string = re.compile(r'\x1b\[A')
+    #b_string = re.compile(r'\rCopying\ non-tried\ blocks...\ Pass\ 1\ \(forwards\)\r')
+    #file = a_string.sub('', file)
+    #file = b_string.sub('', file)
+    num = re.findall(r'Finished', file, re.X).groups()
+    file = ''.join(re.search(r'(Press.*?)\r(Finished.*)', file, re.DOTALL).groups())
+    #file = ''.join(re.search(r'(rescued:.*?)\r(Finished.*)', file, re.DOTALL).groups())
+    print(num)
+    omit = ['GNU', 'Finished', 'Pressed']
+    #open('drclog2', 'w').write(file)
     
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
