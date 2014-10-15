@@ -19,6 +19,7 @@ def main(input=None):
 
     first_string = 'rescued'       
     end_string = 'Finished'
+    newlines = ''
     for i, line in enumerate(lines):
         if re.search(end_string, line):
             for j in range(3):
@@ -27,9 +28,11 @@ def main(input=None):
                     current_line = (first_string + 
                                     re.split(first_string, current_line)[1])
 
-                print(current_line.strip())
+                newlines = newlines + current_line.strip() + '\n'
 
-            print('\n')
+            newlines = newlines + '\n'
+
+    print(newlines)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
