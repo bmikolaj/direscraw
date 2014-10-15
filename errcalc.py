@@ -1,40 +1,87 @@
 #!/usr/bin/env python
-#Error Percentage and Runtime Calculation Summary, errcalc v2.0
-#Copyright (c) 2014 by Brian Mikolajczyk, brianm12@gmail.com
 
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+################################################################################
+#Authors: Brian Mikolajczyk and Gary Foreman
+#Last Modified: October 15, 2014
+#Reads in file given as command argument. Searches for each instance of string
+#"Finished", and prints preceding three lines.
+################################################################################
 
 import argparse
-from itertools import ifilter
+import bitmath
 import os.path
 import re
-import subprocess
 
 def main(input=None):
-    f = open(os.path.abspath(input),'r')
-    file = f.readlines()
-    f.close()
-    #a_string = re.compile(r'\x1b\[A')
-    #b_string = re.compile(r'\rCopying\ non-tried\ blocks...\ Pass\ 1\ \(forwards\)\r')
-    #file = a_string.sub('', file)
-    #file = b_string.sub('', file)
-    num = re.findall(r'Finished', file, re.X).groups()
-    file = ''.join(re.search(r'(Press.*?)\r(Finished.*)', file, re.DOTALL).groups())
-    #file = ''.join(re.search(r'(rescued:.*?)\r(Finished.*)', file, re.DOTALL).groups())
-    print(num)
-    omit = ['GNU', 'Finished', 'Pressed']
-    #open('drclog2', 'w').write(file)
+    with open(os.path.abspath(input), 'r') as infile:
+        lines = infile.readlines()
+
+
+#Clip input to match number of files
+    first_string = 'rescued'       
+    end_string = 'Finished'
+    newlines = []
+    n_files = 0
+    for i, line in enumerate(lines):
+        if re.search(end_string, line):
+            n_files = n_files + 1
+            for j in xrange(3):
+                current_line = lines[i - 3 + j]
+                if re.search(first_string, current_line):
+                    current_line = (first_string +
+                                    re.split(first_string, current_line)[1])
+                    
+                newlines.append(current_line.strip())
+
+    files = [x.replace('\n','') for x in lines[0:n_files]]
+
+#Split into calculable variables
+    rescued_num = []
+    rescued_unit = []
+    errsize_num = []
+    errsize_unit = []
+    runtime = []
+    for line in newlines:
+        if re.search(first_string, line):
+            delim = re.split(': |, ', line)
+            rescued_num.append(re.split(' ', delim[1].strip())[0])
+            rescued_unit.append(re.split(' ', delim[1].strip())[1])
+            errsize_num.append(re.split(' ', delim[3].strip())[0])
+            errsize_unit.append(re.split(' ', delim[3].strip())[1])
+        if re.search('opos', line):
+            delim = re.split(': |, ', line)
+            runtime.append(delim[3].strip().replace(' ',''))
+
+#Calculations
+    for i in xrange(n_files):
+        #Conversion to bitmath format: rescued
+        if rescued_unit[i] == 'B':
+            rescued_num[i] = 'bitmath.Byte(' + rescued_num[i] + ')'
+            
+        if rescued_unit[i] == 'kB':
+            rescued_num[i] = 'bitmath.KiB(' + rescued_num[i] + ')'
+            
+        if rescued_unit[i] == 'Mb': #Verify via ddrescue
+            rescued_num[i] = 'bitmath.MiB(' + rescued_num[i] + ')'
+            
+        if rescued_unit[i] == 'Gb': #Verify via ddrescue
+            rescued_num[i] = 'bitmath.GiB(' + rescued_num[i] + ')'
+            
+        #Conversion to bitmath format: errsize
+        if errsize_unit[i] == 'B':
+            errsize_num[i] = 'bitmath.Byte(' + errsize_num[i] + ')'
+            
+        if errsize_unit[i] == 'kB':
+            errsize_num[i] = 'bitmath.KiB(' + errsize_num[i] + ')'
+            
+        if errsize_unit[i] == 'Mb': #Verify via ddrescue
+            errsize_num[i] = 'bitmath.MiB(' + errsize_num[i] + ')'
+            
+        if errsize_unit[i] == 'Gb': #Verify via ddrescue
+            errsize_num[i] = 'bitmath.GiB(' + errsize_num[i] + ')'
+        
+        total_size = rescued_num[i] + errsize_num[i]
+        print(total_size)
     
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
