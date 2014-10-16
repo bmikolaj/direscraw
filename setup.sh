@@ -17,17 +17,17 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 if [ $1 == "install" ]; then
-        if [ $(which g++) ]; then
+        if [ ! $(which g++) ]; then
                 gverdir=$(wget http://mirrors.concertpass.com/gcc/releases/ -qO - | grep gcc- | tail -1 | cut -d= -f3 | cut -d\" -f2)
                 gver=$(wget http://mirrors.concertpass.com/gcc/releases/$gverdir -qO - | grep .tar.gz | cut -d= -f3 | cut -d\" -f2)
                 wget -q http://mirrors.concertpass.com/gcc/releases/$gverdir/$gver
                 gunzip $gver
-                tar xf "$(gver%.gz}"
+                tar xf "${gver%.gz}"
                 cd "${gver%.tar.gz}"
 		sudo ./configure && make && sudo make install
 		cd ..
         fi
-	if [ $(which lzip) ]; then
+	if [ ! $(which lzip) ]; then
 		lver=$(wget http://download.savannah.gnu.org/releases/lzip/ -qO - | grep lzip | grep -v plzip | grep tar.gz | grep -v sig | cut -d\" -f8 | tail -1)
 		wget -q http://download.savannah.gnu.org/releases/lzip/$lver
 		gunzip $lver
@@ -36,7 +36,7 @@ if [ $1 == "install" ]; then
 		sudo ./configure && make && sudo make install
 		cd ..
 	fi
-	if [ $(which ddrescue) ]; then
+	if [ ! $(which ddrescue) ]; then
 		ddver=$(wget http://mirrors.kernel.org/gnu/ddrescue/ -qO - | grep -v sig | grep href | tail -1 | cut -d\> -f2 | cut -d\< -f1)
 		wget -q http://mirrors.kernel.org/gnu/ddrescue/$ddver
 		lzip -d $ddver
@@ -45,7 +45,7 @@ if [ $1 == "install" ]; then
 		sudo ./configure && make && sudo make install
 		cd ..
 	fi
-	if [ $(which units) ]; then
+	if [ ! $(which units) ]; then
 		unvar=$(wget http://ftp.gnu.org/gnu/units/ -qO - | grep -v sig | grep href | grep units | tail -1 | cut -d\" -f6)
 		wget -q http://ftp.gnu.org/gnu/units/$unvar
 		gunzip $unvar
