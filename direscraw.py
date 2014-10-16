@@ -44,6 +44,7 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False,
 
     tfmt = '%Y-%m-%d %H:%M:%S'
     top_input_dir = os.path.split(input_dir)[1]
+    fullskipset = set([])
     with open(os.path.join(output_dir, 'full_error_summary'),
                            'w+') as full_error_summary:
         if not nosum:
@@ -106,6 +107,7 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False,
                                                shell=True)
                     except KeyboardInterrupt:
                         skipset.add(in_file_path)
+                        fullskipset.add(in_file_path)
                         print('\n' + in_file_path + ' has been skipped')
                         continue
 
@@ -142,6 +144,11 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False,
         if not nosum:
             full_error_summary.seek(0)
             full_error_summary.write(time.strftime(tfmt) + '\n')
+            if len(fullskipset) > 0:
+                full_error_summary.write('\n' + 'Files Skipped:' + '\n')
+                for skipel in fullskipset:
+                    full_error_summary.write(skipel + '\n')
+                    full_error_summary.flush()
         
     if nosum:
         os.remove(os.path.join(output_dir, 'full_error_summary'))
