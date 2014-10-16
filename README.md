@@ -1,7 +1,7 @@
 #Directory Rescue Crawler
-v1.3
+v1.4
 
-#####Errcalc v1.0
+#####Errcalc v2.0
 
 ##Description
 
@@ -12,8 +12,9 @@ Directory Rescue Crawler was designed for Linux and uses the following programs;
 
 * Bash
 * Python 2.7+
+* Git
 * GNU ddrescue (installed via setup.sh)
-* GNU Units (installed via setup.sh)
+* Python module: `bitmath` (installed via setup.sh)
 * g++ (for installation; installed via setup.sh)
 * Lzip (for installation; installed via setup.sh)
 * Gunzip (for installation)
@@ -63,6 +64,16 @@ If `ddrescue` is running to long, or you want to manually skip a file while it's
   `sudo ./setup.sh uninstall`
 
 ##Changelog
+* v1.4 (16 October 2014)
+
+  Updated `direscraw` to reflect changes
+
+  Rewrote `errcalc` in python; v2.0
+    Special Thanks to [Gary Foreman](https://github.com/garyForeman) for all the help
+
+  Removed GNU Units from setup.sh; now unnecessary. Added `bitmath` Python module to setup.sh
+
+
 * v1.3 (13 October 2014)
 
   Added ability to skip a `ddrescue` instance.
@@ -115,7 +126,6 @@ Tested with the following program versions;
 * Bash v4.3.11(1)-release (i686-pc-linux-gnu)
 * Python 2.7.6
 * GNU ddrescue 1.18.1
-* GNU Units v2.02
 
 ##Author
 [Brian Mikolajczyk](https://github.com/p014k), brianm12@gmail.com

@@ -1,6 +1,6 @@
 #!/bin/bash
 #Setup File
-#Directory Rescue Crawler, direscraw v1.3; Error Percentage and Runtime Calculation Summary, errcalc v1.0
+#Directory Rescue Crawler, direscraw v1.4; Error Percentage and Runtime Calculation Summary, errcalc v2.0
 #Copyright (c) 2014 by Brian Mikolajczyk, brianm12@gmail.com
 
 # This program is free software: you can redistribute it and/or modify
@@ -45,16 +45,14 @@ if [ $1 == "install" ]; then
 		sudo ./configure && make && sudo make install
 		cd ..
 	fi
-	if [ ! $(which units) ]; then
-		unvar=$(wget http://ftp.gnu.org/gnu/units/ -qO - | grep -v sig | grep href | grep units | tail -1 | cut -d\" -f6)
-		wget -q http://ftp.gnu.org/gnu/units/$unvar
-		gunzip $unvar
-		tar xf "${unvar%.gz}"
-		cd "${unvar%.tar.gz}"
-		sudo ./configure && make && sudo make install
+	if [[ $(pydoc -w bitmath | head -1 | cut -c1-2) == "no" ]]; then
+		git clone https://github.com/tbielawa/bitmath.git bitmath
+		cd bitmath
+		sudo python setup.py install
 		cd ..
 	fi
-	sudo cp errcalc /usr/local/bin
+	rm bitmath.html
+	sudo cp errcalc.py /usr/local/bin/errcalc
 	sudo cp direscraw.py /usr/local/bin/direscraw
 	sudo chmod a+x /usr/local/bin/direscraw
 	sudo chmod a+x /usr/local/bin/errcalc
@@ -64,6 +62,6 @@ elif [[ $1 == "uninstall" ]]; then
 	echo "direscraw and errcalc uninstalled successfully"
 else
 	echo "Usage"
-	echo "'sudo ./setup.sh install' to install"
-	echo "'sudo ./setup.sh uninstall' to uninstall"
+	echo "sudo ./setup.sh install to install"
+	echo "sudo ./setup.sh uninstall to uninstall"
 fi
