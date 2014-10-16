@@ -1,11 +1,20 @@
 #!/usr/bin/env python
+#Error Percentage and Runtime Calculation Summary, errcalc v2.0
+#Copyright (c) 2014 by Brian Mikolajczyk, brianm12@gmail.com
 
-################################################################################
-#Authors: Brian Mikolajczyk and Gary Foreman
-#Last Modified: October 15, 2014
-#Reads in file given as command argument. Searches for each instance of string
-#"Finished", and prints preceding three lines.
-################################################################################
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 
 import argparse
 import bitmath
@@ -48,7 +57,7 @@ def main(input=None):
             rescued_unit.append(re.split(' ', delim[1].strip())[1])
             errsize_num.append(re.split(' ', delim[3].strip())[0])
             errsize_unit.append(re.split(' ', delim[3].strip())[1])
-        if re.search('opos', line):
+        elif re.search('opos', line):
             delim = re.split(': |, ', line)
             runtime.append(delim[3].strip().replace(' ',''))
 
