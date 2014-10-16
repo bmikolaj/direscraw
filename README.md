@@ -14,7 +14,7 @@ Directory Rescue Crawler was designed for Linux and uses the following programs;
 * Python 2.7+
 * Git
 * GNU ddrescue (installed via setup.sh)
-* Python module: bitmath (installed via setup.sh)
+* Python module: `bitmath` (installed via setup.sh)
 * g++ (for installation; installed via setup.sh)
 * Lzip (for installation; installed via setup.sh)
 * Gunzip (for installation)
@@ -71,7 +71,7 @@ If `ddrescue` is running to long, or you want to manually skip a file while it's
   Rewrote `errcalc` in python; v2.0
     Special Thanks to [Gary Foreman](https://github.com/garyForeman) for all the help
 
-  Removed GNU Units from setup.sh; now unnecessary. Added bitmath Python module to setup.sh
+  Removed GNU Units from setup.sh; now unnecessary. Added `bitmath` Python module to setup.sh
 
 
 * v1.3 (13 October 2014)

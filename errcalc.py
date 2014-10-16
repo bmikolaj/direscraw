@@ -20,8 +20,10 @@ import argparse
 import bitmath
 import os.path
 import re
+import time
 
-def main(input=None):
+def main(input=None, standalone=False):
+    tfmt = '%Y-%m-%d %H:%M:%S'
     with open(os.path.abspath(input), 'r') as infile:
         lines = infile.readlines()
 
@@ -91,7 +93,8 @@ def main(input=None):
             errsize_num[i] = bitmath.GiB(float(errsize_num[i]))
         
         try:
-            errper.append((errsize_num[i] / (rescued_num[i] + errsize_num[i])) * 100)
+            errper.append((errsize_num[i] / (rescued_num[i]
+                          + errsize_num[i])) * 100)
         except ZeroDivisionError:
             errper.append(0)
         
@@ -99,12 +102,30 @@ def main(input=None):
         errper[i] = format(line, '.2f').rstrip('0').rstrip('.') + '%'
 
 #Concaterate lists
+    if standalone:
+        output_dir = os.path.split(os.path.abspath(input))[0]
+        output = open(os.path.join(output_dir, 'error_summary'), 'w')
+        output.write(time.strftime(tfmt) + '\n')
+        output.write(output_dir + '\n')
+        output.write('File Error% RunTime' + '\n')
+        output.flush()
+
     for i in xrange(n_files):
-        print(files[i] + ' ' + errper[i] + ' ' + runtime[i])
+        if standalone:
+            output.write(files[i] + ' ' + errper[i] + ' ' + runtime[i] + '\n')
+            output.flush()
+
+        else:
+            print(files[i] + ' ' + errper[i] + ' ' + runtime[i])
+
+    if standalone:
+        output.close()
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('input')
+    parser.add_argument('-s', '--standalone', action='store_true',
+                        help=argparse.SUPPRESS)
     parser.add_argument('--version', action='version',
                         version='errcalc v2.0')
 
