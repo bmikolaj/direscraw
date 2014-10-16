@@ -73,7 +73,7 @@ def main(input=None, standalone=False):
         elif rescued_unit[i] == 'kB':
             rescued_num[i] = bitmath.KiB(float(rescued_num[i]))
             
-        elif rescued_unit[i] == 'Mb': #Verify via ddrescue
+        elif rescued_unit[i] == 'MB':
             rescued_num[i] = bitmath.MiB(float(rescued_num[i]))
             
         elif rescued_unit[i] == 'Gb': #Verify via ddrescue
@@ -86,7 +86,7 @@ def main(input=None, standalone=False):
         elif errsize_unit[i] == 'kB':
             errsize_num[i] = bitmath.KiB(float(errsize_num[i]))
             
-        elif errsize_unit[i] == 'Mb': #Verify via ddrescue
+        elif errsize_unit[i] == 'MB':
             errsize_num[i] = bitmath.MiB(float(errsize_num[i]))
             
         elif errsize_unit[i] == 'Gb': #Verify via ddrescue

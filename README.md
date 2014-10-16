@@ -68,8 +68,7 @@ If `ddrescue` is running to long, or you want to manually skip a file while it's
 
   Updated `direscraw` to reflect changes
 
-  Rewrote `errcalc` in python; v2.0
-    Special Thanks to [Gary Foreman](https://github.com/garyForeman) for all the help
+  Rewrote `errcalc` in python; v2.0 ---Special thanks to [Gary Foreman](https://github.com/garyForeman) for all the help
 
   Removed GNU Units from setup.sh; now unnecessary. Added `bitmath` Python module to setup.sh
 
@@ -124,7 +123,7 @@ If `ddrescue` is running to long, or you want to manually skip a file while it's
 Tested with the following program versions;
 
 * Bash v4.3.11(1)-release (i686-pc-linux-gnu)
-* Python 2.7.6
+* Python 2.7.6 with `bitmath` v1.0.8 module
 * GNU ddrescue 1.18.1
 
 ##Author
