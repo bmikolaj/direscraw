@@ -50,7 +50,7 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False,
         os.remove(os.path.join(output_dir, 'full_error_summary'))
     
     with open(os.path.join(output_dir, 'full_error_summary'),
-                           'a+') as full_error_summary:
+                           'w+') as full_error_summary:
         if not nosum:
             full_error_summary.write('File Error% RunTime' + '\n')
         
@@ -118,7 +118,7 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False,
                 drclog.seek(0)
                 if not nosum:
                     with open(os.path.join(current_out_dir, 'error_summary'),
-                    'w') as error_summary:
+                                           'w') as error_summary:
                         error_summary.write(time.strftime(tfmt) + '\n')
                         error_summary.write(current_out_dir + '\n')
                         if len(skipset) > 0:
@@ -145,15 +145,23 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False,
             
             os.remove(os.path.join(current_out_dir, 'copylog'))
         
-        if not nosum:
-            full_error_summary.seek(0)
+    if not nosum:
+        old_FES = open(os.path.join(output_dir, 'full_error_summary'))
+        old_FES_lines = old_FES.readlines()
+        old_FES.close()
+        with open(os.path.join(output_dir, 'full_error_summary'),
+                               'w') as full_error_summary:
             full_error_summary.write(time.strftime(tfmt) + '\n')
             if len(fullskipset) > 0:
                 full_error_summary.write('\n' + 'Files Skipped:' + '\n')
                 for skipel in fullskipset:
                     full_error_summary.write(skipel + '\n')
             
+            full_error_summary.write('\n')
+            
             full_error_summary.flush()
+            for lines in old_FES_lines:
+                full_error_summary.write(lines)
         
     if nosum:
         os.remove(os.path.join(output_dir, 'full_error_summary'))
