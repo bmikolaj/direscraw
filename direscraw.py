@@ -45,8 +45,12 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False,
     tfmt = '%Y-%m-%d %H:%M:%S'
     top_input_dir = os.path.split(input_dir)[1]
     fullskipset = set([])
+    if os.path.isfile(os.path.join(output_dir, 'full_error_summary')) and not\
+                                                                       resume:
+        os.remove(os.path.join(output_dir, 'full_error_summary'))
+    
     with open(os.path.join(output_dir, 'full_error_summary'),
-                           'w+') as full_error_summary:
+                           'a+') as full_error_summary:
         if not nosum:
             full_error_summary.write('File Error% RunTime' + '\n')
         
@@ -148,7 +152,8 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False,
                 full_error_summary.write('\n' + 'Files Skipped:' + '\n')
                 for skipel in fullskipset:
                     full_error_summary.write(skipel + '\n')
-                    full_error_summary.flush()
+            
+            full_error_summary.flush()
         
     if nosum:
         os.remove(os.path.join(output_dir, 'full_error_summary'))
