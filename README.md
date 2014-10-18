@@ -5,7 +5,9 @@ v1.41
 
 ##Description
 
-Directory Rescue Crawler uses `ddrescue` to recover full directories from one location to another. This program also prints an error and runtime summary in each subdirectory copied and a full summary in the root directory via the included `errcalc` program. 
+Directory Rescue Crawler uses `ddrescue` to recover full directories from one location to another. `ddrescue` by itself can only recover individual files or full filesystems.
+
+This program also prints an error and runtime summary in each subdirectory copied and a full summary in the root directory via the included `errcalc` program. 
 
 ##Dependencies
 Directory Rescue Crawler was designed for Linux and uses the following programs;
@@ -56,7 +58,7 @@ Run from the command line;
 
 Note: Directories and files with characters that need escaping can be put in quotes. Files and directories are case-sensitive. Wildcards are accepted.
 
-If `ddrescue` is running to long, or you want to manually skip a file while it's copying, `CTRL+C` will skip the file. A note of the skipped file is written to the error report of that directory.
+If `ddrescue` is running to long, or you want to manually skip a file while it's copying, `CTRL+C` will skip the file. A note of the skipped file is written to the error report of that directory and to the full error report in the root directory.
 
 ##Uninstall
 * Run the following command to uninstall;
