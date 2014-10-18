@@ -1,5 +1,5 @@
 #Directory Rescue Crawler
-v1.4
+v1.41
 
 #####Errcalc v2.0
 
@@ -64,6 +64,12 @@ If `ddrescue` is running to long, or you want to manually skip a file while it's
   `sudo ./setup.sh uninstall`
 
 ##Changelog
+* v1.41 (18 October 2014)
+
+  Added skip reporting to full_error_summary
+
+  Added `errcalc` to `--version`
+
 * v1.4 (16 October 2014)
 
   Updated `direscraw` to reflect changes

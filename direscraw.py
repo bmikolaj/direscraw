@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#Directory Rescue Crawler, direscraw v1.4
+#Directory Rescue Crawler, direscraw v1.41
 #Copyright (c) 2014 by Brian Mikolajczyk, brianm12@gmail.com
 
 # This program is free software: you can redistribute it and/or modify
@@ -146,9 +146,9 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False,
             os.remove(os.path.join(current_out_dir, 'copylog'))
         
     if not nosum:
-        old_FES = open(os.path.join(output_dir, 'full_error_summary'))
-        old_FES_lines = old_FES.readlines()
-        old_FES.close()
+        FES = open(os.path.join(output_dir, 'full_error_summary'))
+        FES_lines = FES.readlines()
+        FES.close()
         with open(os.path.join(output_dir, 'full_error_summary'),
                                'w') as full_error_summary:
             full_error_summary.write(time.strftime(tfmt) + '\n')
@@ -160,10 +160,9 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False,
             full_error_summary.write('\n')
             
             full_error_summary.flush()
-            for lines in old_FES_lines:
+            for lines in FES_lines:
                 full_error_summary.write(lines)
-        
-    if nosum:
+    else:
         os.remove(os.path.join(output_dir, 'full_error_summary'))
 
 if __name__ == '__main__':
@@ -171,7 +170,7 @@ if __name__ == '__main__':
     parser.add_argument('input_dir')
     parser.add_argument('output_dir')
     parser.add_argument('--version', action='version',
-                        version='direscraw v1.4; errcalc v2.0')
+                        version='direscraw v1.41; errcalc v2.0')
     parser.add_argument('-d', '--debug', action='store_true',
                          help=argparse.SUPPRESS)
     parser.add_argument('-b', '--blacklist', nargs='+',
