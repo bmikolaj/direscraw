@@ -33,7 +33,7 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False,
         os.mkdir(output_dir)
     except OSError:
         pass
-
+#Handling of blacklist
     oblist = set(['drclog', 'error_summary', 'full_error_summary'])
     if blacklist is None:
         blwild = False
@@ -53,8 +53,9 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False,
                            'w+') as full_error_summary:
         if not nosum:
             full_error_summary.write('File Error% RunTime' + '\n')
-        
+#Starting os.walk for loop
         for current_dir, dirnames, unfilenames in os.walk(input_dir):
+        #Check for wildcards in blacklist
             if blwild:
                 infiles = set([f for f in os.listdir(
                                      current_dir)]) - blacklist
@@ -96,6 +97,7 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False,
             with open(os.path.join(current_out_dir, 'drclog'),
                       'w+') as drclog, open(os.path.join(current_out_dir,
                                                          'copylog'), 'w'):
+            #Start directory loop
                 for filename in [f for f in filenames[sindex:]
                                          if f not in blacklist]:
                     in_file_path = os.path.join(current_dir, filename)
@@ -116,6 +118,7 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False,
                         continue
 
                 drclog.seek(0)
+            #Creating error report
                 if not nosum:
                     with open(os.path.join(current_out_dir, 'error_summary'),
                                            'w') as error_summary:
@@ -144,7 +147,7 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False,
                 os.remove(os.path.join(current_out_dir, 'drclog'))
             
             os.remove(os.path.join(current_out_dir, 'copylog'))
-        
+#Creating full error report    
     if not nosum:
         FES = open(os.path.join(output_dir, 'full_error_summary'))
         FES_lines = FES.readlines()
