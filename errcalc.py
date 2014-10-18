@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#Error Percentage and Runtime Calculation Summary, errcalc v2.0
+#Error Percentage and Runtime Calculation Summary, errcalc v2.1
 #Copyright (c) 2014 by Brian Mikolajczyk, brianm12@gmail.com
 
 # This program is free software: you can redistribute it and/or modify
@@ -52,6 +52,7 @@ def main(input=None, standalone=False):
     errsize_num = []
     errsize_unit = []
     runtime = []
+    runtime_unit = []
     for line in newlines:
         if re.search(first_string, line):
             delim = re.split(': |, ', line)
@@ -61,11 +62,31 @@ def main(input=None, standalone=False):
             errsize_unit.append(re.split(' ', delim[3].strip())[1])
         elif re.search('opos', line):
             delim = re.split(': |, ', line)
-            runtime.append(delim[3].strip().replace(' ',''))
+            runtime.append(re.split(' ', delim[3].strip())[0])
+            runtime_unit.append(re.split(' ', delim[3].strip())[1])
 
 #Calculations
     errper = []
     for i in xrange(n_files):
+        #Conversion of runtime_unit to string
+        if runtime_unit[i] == 'm':
+            if runtime[i] == '1':
+                runtime_unit[i] = 'min'
+            else:
+                runtime_unit[i] = 'mins'
+        
+        elif runtime_unit[i] == 'h':
+            if runtime[i] == '1':
+                runtime_unit[i] = 'hr'
+            else:
+                runtime_unit[i] = 'hrs'
+        
+        elif runtime_unit[i] == 'd':
+            if runtime[i] == '1':
+                runtime_unit[i] = 'day'
+            else:
+                runtime_unit[i] = 'days'
+            
         #Conversion to bitmath format: rescued
         if rescued_unit[i] == 'B':
             rescued_num[i] = bitmath.Byte(float(rescued_num[i]))
@@ -112,11 +133,13 @@ def main(input=None, standalone=False):
 
     for i in xrange(n_files):
         if standalone:
-            output.write(files[i] + ' ' + errper[i] + ' ' + runtime[i] + '\n')
+            output.write(files[i] + ' ' + errper[i] + ' ' +
+                         '{}{}'.format(runtime[i], runtime_unit[i]) + '\n')
             output.flush()
 
         else:
-            print(files[i] + ' ' + errper[i] + ' ' + runtime[i])
+            print(files[i] + ' ' + errper[i] + ' ' +
+                  '{}{}'.format(runtime[i], runtime_unit[i]))
 
     if standalone:
         output.close()
@@ -127,6 +150,6 @@ if __name__ == '__main__':
     parser.add_argument('-s', '--standalone', action='store_true',
                         help=argparse.SUPPRESS)
     parser.add_argument('--version', action='version',
-                        version='errcalc v2.0')
+                        version='errcalc v2.1')
 
     main(**vars(parser.parse_args()))

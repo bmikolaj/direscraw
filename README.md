@@ -1,7 +1,7 @@
 #Directory Rescue Crawler
 v1.41
 
-#####Errcalc v2.0
+#####Errcalc v2.1
 
 ##Description
 
@@ -67,6 +67,8 @@ If `ddrescue` is running to long, or you want to manually skip a file while it's
 * v1.41 (18 October 2014)
 
   Added skip reporting to full_error_summary
+
+  Stylized run time units reporting in error summary reports; `errcalc` v2.1
 
   Added `errcalc` to `--version`
 
