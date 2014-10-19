@@ -1,5 +1,5 @@
 #Directory Rescue Crawler
-v1.41
+v1.42
 
 #####Errcalc v2.1
 
@@ -66,6 +66,12 @@ If `ddrescue` is running to long, or you want to manually skip a file while it's
   `sudo ./setup.sh uninstall`
 
 ##Changelog
+* v1.42 (19 October 2014)
+
+  Added number of files skipped to error reporting
+
+  Changed `bitmath` module install to `easy_install` from PyPi
+
 * v1.41 (18 October 2014)
 
   Added skip reporting to full_error_summary

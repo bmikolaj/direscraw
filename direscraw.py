@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#Directory Rescue Crawler, direscraw v1.41
+#Directory Rescue Crawler, direscraw v1.42
 #Copyright (c) 2014 by Brian Mikolajczyk, brianm12@gmail.com
 
 # This program is free software: you can redistribute it and/or modify
@@ -125,8 +125,8 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False,
                         error_summary.write(time.strftime(tfmt) + '\n')
                         error_summary.write(current_out_dir + '\n')
                         if len(skipset) > 0:
-                            error_summary.write('\n' + 'Files Skipped:'\
-                                                + '\n')
+                            error_summary.write('\n' + 'Files Skipped: '\
+                                            + str(len(skipset)) + ';' + '\n')
                             for skipel in skipset:
                                 error_summary.write(skipel + '\n')
 
@@ -156,7 +156,8 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False,
                                'w') as full_error_summary:
             full_error_summary.write(time.strftime(tfmt) + '\n')
             if len(fullskipset) > 0:
-                full_error_summary.write('\n' + 'Files Skipped:' + '\n')
+                full_error_summary.write('\n' + 'Files Skipped: '\
+                                         + str(len(fullskipset)) + ';' + '\n')
                 for skipel in fullskipset:
                     full_error_summary.write(skipel + '\n')
             
@@ -173,7 +174,7 @@ if __name__ == '__main__':
     parser.add_argument('input_dir')
     parser.add_argument('output_dir')
     parser.add_argument('--version', action='version',
-                        version='direscraw v1.41; errcalc v2.1')
+                        version='direscraw v1.42; errcalc v2.1')
     parser.add_argument('-d', '--debug', action='store_true',
                          help=argparse.SUPPRESS)
     parser.add_argument('-b', '--blacklist', nargs='+',
