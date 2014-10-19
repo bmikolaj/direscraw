@@ -46,10 +46,7 @@ if [ $1 == "install" ]; then
 		cd ..
 	fi
 	if [[ $(pydoc -w bitmath | head -1 | cut -c1-2) == "no" ]]; then
-		git clone https://github.com/tbielawa/bitmath.git bitmath
-		cd bitmath
-		sudo python setup.py install
-		cd ..
+		sudo easy_install -U bitmath
 	fi
 	rm bitmath.html
 	sudo cp errcalc.py /usr/local/bin/errcalc
