@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#Directory Rescue Crawler, direscraw v1.42
+#Directory Rescue Crawler, direscraw v1.43
 #Copyright (c) 2014 by Brian Mikolajczyk, brianm12@gmail.com
 
 # This program is free software: you can redistribute it and/or modify
@@ -136,10 +136,10 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False,
                         error_summary.flush()
                         full_error_summary.write(current_out_dir + '\n')
                         full_error_summary.flush()
-                        subprocess.call(['errcalc',
+                        subprocess.call(['errcalc2',
                                         os.path.join(current_out_dir,
                                         'drclog')], stdout=error_summary)
-                        subprocess.call(['errcalc',
+                        subprocess.call(['errcalc2',
                                         os.path.join(current_out_dir,
                                         'drclog')], stdout=full_error_summary)
 
@@ -174,7 +174,7 @@ if __name__ == '__main__':
     parser.add_argument('input_dir')
     parser.add_argument('output_dir')
     parser.add_argument('--version', action='version',
-                        version='direscraw v1.42; errcalc v2.1')
+                        version='direscraw v1.43; errcalc2 v2.1')
     parser.add_argument('-d', '--debug', action='store_true',
                          help=argparse.SUPPRESS)
     parser.add_argument('-b', '--blacklist', nargs='+',

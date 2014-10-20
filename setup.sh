@@ -1,6 +1,6 @@
 #!/bin/bash
 #Setup File
-#Directory Rescue Crawler, direscraw v1.41; Error Percentage and Runtime Calculation Summary, errcalc v2.1
+#Directory Rescue Crawler, direscraw v1.43; Error Percentage and Runtime Calculation Summary, errcalc v2.1
 #Copyright (c) 2014 by Brian Mikolajczyk, brianm12@gmail.com
 
 # This program is free software: you can redistribute it and/or modify
@@ -45,13 +45,11 @@ if [ $1 == "install" ]; then
 		sudo ./configure && make && sudo make install
 		cd ..
 	fi
+	wget https://bootstrap.pypa.io/ez_setup.py -O - | sudo python
 	if [[ $(pydoc -w bitmath | head -1 | cut -c1-2) == "no" ]]; then
 		sudo easy_install -U bitmath
 	fi
-	if [[ $(pydoc -w wolframalpha | head -1 | cut -c1-2) == "no" ]]; then
-		sudo easy_install -U wolframalpha
-	fi
-	rm bitmath.html wolframalpha.html
+	rm bitmath.html setuptools*
 	sudo cp errcalc.py /usr/local/bin/errcalc
 	sudo cp direscraw.py /usr/local/bin/direscraw
 	sudo chmod a+x /usr/local/bin/direscraw
