@@ -134,12 +134,12 @@ def main(input=None, standalone=False):
     for i in xrange(n_files):
         if standalone:
             output.write(files[i] + ' ' + errper[i] + ' ' +
-                         '{}{}'.format(runtime[i], runtime_unit[i]) + '\n')
+                         '{} {}'.format(runtime[i], runtime_unit[i]) + '\n')
             output.flush()
 
         else:
             print(files[i] + ' ' + errper[i] + ' ' +
-                  '{}{}'.format(runtime[i], runtime_unit[i]))
+                  '{} {}'.format(runtime[i], runtime_unit[i]))
 
     if standalone:
         output.close()

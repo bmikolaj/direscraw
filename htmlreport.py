@@ -35,13 +35,13 @@ def main(input=None):
                line.startswith('\n'):
             timelist.append(re.split('%', line)[1].strip())
 
-    entry = "'{}'".format(' + '.join(map(str, timelist)))
-    print(entry)    
-    #out = client.query(entry)
-    #for pod in out.pods:
-    #    print(pod)
+    entry = "'{}'".format('+'.join(map(str, timelist)))
+    print(entry)
+    out = client.query(entry, '*C.s-_*Unit-')
+    for pod in out.pods:
+        print(pod.text)
 
-    #print(out.pods[2].text)
+    print(out.pods[1].text)
 
 
 if __name__ == '__main__':
