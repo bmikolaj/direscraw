@@ -136,10 +136,10 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False,
                         error_summary.flush()
                         full_error_summary.write(current_out_dir + '\n')
                         full_error_summary.flush()
-                        subprocess.call(['errcalc2',
+                        subprocess.call(['errcalc',
                                         os.path.join(current_out_dir,
                                         'drclog')], stdout=error_summary)
-                        subprocess.call(['errcalc2',
+                        subprocess.call(['errcalc',
                                         os.path.join(current_out_dir,
                                         'drclog')], stdout=full_error_summary)
 

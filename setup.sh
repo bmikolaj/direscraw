@@ -49,7 +49,10 @@ if [ $1 == "install" ]; then
 	if [[ $(pydoc -w bitmath | head -1 | cut -c1-2) == "no" ]]; then
 		sudo easy_install -U bitmath
 	fi
-	rm bitmath.html setuptools*
+	if [[ $(pydoc -w wolframalpha | head -1 | cut -c1-2) == "no" ]]; then
+		sudo easy_install -U wolframalpha
+	fi
+	rm bitmath.html setuptools* wolframalpha.html
 	sudo cp errcalc.py /usr/local/bin/errcalc
 	sudo cp direscraw.py /usr/local/bin/direscraw
 	sudo chmod a+x /usr/local/bin/direscraw
