@@ -153,7 +153,23 @@ def main(input=None):
     
     average_time = pretty(total_time / len(time_s))
     total_time = pretty(total_time)
-
+##Errors to list
+    errlist = []
+    errnums = []
+    for i, line in enumerate(lines):
+        if not line.startswith('/') and not i == 0 and not\
+               line.endswith(';\n') and not line.endswith('RunTime\n') and not\
+               line.startswith('\n'):
+            errlist.append(re.split('%', line)[0].rsplit(' ', 1)[1] + '%')
+            errnums.append(re.split('%', line)[0].rsplit(' ', 1)[1])
+    
+    total_error = 0
+    for i, _ in enumerate(errnums):
+        total_error = total_error + float(errnums[i])
+    
+	average_error = format(total_error / len(errnums),
+                    '.2f').rstrip('0').rstrip('.') + '%'
+    
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('input')
