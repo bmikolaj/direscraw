@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#HTML Report generator, htmlreport v1.0
+#HTML Report Generator, htmlreport v1.0
 #Copyright (c) 2014 by Brian Mikolajczyk, brianm12@gmail.com
 
 # This program is free software: you can redistribute it and/or modify
@@ -31,14 +31,15 @@ def main(input=None):
     timelist = []
     for i, line in enumerate(lines):
         if not line.startswith('/') and not i == 0 and not\
-               line.startswith('File') and not line.startswith('\n'):
+               line.endswith(';\n') and not line.endswith('RunTime\n') and not\
+               line.startswith('\n'):
             timelist.append(re.split('%', line)[1].strip())
 
     entry = "'{}'".format(' + '.join(map(str, timelist)))
     print(entry)    
-    out = client.query(entry)
-    for pod in out.pods:
-        print(pod)
+    #out = client.query(entry)
+    #for pod in out.pods:
+    #    print(pod)
 
     #print(out.pods[2].text)
 
