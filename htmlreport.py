@@ -20,51 +20,13 @@ import argparse
 import os.path
 import re
 
-def main(input=None):
-    input = os.path.abspath(input)
-    file = open(input, 'r')
-    lines = file.readlines()
-    file.close()
-##Time summation/average
-    timelist = []
-    for i, line in enumerate(lines):
-        if not line.startswith('/') and not i == 0 and not\
-               line.endswith(';\n') and not line.endswith('RunTime\n') and not\
-               line.startswith('\n'):
-            timelist.append(re.split('%', line)[1].strip())
-    ####For Testing###
-    timelist = ['2.3 days', '5 s', '42.34 mins', '52 hrs', '96 days']
-    ############
-    timelist_num = []
-    timelist_unit = []
-    for el in timelist:
-        timelist_num.append(float(re.split(' ', el)[0].strip()))
-        timelist_unit.append(re.split(' ', el)[1].strip())
-    
-    time_s = []
-    for i, _ in enumerate(timelist):
-        if timelist_unit[i].startswith('day'):
-            time_s.append(timelist_num[i] * 86400)
-            
-        elif timelist_unit[i].startswith('hr'):
-            time_s.append(timelist_num[i] * 3600)
-            
-        elif timelist_unit[i].startswith('min'):
-            time_s.append(timelist_num[i] * 60)
-            
-        else:
-            time_s.append(timelist_num[i])
-
-    total_time = 0
-    for i, _ in enumerate(time_s):
-        total_time = total_time + time_s[i]
+def pretty(input_time):
+    if float(input_time).is_integer():
+        input_time = float(str(input_time) + '.0')
 #Pretty time formatting
     #Month time
-    if float(total_time).is_integer():
-        total_time = float(str(total_time) + '.0')
-        
-    if total_time > 2628000:
-        month_time = str(total_time / 2628000)
+    if input_time > 2628000:
+        month_time = str(input_time / 2628000)
         months = re.split('\.', month_time)[0]
         days = str(float(str('.') + re.split('\.', month_time)[1]) * 30.42)
         hours = str(float(str('.') + re.split('\.', days)[1]) * 24)
@@ -92,8 +54,8 @@ def main(input=None):
             pretty_time = months + ' months, ' + days + ' days, ' + hours +\
                   ' hours, ' + minutes + ' minutes, ' + seconds + ' seconds'
     #Day time
-    elif total_time > 86400:
-        day_time = str(total_time / 86400)
+    elif input_time > 86400:
+        day_time = str(input_time / 86400)
         days = re.split('\.', day_time)[0]
         hours = str(float(str('.') + re.split('\.', day_time)[1]) * 24)
         minutes = str(float(str('.') + re.split('\.', hours)[1]) * 60)
@@ -116,8 +78,8 @@ def main(input=None):
             pretty_time = days + ' days, ' + hours +\
                   ' hours, ' + minutes + ' minutes, ' + seconds + ' seconds'
     #Hour time
-    elif total_time > 3600:
-        hour_time = str(total_time / 3600)
+    elif input_time > 3600:
+        hour_time = str(input_time / 3600)
         hours = re.split('\.', hour_time)[0]
         minutes = str(float(str('.') + re.split('\.', hour_time)[1]) * 60)
         seconds = float(str('.') + re.split('\.', minutes)[1]) * 60
@@ -133,8 +95,8 @@ def main(input=None):
             pretty_time = hours + ' hours, ' + minutes + ' minutes, ' +\
                                                     seconds + ' seconds'
     #Minute time
-    elif total_time > 60:
-        min_time = str(total_time / 60)
+    elif input_time > 60:
+        min_time = str(input_time / 60)
         minutes = re.split('\.', min_time)[0]
         seconds = float(str('.') + re.split('\.', min_time)[1]) * 60
         seconds = format(seconds, '.2f').rstrip('0').rstrip('.')
@@ -145,12 +107,52 @@ def main(input=None):
             pretty_time = minutes + ' minutes, ' + seconds + ' seconds'
     
     else:
-        seconds = format(total_time, '.2f').rstrip('0').rstrip('.')
+        seconds = format(input_time, '.2f').rstrip('0').rstrip('.')
         pretty_time = seconds + ' seconds'
     
-    print(pretty_time)
-    #sum = "'{}'".format('+'.join(map(str, timelist)))
+    return pretty_time
 
+def main(input=None):
+    input = os.path.abspath(input)
+    file = open(input, 'r')
+    lines = file.readlines()
+    file.close()
+##Time summation/average
+    timelist = []
+    for i, line in enumerate(lines):
+        if not line.startswith('/') and not i == 0 and not\
+               line.endswith(';\n') and not line.endswith('RunTime\n') and not\
+               line.startswith('\n'):
+            timelist.append(re.split('%', line)[1].strip())
+    ####For Testing###
+    timelist = ['2.3 days', '5 s', '42.34 mins', '52 hrs', '96 days']
+    ##################
+    timelist_num = []
+    timelist_unit = []
+    for el in timelist:
+        timelist_num.append(float(re.split(' ', el)[0].strip()))
+        timelist_unit.append(re.split(' ', el)[1].strip())
+    
+    time_s = []
+    for i, _ in enumerate(timelist):
+        if timelist_unit[i].startswith('day'):
+            time_s.append(timelist_num[i] * 86400)
+            
+        elif timelist_unit[i].startswith('hr'):
+            time_s.append(timelist_num[i] * 3600)
+            
+        elif timelist_unit[i].startswith('min'):
+            time_s.append(timelist_num[i] * 60)
+            
+        else:
+            time_s.append(timelist_num[i])
+
+    total_time = 0
+    for i, _ in enumerate(time_s):
+        total_time = total_time + time_s[i]
+    
+    average_time = pretty(total_time / len(time_s))
+    total_time = pretty(total_time)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
