@@ -1,0 +1,1 @@
+sed s/$/'"\)'/g build.html | sed s/^/'\ \ \ \ htmlfile.write\("'/g
