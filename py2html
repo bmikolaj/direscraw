@@ -1,0 +1,1 @@
+sed s/'$"\)'//g buildpy.html | sed s/'^\ \ \ \ htmlfile.write\("'//g > build.html

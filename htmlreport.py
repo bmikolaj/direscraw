@@ -151,14 +151,25 @@ def main(input=None):
             time_s.append(timelist_num[i])
 
     total_time = 0
+    time_h = []
     for i, _ in enumerate(time_s):
         total_time = total_time + time_s[i]
+    #Time normalized to hours
+        time_h.append(format(time_s[i] / 3600, '.2f').rstrip('0').rstrip('.'))
     
     average_time = pretty(total_time / len(time_s))
     total_time = pretty(total_time)
 ##Number of files
     n_files = len(timelist)
-##Errors to list
+    for line in lines:
+        if re.search('Files Skipped', line):
+            n_skip = int(re.split(':', line)[1].strip().replace(';',''))
+##Number of directories
+    n_dir = 0 - n_skip
+    for line in lines:
+        if line.startswith('/'):
+            n_dir = n_dir + 1
+##Average Errors
     errlist = []
     errnums = []
     for i, line in enumerate(lines):
@@ -174,16 +185,33 @@ def main(input=None):
     
 	average_error = format(total_error / len(errnums),
                     '.2f').rstrip('0').rstrip('.') + '%'
-##Number of directories
+##Charts
+#List of usables#
+#
+#total_time - pretty Total Time
+#average_time - pretty Average Time
+#time_h - List of time normalized to hours
+#
+#errlist - List of errors with %
+#errnums - List of errors sans %
+#average_error - Average Error
+#
+#n_files - File count
+#n_dir - Directory Count
+#n_skip - Skipped Count
 
-##Build HTML
-#Charts
+#Error Distribution
+    errnums = ['5', '10', '10', '3.3', '50']
+    errnums.sort(key=float)
+    print(errnums)
+    err_dist = VerticalBarStack(errnums)
+    err_dist.bar(10,10)
+    err_dist.color('red')
+    print(err_dist)
+##Write HTML
+    #with open(os.path.join(os.path.split(input)[0], 'ErrorReport.html'), 'w')\
+    #                                                              as htmlfile:
     
-
-#Write HTML
-    with(os.path.join(os.path.split(input)[0], 'ErrorReport.html'), 'w') as\
-                                                              htmlfile:
-        pass
 
 
 if __name__ == '__main__':

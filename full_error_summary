@@ -1,0 +1,30 @@
+2014-10-21 10:21:41
+
+Files Skipped: 1;
+/home/brian/LinuxHelp/GitHub/direscraw/testing/large
+
+File Error% RunTime
+/home/brian/LinuxHelp/GitHub/direscraw/s/testing
+f 1 0% 1 s
+f2 0% 1 s
+f3 0% 1 s
+/home/brian/LinuxHelp/GitHub/direscraw/s/testing/a
+h1 0% 1 s
+h2 0% 1 s
+h3 0% 1 s
+/home/brian/LinuxHelp/GitHub/direscraw/s/testing/.hiddendir
+hid1 0% 1 s
+hid2 0% 1 s
+hid3 0% 1 s
+/home/brian/LinuxHelp/GitHub/direscraw/s/testing/b
+e1.mp3 0% 1 s
+e2.mp3 0% 1 s
+e3.mp3 0% 1 s
+/home/brian/LinuxHelp/GitHub/direscraw/s/testing/b/c
+g1 0% 1 s
+g2 0% 1 s
+g3 0% 1 s
+/home/brian/LinuxHelp/GitHub/direscraw/s/testing/b/to omit
+o1 0% 1 s
+o2 0% 1 s
+o3 0% 1 s
