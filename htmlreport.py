@@ -17,6 +17,7 @@
 
 
 import argparse
+from GChartWrapper import *
 import os.path
 import re
 import time
@@ -155,6 +156,8 @@ def main(input=None):
     
     average_time = pretty(total_time / len(time_s))
     total_time = pretty(total_time)
+##Number of files
+    n_files = len(timelist)
 ##Errors to list
     errlist = []
     errnums = []
@@ -171,8 +174,13 @@ def main(input=None):
     
 	average_error = format(total_error / len(errnums),
                     '.2f').rstrip('0').rstrip('.') + '%'
+##Number of directories
 
-#Build HTML
+##Build HTML
+#Charts
+    
+
+#Write HTML
     with(os.path.join(os.path.split(input)[0], 'ErrorReport.html'), 'w') as\
                                                               htmlfile:
         pass
