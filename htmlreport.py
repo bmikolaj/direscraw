@@ -19,6 +19,7 @@
 import argparse
 import os.path
 import re
+import time
 
 def pretty(input_time):
     if float(input_time).is_integer():
@@ -117,6 +118,7 @@ def main(input=None):
     file = open(input, 'r')
     lines = file.readlines()
     file.close()
+    tfmt = '%Y-%m-%d %H:%M:%S'
 ##Time summation/average
     timelist = []
     for i, line in enumerate(lines):
@@ -169,7 +171,13 @@ def main(input=None):
     
 	average_error = format(total_error / len(errnums),
                     '.2f').rstrip('0').rstrip('.') + '%'
-    
+
+#Build HTML
+    with(os.path.join(os.path.split(input)[0], 'ErrorReport.html'), 'w') as\
+                                                              htmlfile:
+        pass
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('input')
