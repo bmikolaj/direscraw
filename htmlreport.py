@@ -211,56 +211,73 @@ def main(input=None):
 #n_skip - Skipped Count
 
 #Error Distribution
-    #errnums = [2.2, 5, 10, 10, 10, 55, 56, 76, 86, 100]
-    errnums = numpy.random.randint(0,100,10000)
+    #errnums = [2.2, 5, 10, 10, 10, 55, 56, 76, 16, 10]
+    errnums = numpy.random.randint(0,100,100)
     x = errnums
     err_dist = Histogram(
         x=x,
         histnorm='count',
         autobinx=False,
-        xbins=XBins(
-            start=0,
-            end=100,
-            size=1
-        ),
-        marker=Marker(
-            color='red'
-        )
+        xbins=XBins(start=0, end=100, size=1),
+        marker=Marker(color='red')
     )
     layout = Layout(
         title='Error Distribution',
-        xaxis=XAxis(
-            title='Error Percent'
-            ),
-        yaxis=YAxis(
-            title='Count'
-        ),
+        xaxis=XAxis(title='Error Percent'),
+        yaxis=YAxis(title='Count'),
     )
     fig = Figure(data=Data([err_dist]), layout=layout)
     plotly.image.save_as(fig, os.path.join(output_images, 'err_dist.png'))
 #Time Distribution
-    time_h = numpy.random.randint(0,423000,10000)
+    time_h = numpy.random.randint(0,423000,100)
     x = time_h
     time_dist = Histogram(
         x=x,
         histnorm='count',
         autobinx=True,
-        marker=Marker(
-            color='green'
-        )
+        marker=Marker(color='green')
     )
     layout = Layout(
         title='Time Distribution',
-        xaxis=XAxis(
-            title='Time (hours)'
-            ),
-        yaxis=YAxis(
-            title='Count'
-        ),
+        xaxis=XAxis(title='Time (hours)'),
+        yaxis=YAxis(title='Count'),
     )
     fig = Figure(data=Data([time_dist]), layout=layout)
     plotly.image.save_as(fig, os.path.join(output_images, 'time_dist.png'))
-##Write HTML
+#Error Box Chart
+    y = errnums
+    err_box = Box(
+        y=y,
+        name='Error Percent',
+        boxmean=True,
+        marker=Marker(color='red'),
+        boxpoints='all',
+        jitter=0.5,
+        pointpos=-2.0
+    )
+    layout = Layout(
+        title='Error Box',
+    )
+    fig = Figure(data=Data([err_box]), layout=layout)
+    plotly.image.save_as(fig, os.path.join(output_images, 'err_box.png'))
+#Time Box Chart
+    y = time_h
+    time_box = Box(
+        y=y,
+        name='Time (hours)',
+        boxmean=True,
+        marker=Marker(color='green'),
+        boxpoints='all',
+        jitter=0.5,
+        pointpos=-2.0
+    )
+    layout = Layout(
+        title='Time Box',
+    )
+    fig = Figure(data=Data([time_box]), layout=layout)
+    plotly.image.save_as(fig, os.path.join(output_images, 'time_box.png'))
+    
+    ##Write HTML
     #with open(os.path.join(output_images, 'ErrorReport.html'), 'w')\
     #                                                 as htmlfile:
     

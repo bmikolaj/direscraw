@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<head><title>Directory Rescue Crawler ErrorReport</title></head>
+<head><title>Directory Rescue Crawler Error and Runtime Report</title></head>
 <style>
 body {
     font-family: sans-serif;
@@ -9,16 +9,18 @@ h1 {
     font-size: 2.5em;
 }
 table {
+    margin-left:auto; 
+    margin-right:auto; 
     border-spacing: 0px;
     text-align: center;
 }
-th {
+.sum th {
     font-family: serif;
     font-size: 2em;
     padding: 3px;
 }
-td {
-    padding: 10px;
+.sum td {
+    padding: 8px;
     font-size: 1.75em;
 }
 .right {
@@ -33,6 +35,9 @@ td {
 .half {
     width: 50%;
 }
+.isty {
+    width: 80%;
+}
 .larger {
     font-family: sans-serif;
     font-size: 1.3em;
@@ -44,9 +49,9 @@ direscraw v1.5
 <br>
 Generated: time
 </font></align>
-<h1 align=center>Directory Rescue Crawler ErrorReport</h1>
+<h1 align=center>Directory Rescue Crawler Error & Runtime Report</h1>
 <hr><br>
-<table align=center>
+<table class='sum'>
 <tr class='bottom'><th colspan=4><div class='larger'>Summary</div></th></tr>
 <tr><td rowspan=2>Directory Count</td><td rowspan=2 class='right'>n_dir</td><td>File Count</td><td>n_files</td></tr>
 <tr><td>Files Skipped</td><td>n_skip</td></tr>
@@ -55,6 +60,11 @@ Generated: time
 <tr class='top'><td rowspan=2>Average</td><td rowspan=2 class='right'>average_error</td><td>Total</td><td>total_time</td></tr>
 <tr><td>Average</td><td>average_time</td></tr>
 </table>
-
+<br>
+<table class='sum'>
+<tr><th colspan=2><div class='larger'>Charts</div></th></tr>
+<tr><td><img class='isty' src='err_dist.png' /></td><td><img class='isty' src='time_dist.png' /></td></tr>
+<tr><td><img class='isty' src='err_box.png' /></td><td><img class='isty' src='time_box.png' /></td></tr>
+</table>
 </body></html>
 <!-- <img src=\"" + str(G) + "\"> -->
