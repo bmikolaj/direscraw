@@ -222,14 +222,14 @@ def main(input=None):
         marker=Marker(color='red')
     )
     layout = Layout(
-        title='Error Distribution',
-        xaxis=XAxis(title='Error Percent'),
+        title='Error Percent Distribution',
+        xaxis=XAxis(title='Error (%)'),
         yaxis=YAxis(title='Count'),
     )
     fig = Figure(data=Data([err_dist]), layout=layout)
     plotly.image.save_as(fig, os.path.join(output_images, 'err_dist.png'))
 #Time Distribution
-    time_h = numpy.random.randint(0,423000,100)
+    time_h = numpy.random.randint(0,750,100)
     x = time_h
     time_dist = Histogram(
         x=x,
@@ -238,8 +238,8 @@ def main(input=None):
         marker=Marker(color='green')
     )
     layout = Layout(
-        title='Time Distribution',
-        xaxis=XAxis(title='Time (hours)'),
+        title='RunTime Distribution',
+        xaxis=XAxis(title='Duration (hours)'),
         yaxis=YAxis(title='Count'),
     )
     fig = Figure(data=Data([time_dist]), layout=layout)
@@ -249,14 +249,17 @@ def main(input=None):
     err_box = Box(
         y=y,
         name='Error Percent',
-        boxmean=True,
+        boxmean='sd',
         marker=Marker(color='red'),
         boxpoints='all',
         jitter=0.5,
         pointpos=-2.0
     )
     layout = Layout(
-        title='Error Box',
+        title='Error Percent BoxPlot',
+        yaxis=YAxis(title='Error (%)'),
+        height=500,
+        width=500
     )
     fig = Figure(data=Data([err_box]), layout=layout)
     plotly.image.save_as(fig, os.path.join(output_images, 'err_box.png'))
@@ -264,15 +267,18 @@ def main(input=None):
     y = time_h
     time_box = Box(
         y=y,
-        name='Time (hours)',
-        boxmean=True,
+        name='RunTime',
+        boxmean='sd',
         marker=Marker(color='green'),
         boxpoints='all',
         jitter=0.5,
         pointpos=-2.0
     )
     layout = Layout(
-        title='Time Box',
+        title='RunTime BoxPlot',
+        yaxis=YAxis(title='Duration (hours)'),
+        height=500,
+        width=500
     )
     fig = Figure(data=Data([time_box]), layout=layout)
     plotly.image.save_as(fig, os.path.join(output_images, 'time_box.png'))
