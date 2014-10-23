@@ -17,10 +17,12 @@
 
 
 import argparse
-from GChartWrapper import *
 import os.path
+import plotly.plotly as plotly
+from plotly.graph_objs import *
 import re
 import time
+import numpy
 
 def pretty(input_time):
     if float(input_time).is_integer():
@@ -116,6 +118,14 @@ def pretty(input_time):
 
 def main(input=None):
     input = os.path.abspath(input)
+    output_dir = os.path.split(input)[0]
+    output_images = output_dir
+    #output_images = os.path.join(output_dir, 'images')
+    try:
+        os.mkdir(os.path.join(output_dir, 'images'))
+    except OSError:
+        pass
+    
     file = open(input, 'r')
     lines = file.readlines()
     file.close()
@@ -201,16 +211,58 @@ def main(input=None):
 #n_skip - Skipped Count
 
 #Error Distribution
-    errnums = ['5', '10', '10', '3.3', '50']
-    errnums.sort(key=float)
-    print(errnums)
-    err_dist = VerticalBarStack(errnums)
-    err_dist.bar(10,10)
-    err_dist.color('red')
-    print(err_dist)
+    #errnums = [2.2, 5, 10, 10, 10, 55, 56, 76, 86, 100]
+    errnums = numpy.random.randint(0,100,10000)
+    x = errnums
+    err_dist = Histogram(
+        x=x,
+        histnorm='count',
+        autobinx=False,
+        xbins=XBins(
+            start=0,
+            end=100,
+            size=1
+        ),
+        marker=Marker(
+            color='red'
+        )
+    )
+    layout = Layout(
+        title='Error Distribution',
+        xaxis=XAxis(
+            title='Error Percent'
+            ),
+        yaxis=YAxis(
+            title='Count'
+        ),
+    )
+    fig = Figure(data=Data([err_dist]), layout=layout)
+    plotly.image.save_as(fig, os.path.join(output_images, 'err_dist.png'))
+#Time Distribution
+    time_h = numpy.random.randint(0,423000,10000)
+    x = time_h
+    time_dist = Histogram(
+        x=x,
+        histnorm='count',
+        autobinx=True,
+        marker=Marker(
+            color='green'
+        )
+    )
+    layout = Layout(
+        title='Time Distribution',
+        xaxis=XAxis(
+            title='Time (hours)'
+            ),
+        yaxis=YAxis(
+            title='Count'
+        ),
+    )
+    fig = Figure(data=Data([time_dist]), layout=layout)
+    plotly.image.save_as(fig, os.path.join(output_images, 'time_dist.png'))
 ##Write HTML
-    #with open(os.path.join(os.path.split(input)[0], 'ErrorReport.html'), 'w')\
-    #                                                              as htmlfile:
+    #with open(os.path.join(output_images, 'ErrorReport.html'), 'w')\
+    #                                                 as htmlfile:
     
 
 
