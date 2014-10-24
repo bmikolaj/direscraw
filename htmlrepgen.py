@@ -39,7 +39,7 @@ def pretty(input_time):
         days = re.split('\.', days)[0]
         hours = re.split('\.', hours)[0]
         minutes = re.split('\.', minutes)[0]
-        if not seconds = 0:
+        if not seconds == 0:
             seconds = format(seconds, '.2f').rstrip('0').rstrip('.')
 
         if days == '0':
@@ -68,7 +68,7 @@ def pretty(input_time):
         seconds = float(str('.') + re.split('\.', minutes)[1]) * 60
         hours = re.split('\.', hours)[0]
         minutes = re.split('\.', minutes)[0]
-        if not seconds = 0:
+        if not seconds == 0:
             seconds = format(seconds, '.2f').rstrip('0').rstrip('.')
 
         if hours == '0':
@@ -92,7 +92,7 @@ def pretty(input_time):
         minutes = str(float(str('.') + re.split('\.', hour_time)[1]) * 60)
         seconds = float(str('.') + re.split('\.', minutes)[1]) * 60
         minutes = re.split('\.', minutes)[0]
-        if not seconds = 0:
+        if not seconds == 0:
             seconds = format(seconds, '.2f').rstrip('0').rstrip('.')
 
         if minutes == '0':
@@ -109,7 +109,7 @@ def pretty(input_time):
         min_time = str(input_time / 60)
         minutes = re.split('\.', min_time)[0]
         seconds = float(str('.') + re.split('\.', min_time)[1]) * 60
-        if not seconds = 0:
+        if not seconds == 0:
             seconds = format(seconds, '.2f').rstrip('0').rstrip('.')
 
         if seconds == '0':
@@ -119,7 +119,7 @@ def pretty(input_time):
             pretty_time = minutes + ' minutes, ' + seconds + ' seconds'
     
     else:
-        if not seconds = 0:
+        if not seconds == 0:
             seconds = format(seconds, '.2f').rstrip('0').rstrip('.')
 
         pretty_time = seconds + ' seconds'
@@ -266,14 +266,13 @@ def main(input=None):
         name='Error Percent',
         boxmean=True,
         marker=Marker(color='red'),
-        boxpoints='all',
-        jitter=0.5,
-        pointpos=-2.0
+        boxpoints='outliers',
+        jitter=0.5
     )
     layout = Layout(
         title='Error Percent BoxPlot',
         yaxis=YAxis(title='Error (%)'),
-        boxgap=0.5,
+        boxgap=0.65,
         height=500,
         width=500,
 	annotations=Annotations([
@@ -323,14 +322,13 @@ def main(input=None):
         name='RunTime',
         boxmean=True,
         marker=Marker(color='green'),
-        boxpoints='all',
-        jitter=0.5,
-        pointpos=-2.0
+        boxpoints='outliers',
+        jitter=0.5
     )
     layout = Layout(
         title='RunTime BoxPlot',
         yaxis=YAxis(title='Duration (hours)'),
-        boxgap=0.5,
+        boxgap=0.65,
         height=500,
         width=500,
 	annotations=Annotations([
@@ -370,11 +368,11 @@ def main(input=None):
     plotly.image.save_as(fig, os.path.join(output_images, 'time_box.png'))
     
     ##Write HTML
-    q1_time = pretty(numpy.percentile(time_s, 25))
-    q2_time = pretty(numpy.percentile(time_s, 50))
-    q3_time = pretty(numpy.percentile(time_s, 75))
-    min_time = pretty(numpy.amin(time_s))
-    max_time = pretty(numpy.amax(time_s))
+    #q1_time = pretty(numpy.percentile(time_s, 25))
+    #q2_time = pretty(numpy.percentile(time_s, 50))
+    #q3_time = pretty(numpy.percentile(time_s, 75))
+    #min_time = pretty(numpy.amin(time_s))
+    #max_time = pretty(numpy.amax(time_s))
     #with open(os.path.join(output_dir, 'direscraw_HTMLReport.html'), 'w')\
     #                                                 as htmlfile:
     #if nskip == 0:
