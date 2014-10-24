@@ -53,8 +53,12 @@ Generated: time
 <hr><br>
 <table class='sum'>
 <tr class='bottom'><th colspan=4><div class='larger'>Summary</div></th></tr>
+<!-- if nskip == 0:
+<tr><td>Directory Count</td><td class='right'>n_dir</td><td>File Count</td><td>n_files</td></tr> -->
+<!-- else: -->
 <tr><td rowspan=2>Directory Count</td><td rowspan=2 class='right'>n_dir</td><td>File Count</td><td>n_files</td></tr>
 <tr><td>Files Skipped</td><td>n_skip</td></tr>
+<!-- end else -->
 <tr><td class='half; right' colspan=2></td><td class='half' colspan=2></td></tr>
 <tr class='top'><th colspan=2 class='right'>Error Percent</th><th colspan=2>Run Time</th></tr>
 <tr class='top'><td rowspan=2>Average</td><td rowspan=2 class='right'>average_error</td><td>Total</td><td>total_time</td></tr>
