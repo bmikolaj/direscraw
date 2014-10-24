@@ -39,7 +39,9 @@ def pretty(input_time):
         days = re.split('\.', days)[0]
         hours = re.split('\.', hours)[0]
         minutes = re.split('\.', minutes)[0]
-        seconds = format(seconds, '.2f').rstrip('0').rstrip('.')
+        if not seconds = 0:
+            seconds = format(seconds, '.2f').rstrip('0').rstrip('.')
+
         if days == '0':
             pretty_time = months + ' months'
             
@@ -66,7 +68,9 @@ def pretty(input_time):
         seconds = float(str('.') + re.split('\.', minutes)[1]) * 60
         hours = re.split('\.', hours)[0]
         minutes = re.split('\.', minutes)[0]
-        seconds = format(seconds, '.2f').rstrip('0').rstrip('.')
+        if not seconds = 0:
+            seconds = format(seconds, '.2f').rstrip('0').rstrip('.')
+
         if hours == '0':
             pretty_time = days + ' days'
             
@@ -88,7 +92,9 @@ def pretty(input_time):
         minutes = str(float(str('.') + re.split('\.', hour_time)[1]) * 60)
         seconds = float(str('.') + re.split('\.', minutes)[1]) * 60
         minutes = re.split('\.', minutes)[0]
-        seconds = format(seconds, '.2f').rstrip('0').rstrip('.')
+        if not seconds = 0:
+            seconds = format(seconds, '.2f').rstrip('0').rstrip('.')
+
         if minutes == '0':
             pretty_time = hours + ' hours'
         
@@ -103,7 +109,9 @@ def pretty(input_time):
         min_time = str(input_time / 60)
         minutes = re.split('\.', min_time)[0]
         seconds = float(str('.') + re.split('\.', min_time)[1]) * 60
-        seconds = format(seconds, '.2f').rstrip('0').rstrip('.')
+        if not seconds = 0:
+            seconds = format(seconds, '.2f').rstrip('0').rstrip('.')
+
         if seconds == '0':
             pretty_time = minutes + ' minutes'
 
@@ -111,7 +119,9 @@ def pretty(input_time):
             pretty_time = minutes + ' minutes, ' + seconds + ' seconds'
     
     else:
-        seconds = format(input_time, '.2f').rstrip('0').rstrip('.')
+        if not seconds = 0:
+            seconds = format(seconds, '.2f').rstrip('0').rstrip('.')
+
         pretty_time = seconds + ' seconds'
     
     return pretty_time
