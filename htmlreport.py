@@ -210,7 +210,7 @@ def main(input=None):
 #n_dir - Directory Count
 #n_skip - Skipped Count
 
-    n_val = 100
+    n_val = 1000
 #Error Distribution
     errnums = numpy.random.randint(0,100,n_val)
     x = errnums
@@ -249,6 +249,8 @@ def main(input=None):
     yq1 = numpy.percentile(errnums, 25)
     yq2 = numpy.percentile(errnums, 50)
     yq3 = numpy.percentile(errnums, 75)
+    ymax = numpy.amax(errnums)
+    ymin = numpy.amin(errnums)
     err_box = Box(
         y=y,
         name='Error Percent',
@@ -267,22 +269,34 @@ def main(input=None):
 	annotations=Annotations([
             Annotation(
                 x=0.25,
+                y=ymin,
+                text=str(ymin) + '%',
+                showarrow=False
+            ),
+            Annotation(
+                x=0.25,
                 y=yq1,
-                text=str(yq1).rstrip('0').rstrip('.') + '%',
+                text=str(yq1) + '%',
                 showarrow=False
             ),
             Annotation(
                 x=0.25,
                 y=yq2,
-                text=str(yq2).rstrip('0').rstrip('.') + '%',
+                text=str(yq2) + '%',
                 showarrow=False
             ),
             Annotation(
                 x=0.25,
                 y=yq3,
-                text=str(yq3).rstrip('0').rstrip('.') + '%',
+                text=str(yq3) + '%',
                 showarrow=False
             ),
+            Annotation(
+                x=0.25,
+                y=ymax,
+                text=str(ymax) + '%',
+                showarrow=False
+            )
         ])
     )
     fig = Figure(data=Data([err_box]), layout=layout)
@@ -292,6 +306,8 @@ def main(input=None):
     yq1 = numpy.percentile(time_h, 25)
     yq2 = numpy.percentile(time_h, 50)
     yq3 = numpy.percentile(time_h, 75)
+    ymax = numpy.amax(time_h)
+    ymin = numpy.amin(time_h)
     time_box = Box(
         y=y,
         name='RunTime',
@@ -310,22 +326,34 @@ def main(input=None):
 	annotations=Annotations([
             Annotation(
                 x=0.25,
+                y=ymin,
+                text=str(ymin),
+                showarrow=False
+            ),
+            Annotation(
+                x=0.25,
                 y=yq1,
-                text=str(yq1).rstrip('0').rstrip('.'),
+                text=str(yq1),
                 showarrow=False
             ),
             Annotation(
                 x=0.25,
                 y=yq2,
-                text=str(yq2).rstrip('0').rstrip('.'),
+                text=str(yq2),
                 showarrow=False
             ),
             Annotation(
                 x=0.25,
                 y=yq3,
-                text=str(yq3).rstrip('0').rstrip('.'),
+                text=str(yq3),
                 showarrow=False
             ),
+            Annotation(
+                x=0.25,
+                y=ymax,
+                text=str(ymax).rstrip('0').rstrip('.'),
+                showarrow=False
+            )
         ])
     )
     fig = Figure(data=Data([time_box]), layout=layout)
@@ -334,7 +362,7 @@ def main(input=None):
     ##Write HTML
     #with open(os.path.join(output_images, 'ErrorReport.html'), 'w')\
     #                                                 as htmlfile:
-    
+    #if nskip == 0:
 
 
 if __name__ == '__main__':
