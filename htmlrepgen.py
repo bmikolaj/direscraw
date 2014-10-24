@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#HTML Report Generator, htmlreport v1.0
+#Error and Runtime HTML Report Generator, htmlrepgen v1.0
 #Copyright (c) 2014 by Brian Mikolajczyk, brianm12@gmail.com
 
 # This program is free software: you can redistribute it and/or modify
@@ -210,7 +210,7 @@ def main(input=None):
 #n_dir - Directory Count
 #n_skip - Skipped Count
 
-    n_val = 1000
+    n_val = 500
 #Error Distribution
     errnums = numpy.random.randint(0,100,n_val)
     x = errnums
@@ -360,7 +360,7 @@ def main(input=None):
     plotly.image.save_as(fig, os.path.join(output_images, 'time_box.png'))
     
     ##Write HTML
-    #with open(os.path.join(output_images, 'ErrorReport.html'), 'w')\
+    #with open(os.path.join(output_images, 'direscraw_HTMLReport.html'), 'w')\
     #                                                 as htmlfile:
     #if nskip == 0:
 
@@ -369,6 +369,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('input')
     parser.add_argument('--version', action='version',
-                        version='htmlreport v1.0')
+                        version='htmlrepgen v1.0')
 
     main(**vars(parser.parse_args()))

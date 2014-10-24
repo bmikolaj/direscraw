@@ -1,13 +1,14 @@
 #Directory Rescue Crawler
-v1.43
+v2.0
 
-#####Errcalc v2.1
+#####Errcalc v2.2
+#####Htmlrepgen v1.0
 
 ##Description
 
 Directory Rescue Crawler uses `ddrescue` to recover full directories from one location to another. `ddrescue` by itself can only recover individual files or full filesystems.
 
-This program also prints an error and runtime summary in each subdirectory copied and a full summary in the root directory via the included `errcalc` program. 
+This program also prints an error and runtime summary in each subdirectory copied and a full summary in the root directory via the included `errcalc` program. This report is then fed into `htmlrepgen` to generate a full HTML report (`direscraw_HTMLReport.html`) in the root directory.
 
 ##Dependencies
 Directory Rescue Crawler was designed for Linux and uses the following programs;
@@ -18,6 +19,8 @@ Directory Rescue Crawler was designed for Linux and uses the following programs;
 * GNU ddrescue (installed via setup.sh)
 * Python setuptools (installed via setup.sh)
 * Python module: `bitmath` (installed via setup.sh)
+* Python module: `numpy` (installed via setup.sh)
+* Python module: `plotly` (installed via setup.sh)
 * g++ (for installation; installed via setup.sh)
 * Lzip (for installation; installed via setup.sh)
 * Gunzip (for installation)
@@ -67,7 +70,13 @@ If `ddrescue` is running to long, or you want to manually skip a file while it's
   `sudo ./setup.sh uninstall`
 
 ##Changelog
-* v1.43 (20 October 2014
+* v2.0
+
+  Added HTML Report, `htmlrepgen`
+
+  Updated `setup.sh`, `direscraw`, and `errcalc` to reflect changes
+
+* v1.43 (20 October 2014)
 
   Added setuptools to setup.sh
 

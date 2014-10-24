@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#Directory Rescue Crawler, direscraw v1.43
+#Directory Rescue Crawler, direscraw v2.0
 #Copyright (c) 2014 by Brian Mikolajczyk, brianm12@gmail.com
 
 # This program is free software: you can redistribute it and/or modify
@@ -166,6 +166,9 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False,
             full_error_summary.flush()
             for lines in FES_lines:
                 full_error_summary.write(lines)
+
+        subprocess.call(['htmlrepgen',
+                        os.path.join(output_dir, 'full_error_summary')])
     else:
         os.remove(os.path.join(output_dir, 'full_error_summary'))
 
@@ -174,7 +177,7 @@ if __name__ == '__main__':
     parser.add_argument('input_dir')
     parser.add_argument('output_dir')
     parser.add_argument('--version', action='version',
-                        version='direscraw v1.43; errcalc v2.1')
+                        version='direscraw v2.0; errcalc v2.2; htmlrepgen v1.0')
     parser.add_argument('-d', '--debug', action='store_true',
                          help=argparse.SUPPRESS)
     parser.add_argument('-b', '--blacklist', nargs='+',

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#Error Percentage and Runtime Calculation Summary, errcalc v2.1
+#Error Percentage and Runtime Calculation Summary, errcalc v2.2
 #Copyright (c) 2014 by Brian Mikolajczyk, brianm12@gmail.com
 
 # This program is free software: you can redistribute it and/or modify
@@ -150,6 +150,6 @@ if __name__ == '__main__':
     parser.add_argument('-s', '--standalone', action='store_true',
                         help=argparse.SUPPRESS)
     parser.add_argument('--version', action='version',
-                        version='errcalc v2.1')
+                        version='errcalc v2.2')
 
     main(**vars(parser.parse_args()))

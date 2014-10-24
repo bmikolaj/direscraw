@@ -1,6 +1,8 @@
 #!/bin/bash
 #Setup File
-#Directory Rescue Crawler, direscraw v1.43; Error Percentage and Runtime Calculation Summary, errcalc v2.1
+#Directory Rescue Crawler, direscraw v2.0
+#Error Percentage and Runtime Calculation Summary, errcalc v2.2
+#Error and Runtime HTML Report Generator, htmlrepgen v1.0
 #Copyright (c) 2014 by Brian Mikolajczyk, brianm12@gmail.com
 
 # This program is free software: you can redistribute it and/or modify
@@ -61,16 +63,18 @@ if [ $1 == "install" ]; then
 		sudo pip install plotly
 	fi
 	sudo pip install plotly --upgrade
-        python -c "import plotly; plotly.tools.set_credentials_file(username='p014k', api_key='4rif4f03pe')"
+	python -c "import plotly; plotly.tools.set_credentials_file(username='p014k', api_key='4rif4f03pe')"
 	rm bitmath.html setuptools* plotly.html numpy.html
 	sudo cp errcalc.py /usr/local/bin/errcalc
 	sudo cp direscraw.py /usr/local/bin/direscraw
+	sudo cp htmlrepgen.py /usr/local/bin/htmlrepgen
+	sudo chmod a+x /usr/local/bin/htmlrepgen
 	sudo chmod a+x /usr/local/bin/direscraw
 	sudo chmod a+x /usr/local/bin/errcalc
-	echo "direscraw and errcalc installed successfully"
+	echo "direscraw, errcalc, and htmlrepgen installed successfully"
 elif [[ $1 == "uninstall" ]]; then
-	sudo rm /usr/local/bin/errcalc /usr/local/bin/direscraw
-	echo "direscraw and errcalc uninstalled successfully"
+	sudo rm /usr/local/bin/errcalc /usr/local/bin/direscraw /usr/local/bin/htmlrepgen
+	echo "direscraw, errcalc, and htmlrepgen uninstalled successfully"
 else
 	echo "Usage"
 	echo "sudo ./setup.sh install to install"
