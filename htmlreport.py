@@ -258,6 +258,7 @@ def main(input=None):
     layout = Layout(
         title='Error Percent BoxPlot',
         yaxis=YAxis(title='Error (%)'),
+        boxgap=0.5,
         height=500,
         width=500
     )
@@ -277,6 +278,7 @@ def main(input=None):
     layout = Layout(
         title='RunTime BoxPlot',
         yaxis=YAxis(title='Duration (hours)'),
+        boxgap=0.5,
         height=500,
         width=500
     )

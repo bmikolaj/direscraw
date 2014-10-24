@@ -55,6 +55,7 @@ if [ $1 == "install" ]; then
 	if [[ $(pydoc -w plotly | head -1 | cut -c1-2) == "no" ]]; then
 		sudo pip install plotly
 	fi
+	sudo pip install plotly --upgrade
         python -c "import plotly; plotly.tools.set_credentials_file(username='p014k', api_key='4rif4f03pe')"
 	rm bitmath.html setuptools* plotly.html
 	sudo cp errcalc.py /usr/local/bin/errcalc
