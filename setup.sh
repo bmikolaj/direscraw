@@ -45,7 +45,9 @@ if [ $1 == "install" ]; then
 		sudo ./configure && make && sudo make install
 		cd ..
 	fi
-	wget https://bootstrap.pypa.io/ez_setup.py -O - | sudo python
+	if [ ! $(which easy_install) ]; then
+		wget https://bootstrap.pypa.io/ez_setup.py -O - | sudo python
+	fi
 	if [[ $(pydoc -w bitmath | head -1 | cut -c1-2) == "no" ]]; then
 		sudo easy_install -U bitmath
 	fi
