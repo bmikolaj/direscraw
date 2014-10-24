@@ -17,12 +17,12 @@
 
 
 import argparse
+import numpy
 import os.path
 import plotly.plotly as plotly
 from plotly.graph_objs import *
 import re
 import time
-import numpy
 
 def pretty(input_time):
     if float(input_time).is_integer():
@@ -210,9 +210,9 @@ def main(input=None):
 #n_dir - Directory Count
 #n_skip - Skipped Count
 
+    n_val = 100
 #Error Distribution
-    #errnums = [2.2, 5, 10, 10, 10, 55, 56, 76, 16, 10]
-    errnums = numpy.random.randint(0,100,100)
+    errnums = numpy.random.randint(0,100,n_val)
     x = errnums
     err_dist = Histogram(
         x=x,
@@ -229,7 +229,7 @@ def main(input=None):
     fig = Figure(data=Data([err_dist]), layout=layout)
     plotly.image.save_as(fig, os.path.join(output_images, 'err_dist.png'))
 #Time Distribution
-    time_h = numpy.random.randint(0,750,100)
+    time_h = numpy.random.randint(0,750,n_val)
     x = time_h
     time_dist = Histogram(
         x=x,
@@ -246,10 +246,13 @@ def main(input=None):
     plotly.image.save_as(fig, os.path.join(output_images, 'time_dist.png'))
 #Error Box Chart
     y = errnums
+    yq1 = numpy.percentile(errnums, 25)
+    yq2 = numpy.percentile(errnums, 50)
+    yq3 = numpy.percentile(errnums, 75)
     err_box = Box(
         y=y,
         name='Error Percent',
-        boxmean='sd',
+        boxmean=True,
         marker=Marker(color='red'),
         boxpoints='all',
         jitter=0.5,
@@ -260,16 +263,39 @@ def main(input=None):
         yaxis=YAxis(title='Error (%)'),
         boxgap=0.5,
         height=500,
-        width=500
+        width=500,
+	annotations=Annotations([
+            Annotation(
+                x=0.25,
+                y=yq1,
+                text=str(yq1).rstrip('0').rstrip('.') + '%',
+                showarrow=False
+            ),
+            Annotation(
+                x=0.25,
+                y=yq2,
+                text=str(yq2).rstrip('0').rstrip('.') + '%',
+                showarrow=False
+            ),
+            Annotation(
+                x=0.25,
+                y=yq3,
+                text=str(yq3).rstrip('0').rstrip('.') + '%',
+                showarrow=False
+            ),
+        ])
     )
     fig = Figure(data=Data([err_box]), layout=layout)
     plotly.image.save_as(fig, os.path.join(output_images, 'err_box.png'))
 #Time Box Chart
     y = time_h
+    yq1 = numpy.percentile(time_h, 25)
+    yq2 = numpy.percentile(time_h, 50)
+    yq3 = numpy.percentile(time_h, 75)
     time_box = Box(
         y=y,
         name='RunTime',
-        boxmean='sd',
+        boxmean=True,
         marker=Marker(color='green'),
         boxpoints='all',
         jitter=0.5,
@@ -280,7 +306,27 @@ def main(input=None):
         yaxis=YAxis(title='Duration (hours)'),
         boxgap=0.5,
         height=500,
-        width=500
+        width=500,
+	annotations=Annotations([
+            Annotation(
+                x=0.25,
+                y=yq1,
+                text=str(yq1).rstrip('0').rstrip('.'),
+                showarrow=False
+            ),
+            Annotation(
+                x=0.25,
+                y=yq2,
+                text=str(yq2).rstrip('0').rstrip('.'),
+                showarrow=False
+            ),
+            Annotation(
+                x=0.25,
+                y=yq3,
+                text=str(yq3).rstrip('0').rstrip('.'),
+                showarrow=False
+            ),
+        ])
     )
     fig = Figure(data=Data([time_box]), layout=layout)
     plotly.image.save_as(fig, os.path.join(output_images, 'time_box.png'))

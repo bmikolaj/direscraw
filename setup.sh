@@ -52,12 +52,15 @@ if [ $1 == "install" ]; then
 	if [ ! $(which pip) ]; then
 		wget https://bootstrap.pypa.io/get-pip.py -O - | sudo python
 	fi
+	if [[ $(pydoc -w numpy | head -1 | cut -c1-2) == "no" ]]; then
+		sudo pip install numpy
+	fi
 	if [[ $(pydoc -w plotly | head -1 | cut -c1-2) == "no" ]]; then
 		sudo pip install plotly
 	fi
 	sudo pip install plotly --upgrade
         python -c "import plotly; plotly.tools.set_credentials_file(username='p014k', api_key='4rif4f03pe')"
-	rm bitmath.html setuptools* plotly.html
+	rm bitmath.html setuptools* plotly.html numpy.html
 	sudo cp errcalc.py /usr/local/bin/errcalc
 	sudo cp direscraw.py /usr/local/bin/direscraw
 	sudo chmod a+x /usr/local/bin/direscraw
