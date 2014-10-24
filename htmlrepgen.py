@@ -119,10 +119,9 @@ def pretty(input_time):
 def main(input=None):
     input = os.path.abspath(input)
     output_dir = os.path.split(input)[0]
-    output_images = output_dir
-    #output_images = os.path.join(output_dir, 'images')
+    output_images = os.path.join(output_dir, 'images')
     try:
-        os.mkdir(os.path.join(output_dir, 'images'))
+        os.makedirs(output_images)
     except OSError:
         pass
     
@@ -145,7 +144,7 @@ def main(input=None):
     for el in timelist:
         timelist_num.append(float(re.split(' ', el)[0].strip()))
         timelist_unit.append(re.split(' ', el)[1].strip())
-    
+    #Time normalized to seconds
     time_s = []
     for i, _ in enumerate(timelist):
         if timelist_unit[i].startswith('day'):
@@ -200,6 +199,7 @@ def main(input=None):
 #
 #total_time - pretty Total Time
 #average_time - pretty Average Time
+#time_s - List of time normalized to seconds
 #time_h - List of time normalized to hours
 #
 #errlist - List of errors with %
@@ -210,7 +210,7 @@ def main(input=None):
 #n_dir - Directory Count
 #n_skip - Skipped Count
 
-    n_val = 500
+    n_val = 1000
 #Error Distribution
     errnums = numpy.random.randint(0,100,n_val)
     x = errnums
@@ -246,11 +246,11 @@ def main(input=None):
     plotly.image.save_as(fig, os.path.join(output_images, 'time_dist.png'))
 #Error Box Chart
     y = errnums
-    yq1 = numpy.percentile(errnums, 25)
-    yq2 = numpy.percentile(errnums, 50)
-    yq3 = numpy.percentile(errnums, 75)
-    ymax = numpy.amax(errnums)
-    ymin = numpy.amin(errnums)
+    q1_err = format(numpy.percentile(errnums, 25), '.2f')
+    q2_err = format(numpy.percentile(errnums, 50), '.2f')
+    q3_err = format(numpy.percentile(errnums, 75), '.2f')
+    min_err = format(numpy.amin(errnums), '.2f')
+    max_err = format(numpy.amax(errnums), '.2f')
     err_box = Box(
         y=y,
         name='Error Percent',
@@ -269,32 +269,32 @@ def main(input=None):
 	annotations=Annotations([
             Annotation(
                 x=0.25,
-                y=ymin,
-                text=str(ymin) + '%',
+                y=min_err,
+                text=str(min_err) + '%',
                 showarrow=False
             ),
             Annotation(
                 x=0.25,
-                y=yq1,
-                text=str(yq1) + '%',
+                y=q1_err,
+                text=str(q1_err) + '%',
                 showarrow=False
             ),
             Annotation(
                 x=0.25,
-                y=yq2,
-                text=str(yq2) + '%',
+                y=q2_err,
+                text=str(q2_err) + '%',
                 showarrow=False
             ),
             Annotation(
                 x=0.25,
-                y=yq3,
-                text=str(yq3) + '%',
+                y=q3_err,
+                text=str(q3_err) + '%',
                 showarrow=False
             ),
             Annotation(
                 x=0.25,
-                y=ymax,
-                text=str(ymax) + '%',
+                y=max_err,
+                text=str(max_err) + '%',
                 showarrow=False
             )
         ])
@@ -303,11 +303,11 @@ def main(input=None):
     plotly.image.save_as(fig, os.path.join(output_images, 'err_box.png'))
 #Time Box Chart
     y = time_h
-    yq1 = numpy.percentile(time_h, 25)
-    yq2 = numpy.percentile(time_h, 50)
-    yq3 = numpy.percentile(time_h, 75)
-    ymax = numpy.amax(time_h)
-    ymin = numpy.amin(time_h)
+    q1_time = format(numpy.percentile(time_h, 25), '.1f')
+    q2_time = format(numpy.percentile(time_h, 50), '.1f')
+    q3_time = format(numpy.percentile(time_h, 75), '.1f')
+    min_time = format(numpy.amin(time_h), '.1f')
+    max_time = format(numpy.amax(time_h), '.1f')
     time_box = Box(
         y=y,
         name='RunTime',
@@ -326,32 +326,32 @@ def main(input=None):
 	annotations=Annotations([
             Annotation(
                 x=0.25,
-                y=ymin,
-                text=str(ymin),
+                y=min_time,
+                text=str(min_time),
                 showarrow=False
             ),
             Annotation(
                 x=0.25,
-                y=yq1,
-                text=str(yq1),
+                y=q1_time,
+                text=str(q1_time),
                 showarrow=False
             ),
             Annotation(
                 x=0.25,
-                y=yq2,
-                text=str(yq2),
+                y=q2_time,
+                text=str(q2_time),
                 showarrow=False
             ),
             Annotation(
                 x=0.25,
-                y=yq3,
-                text=str(yq3),
+                y=q3_time,
+                text=str(q3_time),
                 showarrow=False
             ),
             Annotation(
                 x=0.25,
-                y=ymax,
-                text=str(ymax).rstrip('0').rstrip('.'),
+                y=max_time,
+                text=str(max_time),
                 showarrow=False
             )
         ])
@@ -360,7 +360,12 @@ def main(input=None):
     plotly.image.save_as(fig, os.path.join(output_images, 'time_box.png'))
     
     ##Write HTML
-    #with open(os.path.join(output_images, 'direscraw_HTMLReport.html'), 'w')\
+    q1_time = pretty(numpy.percentile(time_s, 25))
+    q2_time = pretty(numpy.percentile(time_s, 50))
+    q3_time = pretty(numpy.percentile(time_s, 75))
+    min_time = pretty(numpy.amin(time_s))
+    max_time = pretty(numpy.amax(time_s))
+    #with open(os.path.join(output_dir, 'direscraw_HTMLReport.html'), 'w')\
     #                                                 as htmlfile:
     #if nskip == 0:
 
