@@ -25,8 +25,12 @@ import re
 import time
 
 def pretty(input_time):
-    if float(input_time).is_integer():
+    if float(input_time).is_integer() and not re.search('\.',
+                                                        str(input_time)):
         input_time = float(str(input_time) + '.0')
+    else:
+        input_time = float(input_time)
+
 #Pretty time formatting
     #Month time
     if input_time > 2628000:
@@ -39,26 +43,27 @@ def pretty(input_time):
         days = re.split('\.', days)[0]
         hours = re.split('\.', hours)[0]
         minutes = re.split('\.', minutes)[0]
-        if not seconds == 0:
+        if not seconds == '0':
             seconds = format(seconds, '.2f').rstrip('0').rstrip('.')
 
         if days == '0':
-            pretty_time = months + ' months'
+            pretty_time = str(months) + ' months'
             
         elif hours == '0':
-            pretty_time = months + ' months, ' + days + ' days'
+            pretty_time = str(months) + ' months, ' + str(days) + ' days'
             
         elif minutes == '0':
-            pretty_time = months + ' months, ' + days + ' days, ' + hours +\
-                  ' hours'
+            pretty_time = str(months) + ' months, ' + str(days) + ' days, ' +\
+                          str(hours) + ' hours'
         
         elif seconds == '0':
-            pretty_time = months + ' months, ' + days + ' days, ' + hours +\
-                  ' hours, ' + minutes + ' minutes'
+            pretty_time = str(months) + ' months, ' + str(days) + ' days, ' +\
+                          str(hours) + ' hours, ' + str(minutes) + ' minutes'
 
         else:
-            pretty_time = months + ' months, ' + days + ' days, ' + hours +\
-                  ' hours, ' + minutes + ' minutes, ' + seconds + ' seconds'
+            pretty_time = str(months) + ' months, ' + str(days) + ' days, ' +\
+                          str(hours) + ' hours, ' + str(minutes) +\
+                          ' minutes, ' + str(seconds) + ' seconds'
     #Day time
     elif input_time > 86400:
         day_time = str(input_time / 86400)
@@ -68,23 +73,24 @@ def pretty(input_time):
         seconds = float(str('.') + re.split('\.', minutes)[1]) * 60
         hours = re.split('\.', hours)[0]
         minutes = re.split('\.', minutes)[0]
-        if not seconds == 0:
+        if not seconds == '0':
             seconds = format(seconds, '.2f').rstrip('0').rstrip('.')
 
         if hours == '0':
-            pretty_time = days + ' days'
+            pretty_time = str(days) + ' days'
             
         elif minutes == '0':
-            pretty_time = days + ' days, ' + hours +\
-                  ' hours'
+            pretty_time = str(days) + ' days, ' + str(hours) +\
+                          ' hours'
         
         elif seconds == '0':
-            pretty_time = days + ' days, ' + hours +\
-                  ' hours, ' + minutes + ' minutes'
+            pretty_time = str(days) + ' days, ' + str(hours) +\
+                          ' hours, ' + str(minutes) + ' minutes'
 
         else:
-            pretty_time = days + ' days, ' + hours +\
-                  ' hours, ' + minutes + ' minutes, ' + seconds + ' seconds'
+            pretty_time = str(days) + ' days, ' + str(hours) +\
+                          ' hours, ' + str(minutes) + ' minutes, ' +\
+                          str(seconds) + ' seconds'
     #Hour time
     elif input_time > 3600:
         hour_time = str(input_time / 3600)
@@ -92,37 +98,36 @@ def pretty(input_time):
         minutes = str(float(str('.') + re.split('\.', hour_time)[1]) * 60)
         seconds = float(str('.') + re.split('\.', minutes)[1]) * 60
         minutes = re.split('\.', minutes)[0]
-        if not seconds == 0:
+        if not seconds == '0':
             seconds = format(seconds, '.2f').rstrip('0').rstrip('.')
 
         if minutes == '0':
-            pretty_time = hours + ' hours'
+            pretty_time = str(hours) + ' hours'
         
         elif seconds == '0':
-            pretty_time = hours + ' hours, ' + minutes + ' minutes'
+            pretty_time = str(hours) + ' hours, ' + str(minutes) + ' minutes'
 
         else:
-            pretty_time = hours + ' hours, ' + minutes + ' minutes, ' +\
-                                                    seconds + ' seconds'
+            pretty_time = str(hours) + ' hours, ' + str(minutes) +\
+                          ' minutes, ' + str(seconds) + ' seconds'
     #Minute time
     elif input_time > 60:
         min_time = str(input_time / 60)
         minutes = re.split('\.', min_time)[0]
         seconds = float(str('.') + re.split('\.', min_time)[1]) * 60
-        if not seconds == 0:
+        if not seconds == '0':
             seconds = format(seconds, '.2f').rstrip('0').rstrip('.')
 
         if seconds == '0':
-            pretty_time = minutes + ' minutes'
+            pretty_time = str(minutes) + ' minutes'
 
         else:
-            pretty_time = minutes + ' minutes, ' + seconds + ' seconds'
+            pretty_time = str(minutes) + ' minutes, ' + str(seconds) +\
+                          ' seconds'
     
     else:
-        if not seconds == 0:
-            seconds = format(seconds, '.2f').rstrip('0').rstrip('.')
-
-        pretty_time = seconds + ' seconds'
+        seconds = format(input_time, '.2f').rstrip('0').rstrip('.')
+        pretty_time = str(seconds) + ' seconds'
     
     return pretty_time
 
@@ -368,11 +373,11 @@ def main(input=None):
     plotly.image.save_as(fig, os.path.join(output_images, 'time_box.png'))
     
     ##Write HTML
-    #q1_time = pretty(numpy.percentile(time_s, 25))
-    #q2_time = pretty(numpy.percentile(time_s, 50))
-    #q3_time = pretty(numpy.percentile(time_s, 75))
-    #min_time = pretty(numpy.amin(time_s))
-    #max_time = pretty(numpy.amax(time_s))
+    q1_time = pretty(numpy.percentile(time_s, 25))
+    q2_time = pretty(numpy.percentile(time_s, 50))
+    q3_time = pretty(numpy.percentile(time_s, 75))
+    min_time = pretty(numpy.amin(time_s))
+    max_time = pretty(numpy.amax(time_s))
     #with open(os.path.join(output_dir, 'direscraw_HTMLReport.html'), 'w')\
     #                                                 as htmlfile:
     #if nskip == 0:
