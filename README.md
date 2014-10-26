@@ -76,6 +76,8 @@ If `ddrescue` is running to long, or you want to manually skip a file while it's
 
   Updated `setup.sh`, `direscraw`, and `errcalc` to reflect changes
 
+  Removed easy_install from setup.sh; now unnecessary. Changed `bitmath` module install to `pip`
+
 * v1.43 (20 October 2014)
 
   Added setuptools to setup.sh
@@ -84,7 +86,7 @@ If `ddrescue` is running to long, or you want to manually skip a file while it's
 
   Added number of files skipped to error reporting
 
-  Changed `bitmath` module install to `easy_install` from PyPi
+  Changed `bitmath` module install to `easy_install`
 
 * v1.41 (18 October 2014)
 
