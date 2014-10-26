@@ -13,11 +13,11 @@ This program also prints an error and runtime summary in each subdirectory copie
 ##Dependencies
 Directory Rescue Crawler was designed for Linux and uses the following programs;
 
+* Git
 * Bash
 * Python 2.7+
-* Git
 * GNU ddrescue (installed via setup.sh)
-* Python setuptools (installed via setup.sh)
+* Python `setuptools` (installed via setup.sh)
 * Python module: `bitmath` (installed via setup.sh)
 * Python module: `numpy` (installed via setup.sh)
 * Python module: `plotly` (installed via setup.sh)
@@ -153,7 +153,10 @@ If `ddrescue` is running to long, or you want to manually skip a file while it's
 Tested with the following program versions;
 
 * Bash v4.3.11(1)-release (i686-pc-linux-gnu)
-* Python 2.7.6 with `bitmath` v1.0.8 module
+* Python 2.7.6
+* Python `bitmath` module v1.0.8
+* Python `numpy` module v1.9.0
+* Python `plotly` module v1.3.1
 * GNU ddrescue 1.18.1
 
 ##Author
