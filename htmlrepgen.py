@@ -131,7 +131,7 @@ def pretty(input_time):
     
     return pretty_time
 
-def main(input=None):
+def main(input=None, full=False):
     input = os.path.abspath(input)
     output_dir = os.path.split(input)[0]
     output_images = os.path.join(output_dir, 'images')
@@ -378,8 +378,13 @@ def main(input=None):
     q3_time = pretty(numpy.percentile(time_s, 75))
     min_time = pretty(numpy.amin(time_s))
     max_time = pretty(numpy.amax(time_s))
-    #with open(os.path.join(output_dir, 'direscraw_HTMLReport.html'), 'w')\
-    #                                                 as htmlfile:
+
+    if full:
+        output = 'direscraw_HTMLReport.html'
+    else:
+        output = 'HTMLReport.html'
+
+    #with open(os.path.join(output_dir, output), 'w') as htmlfile:
     #if nskip == 0:
 
 
@@ -388,5 +393,6 @@ if __name__ == '__main__':
     parser.add_argument('input')
     parser.add_argument('--version', action='version',
                         version='htmlrepgen v1.0')
+    parser.add_argument('-f', '--full', action='store_true')
 
     main(**vars(parser.parse_args()))
