@@ -134,7 +134,7 @@ def pretty(input_time):
 def main(input=None, full=False):
     input = os.path.abspath(input)
     output_dir = os.path.split(input)[0]
-    output_images = os.path.join(output_dir, 'images')
+    output_images = os.path.join(output_dir, 'html_report_images')
     try:
         os.makedirs(output_images)
     except OSError:
