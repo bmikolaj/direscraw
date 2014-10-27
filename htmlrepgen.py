@@ -144,13 +144,17 @@ def main(input=None, full=False):
     lines = file.readlines()
     file.close()
     tfmt = '%Y-%m-%d %H:%M:%S'
-##Time summation/average
     timelist = []
+    errlist = []
+    errnums = []
     for i, line in enumerate(lines):
-        if not line.startswith('/') and not i == 0 and not\
+        if not i == 0 and not line.startswith('/') and not\
                line.endswith(';\n') and not line.endswith('RunTime\n') and not\
                line.startswith('\n'):
             timelist.append(re.split('%', line)[1].strip())
+            errlist.append(re.split('%', line)[0].rsplit(' ', 1)[1] + '%')
+            errnums.append(re.split('%', line)[0].rsplit(' ', 1)[1])
+##Time summation/average
     ####For Testing###
     timelist = ['2.3 days', '5 s', '42.34 mins', '52 hrs', '96 days']
     ##################
@@ -181,7 +185,7 @@ def main(input=None, full=False):
     #Time normalized to hours
         time_h.append(format(time_s[i] / 3600, '.2f').rstrip('0').rstrip('.'))
     
-    average_time = pretty(total_time / len(time_s))
+    average_time = pretty(numpy.mean(time_s))
     total_time = pretty(total_time)
 ##Number of files
     n_files = len(timelist)
@@ -192,22 +196,13 @@ def main(input=None, full=False):
     n_dir = 0 - n_skip
     for line in lines:
         if line.startswith('/'):
-            n_dir = n_dir + 1
+            n_dir += 1
 ##Average Errors
-    errlist = []
-    errnums = []
-    for i, line in enumerate(lines):
-        if not line.startswith('/') and not i == 0 and not\
-               line.endswith(';\n') and not line.endswith('RunTime\n') and not\
-               line.startswith('\n'):
-            errlist.append(re.split('%', line)[0].rsplit(' ', 1)[1] + '%')
-            errnums.append(re.split('%', line)[0].rsplit(' ', 1)[1])
-    
     total_error = 0
     for i, _ in enumerate(errnums):
-        total_error = total_error + float(errnums[i])
+        total_error += float(errnums[i])
     
-	average_error = format(total_error / len(errnums),
+	average_error = format(numpy.mean(total_error),
                     '.2f').rstrip('0').rstrip('.') + '%'
 ##Charts
 #List of usables#
@@ -225,7 +220,7 @@ def main(input=None, full=False):
 #n_dir - Directory Count
 #n_skip - Skipped Count
 
-    n_val = 1000
+    n_val = 5
 #Error Distribution
     errnums = numpy.random.randint(0,100,n_val)
     x = errnums
@@ -374,15 +369,11 @@ def main(input=None, full=False):
     
     ##Write HTML
     q1_time = pretty(numpy.percentile(time_s, 25))
-    q2_time = pretty(numpy.percentile(time_s, 50))
     q3_time = pretty(numpy.percentile(time_s, 75))
     min_time = pretty(numpy.amin(time_s))
     max_time = pretty(numpy.amax(time_s))
 
-    if full:
-        output = 'direscraw_HTMLReport.html'
-    else:
-        output = 'HTMLReport.html'
+    output = 'direscraw_HTMLReport.html' if full else 'HTMLReport.html'
 
     #with open(os.path.join(output_dir, output), 'w') as htmlfile:
     #if nskip == 0:
