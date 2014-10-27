@@ -220,7 +220,7 @@ def main(input=None, full=False):
 #n_dir - Directory Count
 #n_skip - Skipped Count
 
-    n_val = 5
+    n_val = 1000
 #Error Distribution
     errnums = numpy.random.randint(0,100,n_val)
     x = errnums
@@ -240,11 +240,16 @@ def main(input=None, full=False):
     plotly.image.save_as(fig, os.path.join(output_images, 'err_dist.png'))
 #Time Distribution
     time_h = numpy.random.randint(0,750,n_val)
+    min_time = numpy.amin(time_h)
+    max_time = numpy.amax(time_h)
+    time_diff = (max_time - min_time) / 10
+    print(time_diff)
     x = time_h
     time_dist = Histogram(
         x=x,
         histnorm='count',
-        autobinx=True,
+        autobinx=False,
+        xbins=XBins(start=min_time, end=max_time, size=time_diff),
         marker=Marker(color='green')
     )
     layout = Layout(
@@ -315,8 +320,9 @@ def main(input=None, full=False):
     q1_time = format(numpy.percentile(time_h, 25), '.1f')
     q2_time = format(numpy.percentile(time_h, 50), '.1f')
     q3_time = format(numpy.percentile(time_h, 75), '.1f')
-    min_time = format(numpy.amin(time_h), '.1f')
-    max_time = format(numpy.amax(time_h), '.1f')
+    #Already calculated above
+    min_time = format(min_time, '.1f')
+    max_time = format(max_time, '.1f')
     time_box = Box(
         y=y,
         name='RunTime',
