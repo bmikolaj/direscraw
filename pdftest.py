@@ -12,11 +12,10 @@ def main(input=None):
     options = {
         'quiet': '',
         'image-dpi': '1000',
-        'image-quality': '100',
-        'disable-smart-shrinking': ''
+        'image-quality': '100'
         }
     pdfkit.from_file(input, output, options=options)
-
+    
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('input')
