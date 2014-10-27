@@ -47,11 +47,12 @@ if [ $1 == "install" ]; then
 		sudo ./configure && make && sudo make install
 		cd ..
 	fi
-	if [[ $(pydoc -w bitmath | head -1 | cut -c1-2) == "no" ]]; then
-		sudo pip install bitmath
-	fi
+	wget https://bootstrap.pypa.io/ez_setup.py -O - | sudo python
 	if [ ! $(which pip) ]; then
 		wget https://bootstrap.pypa.io/get-pip.py -O - | sudo python
+	fi
+	if [[ $(pydoc -w bitmath | head -1 | cut -c1-2) == "no" ]]; then
+		sudo pip install bitmath
 	fi
 	if [[ $(pydoc -w numpy | head -1 | cut -c1-2) == "no" ]]; then
 		sudo pip install numpy
@@ -60,6 +61,8 @@ if [ $1 == "install" ]; then
 		sudo pip install plotly
 	fi
 	sudo pip install plotly --upgrade
+	sudo pip install numpy --upgrade
+	sudo pip install bitmath --upgrade
 	python -c "import plotly; plotly.tools.set_credentials_file(username='p014k', api_key='4rif4f03pe')"
 	rm bitmath.html setuptools* plotly.html numpy.html
 	sudo cp errcalc.py /usr/local/bin/errcalc
