@@ -17,10 +17,12 @@
 
 
 import argparse
+from math import ceil
 import numpy
 import os.path
 import plotly.plotly as plotly
 from plotly.graph_objs import *
+import random #for testing
 import re
 import time
 
@@ -181,7 +183,7 @@ def main(input=None, full=False):
     total_time = 0
     time_h = []
     for i, _ in enumerate(time_s):
-        total_time = total_time + time_s[i]
+        total_time += time_s[i]
     #Time normalized to hours
         time_h.append(format(time_s[i] / 3600, '.2f').rstrip('0').rstrip('.'))
     
@@ -189,6 +191,7 @@ def main(input=None, full=False):
     total_time = pretty(total_time)
 ##Number of files
     n_files = len(timelist)
+    n_skip = 0
     for line in lines:
         if re.search('Files Skipped', line):
             n_skip = int(re.split(':', line)[1].strip().replace(';',''))
@@ -220,15 +223,35 @@ def main(input=None, full=False):
 #n_dir - Directory Count
 #n_skip - Skipped Count
 
+#####For Testing############
     n_val = 1000
+    time_h = []
+    errnums = []
+#Binomial Distribution
+    for n in xrange(0, n_val):
+        toss = random.choice( (1, 2) )
+        if toss == 1:
+            time_h.append(random.triangular(0, 375, 0))
+        else:
+            time_h.append(random.triangular(375, 700))
+
+    for n in xrange(0, n_val):
+        toss = random.choice( (1, 2) )
+        if toss == 1:
+            errnums.append(random.triangular(0, 50, 0))
+        else:
+            errnums.append(random.triangular(50, 100, 95))
+
+    #time_h = numpy.random.randint(0,750,n_val)
+    #errnums = numpy.random.randint(0,100,n_val)
+#############################################################
 #Error Distribution
-    errnums = numpy.random.randint(0,100,n_val)
     x = errnums
     err_dist = Histogram(
         x=x,
         histnorm='count',
         autobinx=False,
-        xbins=XBins(start=0, end=100, size=1),
+        xbins=XBins(start=0, end=100, size=2),
         marker=Marker(color='red')
     )
     layout = Layout(
@@ -239,11 +262,13 @@ def main(input=None, full=False):
     fig = Figure(data=Data([err_dist]), layout=layout)
     plotly.image.save_as(fig, os.path.join(output_images, 'err_dist.png'))
 #Time Distribution
-    time_h = numpy.random.randint(0,750,n_val)
+    q1_time = numpy.percentile(time_h, 25)
+    q3_time = numpy.percentile(time_h, 75)
     min_time = numpy.amin(time_h)
     max_time = numpy.amax(time_h)
-    time_diff = (max_time - min_time) / 10
-    print(time_diff)
+    width = (2 * (q3_time - q1_time)) / (len(time_h) ** (1 / 3.0)) #Freedman-Diaconis rule
+    #width = (3.5 * numpy.std(time_h)) / (len(time_h) ** (1 / 3.0)) #Scott's normal reference rule
+    time_diff = ceil((max_time - min_time) / width)
     x = time_h
     time_dist = Histogram(
         x=x,
@@ -262,7 +287,7 @@ def main(input=None, full=False):
 #Error Box Chart
     y = errnums
     q1_err = format(numpy.percentile(errnums, 25), '.2f')
-    q2_err = format(numpy.percentile(errnums, 50), '.2f')
+    q2_err = format(numpy.mean(errnums), '.2f')
     q3_err = format(numpy.percentile(errnums, 75), '.2f')
     min_err = format(numpy.amin(errnums), '.2f')
     max_err = format(numpy.amax(errnums), '.2f')
@@ -276,7 +301,7 @@ def main(input=None, full=False):
     )
     layout = Layout(
         title='Error Percent BoxPlot',
-        yaxis=YAxis(title='Error (%)'),
+        yaxis=YAxis(title='Error (%)', range=[0,100]),
         boxgap=0.65,
         height=500,
         width=500,
@@ -317,12 +342,13 @@ def main(input=None, full=False):
     plotly.image.save_as(fig, os.path.join(output_images, 'err_box.png'))
 #Time Box Chart
     y = time_h
-    q1_time = format(numpy.percentile(time_h, 25), '.1f')
-    q2_time = format(numpy.percentile(time_h, 50), '.1f')
-    q3_time = format(numpy.percentile(time_h, 75), '.1f')
-    #Already calculated above
+    q2_time = format(numpy.mean(time_h), '.1f')
+    #Calculated above
+    q1_time = format(q1_time, '.1f')
+    q3_time = format(q3_time, '.1f')
     min_time = format(min_time, '.1f')
     max_time = format(max_time, '.1f')
+    #################
     time_box = Box(
         y=y,
         name='RunTime',
