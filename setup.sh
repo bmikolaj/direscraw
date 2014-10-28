@@ -60,20 +60,20 @@ if [ $1 == "install" ]; then
 	if [[ $(pydoc -w plotly | head -1 | cut -c1-2) == "no" ]]; then
 		sudo pip install plotly
 	fi
-    if [ ! $(which wkpdftohtml) ]; then
-        sudo apt-get install wkpdftohtml
-        wget http://downloads.sourceforge.net/project/wkhtmltopdf/0.12.1/wkhtmltox-0.12.1_linux-wheezy-i386.deb
-        sudo dpkg -i wkhtmltox-0.12.1_linux-wheezy-i386.deb
-    fi
-    if [[ $(pydoc -w pdfkit | head -1 | cut -c1-2) == "no" ]]; then
+	if [ ! $(which wkpdftohtml) ]; then
+		sudo apt-get install wkpdftohtml
+		wget http://downloads.sourceforge.net/project/wkhtmltopdf/0.12.1/wkhtmltox-0.12.1_linux-wheezy-i386.deb
+		sudo dpkg -i wkhtmltox-0.12.1_linux-wheezy-i386.deb
+	fi
+	if [[ $(pydoc -w pdfkit | head -1 | cut -c1-2) == "no" ]]; then
 		sudo pip install pdfkit
 	fi
-    sudo pip install pdfkit --upgrade
+	sudo pip install pdfkit --upgrade
 	sudo pip install plotly --upgrade
 	sudo pip install numpy --upgrade
 	sudo pip install bitmath --upgrade
 	python -c "import plotly; plotly.tools.set_credentials_file(username='p014k', api_key='4rif4f03pe')"
-	rm bitmath.html setuptools* plotly.html numpy.html wkhtmltox-0.12.1_linux-wheezy-i386.deb
+	rm bitmath.html setuptools* plotly.html numpy.html pdfkit.html wkhtmltox-0.12.1_linux-wheezy-i386.deb
 	sudo cp errcalc.py /usr/local/bin/errcalc
 	sudo cp direscraw.py /usr/local/bin/direscraw
 	sudo cp htmlrepgen.py /usr/local/bin/htmlrepgen
