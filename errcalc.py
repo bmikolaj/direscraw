@@ -35,7 +35,7 @@ def main(input=None, standalone=False):
     n_files = 0
     for i, line in enumerate(lines):
         if re.search(end_string, line):
-            n_files = n_files + 1
+            n_files += 1
             for j in xrange(3):
                 current_line = lines[i - 3 + j]
                 if re.search(first_string, current_line):

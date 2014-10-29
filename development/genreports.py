@@ -25,6 +25,9 @@ import time
 def main(input_dir=None, debug=False):
     input_dir = os.path.abspath(input_dir)
     tfmt = '%Y-%m-%d %H:%M:%S'
+    if os.path.isfile(os.path.join(input_dir, 'full_error_summary')):
+        os.remove(os.path.join(output_dir, 'full_error_summary'))
+
     with open(os.path.join(input_dir, 'full_error_summary'),
                            'w+') as full_error_summary:
         full_error_summary.write('File Error% RunTime' + '\n')
