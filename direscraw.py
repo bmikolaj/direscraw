@@ -50,8 +50,8 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False,
         os.remove(os.path.join(output_dir, 'full_error_summary'))
     
     with open(os.path.join(output_dir, 'full_error_summary'),
-                           'w+') as full_error_summary:
-        if not nosum:
+                           'a+') as full_error_summary:
+        if not nosum and not resume:
             full_error_summary.write('File Error% RunTime' + '\n')
 #Starting os.walk for loop
         for current_dir, dirnames, unfilenames in os.walk(input_dir):
@@ -115,7 +115,6 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False,
                         skipset.add(in_file_path)
                         fullskipset.add(in_file_path)
                         print('\n' + in_file_path + ' has been skipped')
-                        continue
 
                 drclog.seek(0)
             #Creating error report
