@@ -185,7 +185,7 @@ def main(input=None, full=False):
     for i, _ in enumerate(time_s):
         total_time += time_s[i]
     #Time normalized to hours
-        time_h.append(format(time_s[i] / 3600, '.2f').rstrip('0').rstrip('.'))
+        time_h.append(time_s[i] / 3600)
     
     average_time = pretty(numpy.mean(time_s))
     total_time = pretty(total_time)
