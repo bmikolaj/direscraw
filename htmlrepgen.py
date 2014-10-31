@@ -147,15 +147,22 @@ def main(input=None, full=False):
     file.close()
     tfmt = '%Y-%m-%d %H:%M:%S'
     timelist = []
-    errlist = []
+    filelist = []
     errnums = []
+    maxerr = []
+    maxerr_filelist = []
+    maximum_err = 5 #Maximum Error Percent threshold
     for i, line in enumerate(lines):
         if not i == 0 and not line.startswith('/') and not\
                line.endswith(';\n') and not line.endswith('RunTime\n') and not\
                line.startswith('\n'):
             timelist.append(re.split('%', line)[1].strip())
-            errlist.append(re.split('%', line)[0].rsplit(' ', 1)[1] + '%')
             errnums.append(re.split('%', line)[0].rsplit(' ', 1)[1])
+            filelist.append(re.split('%', line)[0].rsplit(' ', 1)[0])
+            #Lists files over a certain error threshold
+            if errnums[i] > maximum_err:
+                maxerr.append(errnums[i])
+                maxerr_filelist.append(filelist[i])
 ##Time summation/average
     ####For Testing###
     timelist = ['2.3 days', '5 s', '42.34 mins', '52 hrs', '96 days']
@@ -215,8 +222,9 @@ def main(input=None, full=False):
 #time_s - List of time normalized to seconds
 #time_h - List of time normalized to hours
 #
-#errlist - List of errors with %
 #errnums - List of errors sans %
+#maxerr - List of errors larger than maximum eval
+#maxerr_filelist - List of files with error larger than maximum error
 #average_error - Average Error
 #
 #n_files - File count
