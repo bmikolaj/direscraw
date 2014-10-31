@@ -160,7 +160,7 @@ def main(input=None, full=False):
             errnums.append(re.split('%', line)[0].rsplit(' ', 1)[1])
             filelist.append(re.split('%', line)[0].rsplit(' ', 1)[0])
             #Lists files over a certain error threshold
-            if errnums[i] > maximum_err:
+            if float(errnums[i]) > maximum_err:
                 maxerr.append(errnums[i])
                 maxerr_filelist.append(filelist[i])
 ##Time summation/average
@@ -207,24 +207,29 @@ def main(input=None, full=False):
     for line in lines:
         if line.startswith('/'):
             n_dir += 1
-##Average Errors
+##Error Calculations
     total_error = 0
     for i, _ in enumerate(errnums):
         total_error += float(errnums[i])
     
     average_error = format(numpy.mean(total_error),
                            '.2f').rstrip('0').rstrip('.') + '%'
+    maxerrper = format(len(maxerr) / len(errnums),
+                           '.2f').rstrip('0').rstrip('.') + '%'
 ##Charts
 #List of usables#
+#
+#filelist - List of files
 #
 #total_time - pretty Total Time
 #average_time - pretty Average Time
 #time_s - List of time normalized to seconds
 #time_h - List of time normalized to hours
 #
-#errnums - List of errors sans %
+#errnums - List of errors
 #maxerr - List of errors larger than maximum eval
 #maxerr_filelist - List of files with error larger than maximum error
+#maxerrper - Percent of files over maximum error
 #average_error - Average Error
 #
 #n_files - File count
