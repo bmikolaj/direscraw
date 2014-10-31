@@ -205,8 +205,8 @@ def main(input=None, full=False):
     for i, _ in enumerate(errnums):
         total_error += float(errnums[i])
     
-	average_error = format(numpy.mean(total_error),
-                    '.2f').rstrip('0').rstrip('.') + '%'
+    average_error = format(numpy.mean(total_error),
+                           '.2f').rstrip('0').rstrip('.') + '%'
 ##Charts
 #List of usables#
 #
