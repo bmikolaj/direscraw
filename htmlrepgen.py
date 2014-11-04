@@ -197,11 +197,12 @@ def main(input=None, full=False):
     average_time = pretty(numpy.mean(time_s))
     total_time = pretty(total_time)
 ##Number of files
-    n_files = len(timelist)
     n_skip = 0
     for line in lines:
         if re.search('Files Skipped', line):
             n_skip = int(re.split(':', line)[1].strip().replace(';',''))
+
+    n_files = len(timelist) - n_skip
 ##Number of directories
     n_dir = 0 - n_skip
     for line in lines:
