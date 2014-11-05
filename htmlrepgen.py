@@ -208,6 +208,7 @@ def main(input=None, full=False):
     for line in lines:
         if line.startswith('/'):
             n_dir += 1
+
 ##Error Calculations
     total_error = 0
     for i, _ in enumerate(errnums):
@@ -215,7 +216,8 @@ def main(input=None, full=False):
     
     average_error = format(numpy.mean(total_error),
                            '.2f').rstrip('0').rstrip('.') + '%'
-    maxerrper = format(len(maxerr) / len(errnums),
+    n_maxerr = len(maxerr)
+    maxerrper = format(n_maxerr / len(errnums),
                            '.2f').rstrip('0').rstrip('.') + '%'
 ##Charts
 #List of usables#
@@ -228,9 +230,10 @@ def main(input=None, full=False):
 #time_h - List of time normalized to hours
 #
 #errnums - List of errors
-#maxerr - List of errors larger than maximum eval
-#maxerr_filelist - List of files with error larger than maximum error
-#maxerrper - Percent of files over maximum error
+#maxerr - List of errors larger than maximum error threshold
+#n_maxerr - Number of files larger than maximum error threshold
+#maxerr_filelist - List of files with error larger than maximum error threshold
+#maxerrper - Percent of files over maximum error threshold
 #average_error - Average Error
 #
 #n_files - File count
