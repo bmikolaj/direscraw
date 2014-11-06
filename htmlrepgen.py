@@ -230,6 +230,8 @@ def main(input=None, full=False):
 #time_h - List of time normalized to hours
 #
 #errnums - List of errors
+#maximum_err - Maximum Error Threshold
+maximum_err = str(maximum_err) + '%'
 #maxerr - List of errors larger than maximum error threshold
 #n_maxerr - Number of files larger than maximum error threshold
 #maxerr_filelist - List of files with error larger than maximum error threshold
