@@ -26,9 +26,6 @@ import random #for testing
 import re
 import time
 
-def nform(input, suf='', dec=2):
-    return '{{:.{}f}}'.format(dec).format(input).rstrip('0').rstrip('.') + suf
-
 def pretty(input_time):
     if float(input_time).is_integer() and not re.search('\.',
                                                         str(input_time)):
@@ -131,10 +128,16 @@ def pretty(input_time):
                           ' seconds'
     
     else:
-        seconds = format(input_time, '.2f').rstrip('0').rstrip('.')
+        seconds = nform(input_time)
         pretty_time = str(seconds) + ' seconds'
     
     return pretty_time
+
+def nform(input, suf='', dec=2):
+    if not isinstance(dec, int) or dec < 0:
+        raise ValueError('dec must be positive integer')
+
+    return '{{:.{}f}}'.format(dec).format(input).rstrip('0').rstrip('.') + suf
 
 def main(input=None, full=False):
     input = os.path.abspath(input)
@@ -162,10 +165,12 @@ def main(input=None, full=False):
             timelist.append(re.split('%', line)[1].strip())
             errnums.append(re.split('%', line)[0].rsplit(' ', 1)[1])
             filelist.append(re.split('%', line)[0].rsplit(' ', 1)[0])
-            #Lists files over a certain error threshold
-            if float(errnums[i]) > maximum_err:
-                maxerr.append(errnums[i])
-                maxerr_filelist.append(filelist[i])
+
+    #Lists files over a certain error threshold
+    for i, el in enumerate(errnums):
+        if el > maximum_err:
+            maxerr.append(el)
+            maxerr_filelist.append(filelist[i])
 ##Time summation/average
     ####For Testing###
     timelist = ['2.3 days', '5 s', '42.34 mins', '52 hrs', '96 days']
@@ -232,7 +237,7 @@ def main(input=None, full=False):
 #
 #errnums - List of errors
 #maximum_err - Maximum Error Threshold
-maximum_err = str(maximum_err) + '%'
+    maximum_err = str(maximum_err) + '%'
 #maxerr - List of errors larger than maximum error threshold
 #n_maxerr - Number of files larger than maximum error threshold
 #maxerr_filelist - List of files with error larger than maximum error threshold
