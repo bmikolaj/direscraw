@@ -26,34 +26,8 @@ import random #for testing
 import re
 import time
 
-def nform(input, *args):
-    alist = []
-    for i in args:
-        alist.append(i)
-
-    if len(alist) > 2:
-        raise ValueError('%s arguments specified: Maximum is 2.' % len(alist))
-    elif len(alist) == 1:
-        alist.append(None)
-    elif len(alist) == 0:
-        alist.append(None)
-        alist.append(None)
-
-    if alist[1] and not isinstance(alist[1], int):
-        raise ValueError('Argument must be an integer')
-
-    if isinstance(alist[0], int):
-        f = alist[0]
-    elif isinstance(alist[1], int):
-        f = alist[1]
-    else:
-        f = 2
-
-    formatted = '{{:.{}f}}'.format(f).format(input).rstrip('0').rstrip('.')
-    if alist[0] and not isinstance(alist[0], int):
-        formatted = formatted + alist[0]
-
-    return formatted
+def nform(input, suf='', dec=2):
+    return '{{:.{}f}}'.format(dec).format(input).rstrip('0').rstrip('.') + suf
 
 def pretty(input_time):
     if float(input_time).is_integer() and not re.search('\.',
@@ -75,7 +49,7 @@ def pretty(input_time):
         hours = re.split('\.', hours)[0]
         minutes = re.split('\.', minutes)[0]
         if not seconds == '0':
-            seconds = format(seconds, '.2f').rstrip('0').rstrip('.')
+            seconds = nform(seconds)
 
         if days == '0':
             pretty_time = str(months) + ' months'
@@ -105,7 +79,7 @@ def pretty(input_time):
         hours = re.split('\.', hours)[0]
         minutes = re.split('\.', minutes)[0]
         if not seconds == '0':
-            seconds = format(seconds, '.2f').rstrip('0').rstrip('.')
+            seconds = nform(seconds)
 
         if hours == '0':
             pretty_time = str(days) + ' days'
@@ -130,7 +104,7 @@ def pretty(input_time):
         seconds = float(str('.') + re.split('\.', minutes)[1]) * 60
         minutes = re.split('\.', minutes)[0]
         if not seconds == '0':
-            seconds = format(seconds, '.2f').rstrip('0').rstrip('.')
+            seconds = nform(seconds)
 
         if minutes == '0':
             pretty_time = str(hours) + ' hours'
@@ -147,7 +121,7 @@ def pretty(input_time):
         minutes = re.split('\.', min_time)[0]
         seconds = float(str('.') + re.split('\.', min_time)[1]) * 60
         if not seconds == '0':
-            seconds = format(seconds, '.2f').rstrip('0').rstrip('.')
+            seconds = nform(seconds)
 
         if seconds == '0':
             pretty_time = str(minutes) + ' minutes'
@@ -243,11 +217,9 @@ def main(input=None, full=False):
     for i, _ in enumerate(errnums):
         total_error += float(errnums[i])
     
-    average_error = format(numpy.mean(total_error),
-                           '.2f').rstrip('0').rstrip('.') + '%'
+    average_error = nform(numpy.mean(total_error), suf='%')
     n_maxerr = len(maxerr)
-    maxerrper = format(n_maxerr / len(errnums),
-                           '.2f').rstrip('0').rstrip('.') + '%'
+    maxerrper = nform(n_maxerr / len(errnums), suf='%')
 ##Charts
 #List of usables#
 #
