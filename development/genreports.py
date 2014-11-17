@@ -36,13 +36,63 @@ def main(input_dir=None, debug=False, fromlog=False, fromsum=False):
         if not fromsum:
             full_error_summary.write('File Error% RunTime' + '\n')
 
-        full_error_summary.write('File Error% RunTime' + '\n')
+#Loop for skip files
+        if fromsum:
+            for current_dir, _, _ in os.walk(input_dir):
+                relative_dir = os.path.relpath(current_dir, input_dir)
+                current_out_dir = os.path.join(input_dir, relative_dir)
+                if os.path.split(current_out_dir)[1] == '.':
+                    current_out_dir = os.path.split(current_out_dir)[0]
+                if not os.path.isfile(os.path.join(current_out_dir,
+                                      'error_summary')):
+                    continue
+
+                error_summary = open(os.path.join(current_out_dir,
+                                     'error_summary'), 'r')
+                lines = error_summary.readlines()
+                error_summary.close()
+                for i, line in enumerate(lines):
+                    if i < 2:
+                        continue
+
+                    elif re.search('Files Skipped', line):
+                        n_skip = int(re.split(':',
+                                     line)[1].strip().replace(';',''))
+                        skiplines = []
+                        skiplines.append(line)
+                        for j in xrange(n_skip):
+                            skiplines.append(lines[i + 1 + j])
+
+                        for el in skiplines:
+                            full_error_summary.write(el)
+
+                        full_error_summary.write('\n')
+
 #Starting os.walk for loop
         for current_dir, _, _ in os.walk(input_dir):
             relative_dir = os.path.relpath(current_dir, input_dir)
             current_out_dir = os.path.join(input_dir, relative_dir)
             if os.path.split(current_out_dir)[1] == '.':
                 current_out_dir = os.path.split(current_out_dir)[0]
+
+            if fromsum:
+                if not os.path.isfile(os.path.join(current_out_dir,
+                                      'error_summary')):
+                    continue
+
+                error_summary = open(os.path.join(current_out_dir,
+                                     'error_summary'), 'r')
+                lines = error_summary.readlines()
+                error_summary.close()
+                full_error_summary.write(current_out_dir + '\n')
+                for i, line in enumerate(lines):
+                    if i < 2:
+                        continue
+
+                    elif not line.startswith('\n') and not\
+                            line.endswith('RunTime\n') and not\
+                            line in skiplines:
+                        full_error_summary.write(line)
 
             if fromlog:
                 if not os.path.isfile(os.path.join(current_out_dir, 'drclog')):
@@ -67,37 +117,6 @@ def main(input_dir=None, debug=False, fromlog=False, fromsum=False):
                 if not debug:
                     os.remove(os.path.join(current_out_dir, 'drclog'))
             
-            if fromsum:
-                if not os.path.isfile(os.path.join(current_out_dir,
-                                      'error_summary')):
-                    continue
-
-                error_summary = open(os.path.join(current_out_dir,
-                                     'error_summary'), 'r')
-                lines = error_summary.readlines()
-                error_summary.close()
-                full_error_summary.write(current_out_dir + '\n')
-                for i, line in enumerate(lines):
-                    if i < 2:
-                        continue
-
-                    elif re.search('Files Skipped', line):
-                        n_skip = int(re.split(':',
-                                     line)[1].strip().replace(';',''))
-                        skiplines = []
-                        skiplines.append(line)
-                        for j in xrange(n_skip):
-                            skiplines.append(lines[i + 1 + j])
-
-                        print(skiplines)
-                        for el in skiplines:
-                            full_error_summary.write(el)
-
-                        full_error_summary.write('\n')
-
-                    elif not line.startswith('\n') and not line.endswith('RunTime\n'):
-                        full_error_summary.write(line)
-
 #Creating full error report    
     FES = open(os.path.join(input_dir, 'full_error_summary'))
     FES_lines = FES.readlines()
