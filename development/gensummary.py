@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#Error Report Generator v2.0
+#Error Summary Generator v2.0
 #Copyright (c) 2014 by Brian Mikolajczyk, brianm12@gmail.com
 
 #For generating error reports from 'drclog' or 'error_summary files
@@ -133,7 +133,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('input_dir')
     parser.add_argument('--version', action='version', 
-                        version='genreports v2.0')
+                        version='gensummary v2.0')
     parser.add_argument('-d', '--debug', action='store_true',
                         help=argparse.SUPPRESS)
     parser.add_argument('-r', '--drclog', dest='fromlog', action='store_true',
