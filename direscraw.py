@@ -141,8 +141,8 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False,
                         subprocess.call(['errcalc',
                                         os.path.join(current_out_dir,
                                         'drclog')], stdout=full_error_summary)
-                        subprocess.call(['htmlrepgen',
-                              os.path.join(current_out_dir, 'error_summary')])
+                        #subprocess.call(['htmlrepgen',
+                              #os.path.join(current_out_dir, 'error_summary')])
 
             if not debug:
                 os.remove(os.path.join(current_out_dir, 'drclog'))
@@ -168,8 +168,8 @@ def main(input_dir=None, output_dir=None, blacklist=None, nosum=False,
             for lines in FES_lines:
                 full_error_summary.write(lines)
 
-        subprocess.call(['htmlrepgen', '-f',
-                        os.path.join(output_dir, 'full_error_summary')])
+        #subprocess.call(['htmlrepgen', '-f',
+                        #os.path.join(output_dir, 'full_error_summary')])
     else:
         os.remove(os.path.join(output_dir, 'full_error_summary'))
 
