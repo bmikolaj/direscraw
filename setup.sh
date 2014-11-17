@@ -85,7 +85,7 @@ elif [[ $1 == "uninstall" ]]; then
 	sudo rm /usr/local/bin/errcalc /usr/local/bin/direscraw /usr/local/bin/htmlrepgen
 	echo "direscraw, errcalc, and htmlrepgen uninstalled successfully"
 else
-	echo "Usage"
-	echo "sudo ./setup.sh install to install"
-	echo "sudo ./setup.sh uninstall to uninstall"
+	echo "Usage;"
+	echo "'sudo ./setup.sh install' to install"
+	echo "'sudo ./setup.sh uninstall' to uninstall"
 fi
