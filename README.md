@@ -8,7 +8,7 @@ v2.0
 
 Directory Rescue Crawler uses `ddrescue` to recover full directories from one location to another. `ddrescue` by itself can only recover individual files or full filesystems.
 
-This program also prints an error and runtime summary in each subdirectory copied and a full summary in the root directory via the included `errcalc` program. This report is then fed into `htmlrepgen` to generate a full HTML report (`direscraw_HTMLReport.html`) in the root directory.
+This program also prints an error and runtime summary in each subdirectory copied and a full summary in the top-most directory via the included `errcalc` program. This report is then fed into `htmlrepgen` to generate a full HTML report (`direscraw_HTMLReport.html`) in the top-most directory.
 
 ##Dependencies
 Directory Rescue Crawler was designed for Linux and uses the following programs;
@@ -162,7 +162,7 @@ Tested with the following program versions;
 * GNU ddrescue 1.18.1
 
 ##Author
-[Brian Mikolajczyk](https://github.com/p014k), brianm12@gmail.com
+[Brian Mikolajczyk](https://github.com/bmikolaj), brianm12@gmail.com
 
 ##Legal
 Copyright (c) 2014, Brian Mikolajczyk, brianm12@gmail.com
